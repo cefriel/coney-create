@@ -1,24 +1,19 @@
 # Coney Create
 
-Coney Create: Design a conversational survey.
+Coney Create: Design a conversational survey. Coney Create is one of the components of the [Coney](https://github.com/cefriel/coney) toolkit for conversational surveys.
 
-This project was generated using: 
-- [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6 
-- [Rete.js](https://github.com/retejs/rete) version 1.3.1-rc.3
+### License
 
+_Copyright 2020 Cefriel._
 
-## Development server
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-Add --port xxxx to change the exposed port.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-## Build
-
-Run `npm run build` to build the project for production. The build artifacts will be stored in the `dist/` directory. 
-To build with docker's apiUrl run `ng build --configuration=docker`.
-
-To customize a specific build a new configuration may be created in the `angular.json` file as done for the Docker case. The specific environment variable `apiUrl` is set replacing the environment variable file for the given configuration.
-
-## UI
-
-![Coney Create UI](/src/assets/create-ui.PNG)
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

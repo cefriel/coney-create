@@ -1008,7 +1008,7 @@ export class HomeComponent implements OnInit {
       this.searchButtonPressed();
       return;
     }
-    var url = environment.baseUrl + "/coney/deliver";
+    var url = environment.baseUrl + "/coney/home";
     window.location.href = url;
   }
 

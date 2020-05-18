@@ -10,6 +10,7 @@ const VueTextTypeControl = Vue.component('txt-field', {
       '<option value="date">📆 Date</option>' +
       '<option value="time">⏱️ Time</option>' +
       '<option value="url">🔗 Link</option>' +
+      '<option value="email">📧 Email</option>' +
     '</select></div>',
   data() {
     return {

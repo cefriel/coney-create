@@ -5,6 +5,7 @@ import {TagFieldControl} from '../controls/tag-field.control';
 import {MatDialog} from '@angular/material';
 import {ENUM_RETE_COMPONENT} from '../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
+import { OptionalControl } from '../controls/optional.control';
 
 
 var CustomNode = {

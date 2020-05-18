@@ -31,7 +31,7 @@
           style="background-color: #2c2c2c28; color:transparent" class="mb-2 mt-2 hideOnMobile">.</div>
 
           <input *ngIf="titleEditable; else titleDisabled" id="forminput1" class="m-0 p-2 halfWidthOnMobile"
-            [(ngModel)]="currentConversationTitle" maxlength="100" placeholder="Untitled Conversation">
+            [(ngModel)]="currentConversationTitle" maxlength="300" placeholder="Untitled Conversation">
 
           <ng-template #titleDisabled>
             <input style="background: transparent!important;" id="forminput1" class="m-0 p-2 halfWidthOnMobile"

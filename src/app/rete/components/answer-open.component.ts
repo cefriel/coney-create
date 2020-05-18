@@ -3,6 +3,7 @@ import { QuestionAnswerType, TalkType } from '../sockets';
 import {ENUM_RETE_COMPONENT} from '../../model/conversational.model';
 import { PointsFieldControl } from '../controls/points-field.control';
 import VueRender from 'rete-vue-render-plugin';
+import { OptionalControl } from '../controls/optional.control';
 
 var CustomNode = {
   template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
@@ -47,6 +48,7 @@ export class AnswerSingleComponent extends Component {
     const in1 = new Input('in', 'Question', QuestionAnswerType, true);
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
     return node.addInput(in1)
+    .addControl(new OptionalControl(this.editor, "optional"))
     .addControl(new PointsFieldControl(this.editor, "points"))
     .addOutput(out1);
   }

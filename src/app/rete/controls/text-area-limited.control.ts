@@ -3,7 +3,7 @@ import Vue from 'vue';;
 
 const VueTextAreaLimitedControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<textarea :value="text" @input="change($event)" maxlength="40"' +
+  template: '<textarea :value="text" @input="change($event)" maxlength="100"' +
     'style="width:100%; height:100px; border-radius: 4px; font-size: 18px; outline-width: 0; padding: 5px"></textarea>',
   data() {
     return {

@@ -3,8 +3,8 @@ import Vue from 'vue';;
 
 const VueTextAreaLimitedControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<textarea :value="text" @input="change($event)" maxlength="100"' +
-    'style="width:100%; height:100px; border-radius: 4px; font-size: 18px; outline-width: 0; padding: 5px"></textarea>',
+  template: '<textarea class="txtarea-control" :value="text" @input="change($event)"  v-on:keyup="resize($event)" maxlength="150"' +
+    'style="width:100%; max-height:200px!important; min-height:80px!important; border-radius: 4px; font-size: 18px; outline-width: 0; padding: 5px"></textarea>',
   data() {
     return {
       text: ''
@@ -20,6 +20,10 @@ const VueTextAreaLimitedControl = Vue.component('txt-area', {
         this.putData(this.ikey, this.text);
       }
       this.emitter.trigger('process');
+    },
+    resize(event){
+      event.srcElement.style.height = "1px";
+      event.srcElement.style.height = (25+event.srcElement.scrollHeight)+"px";
     }
   },
   mounted() {

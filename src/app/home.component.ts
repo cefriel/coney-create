@@ -432,8 +432,8 @@ export class HomeComponent implements OnInit {
       this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
 
       const dialogRef = this.dialog.open(PublishDialogComponent, {
-        width: '300px',
-        height: '350px',
+        maxWidth: '55vw',
+        maxHeight: '85vh',
         data: {
           conversation: this.editedJson
         }

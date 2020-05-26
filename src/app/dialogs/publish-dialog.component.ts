@@ -11,15 +11,38 @@ export class PublishDialogComponent {
 
   canPress = true;
 
+  privacyActive=false;
+  imageActive=false;
+  textActive=false;
+
+  privacyLink="";
+  imageLink="";
+  text="";
+
   constructor(private backend: BackendService,
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   publish() {
 
+    console.log(this.data);
+    console.log(this.privacyActive + "-" + this.imageActive + "-" + this.textActive);
+    console.log(this.text);
+    let toSend = this.data.conversation;
+   
+    if(this.imageActive){
+      toSend.chatImage = this.imageLink;
+    }
+    if(this.privacyActive){
+      toSend.chatPrivacyNotice = this.privacyLink;
+    }
+    if(this.textActive){
+      toSend.chatIntroText = this.text;
+    }
+    
     document.getElementById("publishBtn").innerHTML = "uploading...";
     this.canPress = false;
-    this.backend.postJson('/create/publishConversation', this.data.conversation).subscribe(
+    this.backend.postJson('/create/publishConversation', toSend).subscribe(
       res => {
         this.dialogRef.close(res);
         this.canPress = true;
@@ -30,6 +53,18 @@ export class PublishDialogComponent {
         document.getElementById("publishBtn").innerHTML = "done";
       }
     );
+  }
+
+  change(variable){
+    
+    if(variable=="image"){
+      this.imageActive = !this.imageActive;
+    } else if(variable=="privacy"){
+      this.privacyActive = !this.privacyActive;
+    } else if(variable=="text"){
+      this.textActive = !this.textActive;
+    }
+
   }
 
   close() {

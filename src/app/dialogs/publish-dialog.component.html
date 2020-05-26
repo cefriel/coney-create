@@ -1,7 +1,47 @@
 <form>
   <div class="form-group">
-    <p class="text-center">
-      Publishing this chat, you won't be able to modify it in the future.
+
+    <div class="row">
+      <div class="col-8">
+
+        <div class="row" style="flex-direction:column; justify-content: center; height: 100%;">
+
+
+        <mat-checkbox  (click)="change('privacy')">Use custom privacy policy</mat-checkbox>
+
+        <mat-form-field [hidden]="!privacyActive" style="width: 100%;">
+          <mat-label>Link to personal privacy policy</mat-label>
+          <input matInput type="url" placeholder="https://..." [(ngModel)]="privacyLink"  [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        
+        <mat-checkbox (click)="change('image')">Use custom logo</mat-checkbox>
+
+        <mat-form-field [hidden]="!imageActive" style="width: 100%;">
+          <mat-label>Link to custom logo</mat-label>
+          <input matInput type="url" placeholder="https://..." [(ngModel)]="imageLink"  [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+
+  
+        <mat-checkbox (click)="change('text')">Use custom text screen</mat-checkbox>
+
+        <mat-form-field [hidden]="!textActive" style="width: 100%;">
+          <mat-label>Custom text</mat-label>
+          <textarea matInput placeholder="Ex. This survey was made by ... for ... " [(ngModel)]="text"  [ngModelOptions]="{standalone: true}"></textarea>
+        </mat-form-field>
+
+      </div>
+      </div>
+      <div class="col-4" style="text-align: end;">
+        <img src="./assets/chat.png" style="width: auto; max-width: 100%; max-height: 350px;">
+      </div>
+      
+    </div>
+
+
+
+
+    <p class="text-center mt-5">
+      Publishing this chat, you won't be able to modify the conversation and the above boxes in the future.
       Do you confirm this operation?
     </p>
   </div>

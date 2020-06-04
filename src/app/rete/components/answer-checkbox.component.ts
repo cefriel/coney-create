@@ -1,6 +1,6 @@
 import { Component, Input, Output } from 'rete';
 import { QuestionAnswerType, TalkType } from '../sockets';
-import { CheckboxControl } from '../controls/checkbox.control';
+import { CheckboxListControl } from '../controls/checkbox-list.control';
 import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
 import { PointsFieldControl } from '../controls/points-field.control';
 import VueRender from 'rete-vue-render-plugin';
@@ -49,7 +49,7 @@ export class AnswerCheckboxComponent extends Component {
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
     return node.addInput(in1)
       .addControl(new ValueControl(this.editor, 'value'))
-      .addControl(new CheckboxControl(this.editor, 'checkbox'))
+      .addControl(new CheckboxListControl(this.editor, 'checkbox'))
       .addControl(new PointsFieldControl(this.editor, "points"))
       .addOutput(out1);
   }

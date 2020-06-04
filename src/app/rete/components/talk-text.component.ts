@@ -38,8 +38,8 @@ export class TalkTextComponent extends Component {
     this.data.component = CustomNode;
   }
 
-  builder(node) {
 
+  builder(node) {
     node.data.type = "Talk";
     node.data.subtype = "text";
 
@@ -52,6 +52,7 @@ export class TalkTextComponent extends Component {
       .addOutput(out1);
   }
 
-  worker(node, inputs, outputs) { }
+  worker(node, inputs, outputs) { 
+  }
 
 }

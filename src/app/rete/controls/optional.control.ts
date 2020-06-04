@@ -4,7 +4,7 @@ import Vue from 'vue';;
 const VueOptionalControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<div class="m-0 row justify-content-center">
-        <input v-model="value" @input="checkChange()" type="checkbox" class="mr-2" style="margin-top: .35rem!important;"> 
+        <input @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="" v-model="value" @input="checkChange()" type="checkbox" class="mr-2" style="margin-top: .35rem!important;"> 
         <span class="op-label"> Optional</span>
     </div>`,
   

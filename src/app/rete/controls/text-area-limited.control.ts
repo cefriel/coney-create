@@ -3,7 +3,7 @@ import Vue from 'vue';;
 
 const VueTextAreaLimitedControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<textarea class="txtarea-control" :value="text" @input="change($event)"  v-on:keyup="resize($event)" maxlength="150"' +
+  template: '<textarea class="txtarea-control" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="" :value="text" @input="change($event)"  v-on:keyup="resize($event)" maxlength="150"' +
     'style="width:100%; max-height:200px!important; min-height:80px!important; border-radius: 4px; font-size: 18px; outline-width: 0; padding: 5px"></textarea>',
   data() {
     return {
@@ -23,7 +23,7 @@ const VueTextAreaLimitedControl = Vue.component('txt-area', {
     },
     resize(event){
       event.srcElement.style.height = "1px";
-      event.srcElement.style.height = (25+event.srcElement.scrollHeight)+"px";
+      event.srcElement.style.height = (10+event.srcElement.scrollHeight)+"px";
     }
   },
   mounted() {

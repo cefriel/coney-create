@@ -4,7 +4,7 @@ const VueNumControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<div id="pointsFieldInputGr" class="input-group">
   <span style="font-size: 10px;position: absolute;z-index: 1;left: 8px; top:9px; color: #7c7c7c">PT: </span>
-  <input @input="change($event)" type="number" min="0" max="100" class="customInput text-right" style="font-size: 12px; padding-left: 36px;" :readonly="readonly" :value="value">
+  <input @input="change($event)" type="number" min="0" max="100" class="customInput text-right" style="font-size: 12px; padding-left: 36px;" :readonly="readonly" :value="value" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="">
   </div>`,
   data() {
     return {

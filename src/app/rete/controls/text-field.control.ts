@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 const VueTextFieldControl = Vue.component('txt-field', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<input :value="text" class="customInput pl-2" style="outline-width: 0; width:100%;"' +
+  template: '<input :value="text" class="customInput pl-2" style="outline-width: 0; width:100%;" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""' +
     '@input="change($event)" placeholder="Displayed text" maxlength="30"/>',
   data() {
     return {

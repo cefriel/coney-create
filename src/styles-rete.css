@@ -219,17 +219,31 @@ background-color:lightblue!important;
   border-color: #f57e76;
 }
 
+.inline-comment {
+  z-index: 999!important;
+  background: #e4e4e4!important;
+  color: black!important;
+  font-size: 1rem!important;
+  border-radius: 5px!important;
+  border: 3px solid #cecece!important;
+  padding: 5px!important;
+  max-width: 200px!important;
+}
 
-
+.inline-comment:focus, .frame-comment:focus {
+  outline: none;
+  border-color: #8bc34a!important;
+}
 
 .checkboxInput{
   border-radius: 4px!important;
   border: 1px solid #a9a9a9;
-  height: 65px!important;
+  max-height: 65px!important;
+  height: 33px;
   width: 100%!important;
 }
 
-#noneCheckbox{
+#noneCheckbox, #otherCheckbox{
   height: 16px;
   width: 16px;
   vertical-align: middle;
@@ -240,6 +254,17 @@ background-color:lightblue!important;
   background-color: white;
   border: 2px solid white;
   background: white;
+}
+
+div[class^="cb-move"] {
+  position: absolute;
+  left: -20px;
+  font-size: x-small;
+  bottom: 37%;
+  border: none;
+  padding: 2px 5px;
+  background: transparent;
+  cursor: pointer;
 }
 
 .add-checkbox{

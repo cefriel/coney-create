@@ -11,6 +11,7 @@ import AreaPlugin from 'rete-area-plugin';
 import ContextMenuPlugin from 'rete-context-menu-plugin';
 import ReadonlyPlugin from 'rete-readonly-plugin';
 import MinimapPlugin from 'rete-minimap-plugin';
+import CommentPlugin from 'rete-comment-plugin';
 
 
 import { MatDialog } from '@angular/material';
@@ -50,9 +51,11 @@ export class ReteComponent implements AfterViewInit, OnChanges {
   globalPath;
   errorFound: boolean;
 
+
   translateCheck = true;
   translateX = 0;
   translateY = 0;
+  zIndex = 0;
 
   @ViewChild('nodeEditor', { static: false }) el: ElementRef;
   @Input() sourceJson: any;
@@ -89,12 +92,16 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       ReteComponent.editor.use(HistoryPlugin, { keyboard: true });
       ReteComponent.editor.use(MinimapPlugin);
       ReteComponent.editor.use(AreaPlugin, { scaleExtent: { min: 0.1, max: 1.5 } });
+      ReteComponent.editor.use(CommentPlugin, { 
+        margin: 20 // indent for new frame comments by default 30 (px)
+      })
       ReteComponent.editor.use(ContextMenuPlugin, {
         searchBar: false,
         allocate() {
           return []
         },
       });
+      
 
     });
 
@@ -218,24 +225,14 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       }
     });
 
-   
+    
+
     //disables the zoom on double click if the user is focusing an input or textarea
     ReteComponent.editor.on('zoom', ({ source }) => {
       if (this.checkForInputFocus()) {
         return source !== 'dblclick';
       }
     });
-
-    /* disables node translation if the input is focused (HEAVY)
-    ReteComponent.editor.on('nodetranslate', ({ node }) => {
-        return !this.checkForInputFocus();
-    });
-    */
-
-    /*ReteComponent.editor.on('translate', ({transform, x, y}) => {
-     // var x = document.getElementsByClassName('connection');
-      
-    });*/
 
     //saves edits on the "Rete json"
     ReteComponent.editor.on(['process', 'nodecreated', 'connectioncreated', 'noderemoved', 'connectionremoved'], async () => {
@@ -313,8 +310,55 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       }
     }),
 
-      ReteComponent.editor.view.resize();
+    ReteComponent.editor.on('keydown', e => {
+      if(e.key == "Shift"){
+        this.zoomSelected();
+      }
+    }),
+
+    ReteComponent.editor.on('nodeselect', (node:any) => {
+      var tmp: any;
+      if(ReteComponent.editor.selected.list.length==1){
+        tmp = ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-1];
+      } else if (ReteComponent.editor.selected.list.length>1){
+        tmp = ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-2];
+      } else {
+        return;
+      }
+      tmp.vueContext.$el.style.transform = "scale(1)";
+    });
+
+    ReteComponent.editor.on('nodeselected', (node:any) => {
+      this.zIndex ++;
+      node.vueContext.$el.parentElement.style.zIndex = this.zIndex;
+    });
+
+    ReteComponent.editor.on('click', () => {
+      var tmp: any =  ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-1];
+      if(tmp!=undefined){tmp.vueContext.$el.style.transform = "scale(1)";}
+      ReteComponent.editor.selected.clear();
+      ReteComponent.editor.nodes.map(n => n.update())
+  });
+  
+    ReteComponent.editor.view.resize();
     ReteComponent.editor.trigger('process');
+  }
+
+  public async zoomSelected(){
+    //zooms on a node 
+    
+    if(ReteComponent.editor.selected.list.length == 0){return;}
+   
+    var node:any = ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-1]; //Node[]
+    var tmpTransf = ReteComponent.editor.view.area.transform;
+    var scaleValue = Math.max(1, 1/tmpTransf.k);
+
+    if(node.vueContext.$el.style.transform=="scale(1)" || node.vueContext.$el.style.transform==""){
+      console.log("action");
+      node.vueContext.$el.style.transform =  "scale("+scaleValue+")"
+    } else {
+      node.vueContext.$el.style.transform = "scale(1)";
+    }
   }
 
   //method to zoom in (i=0) or out (i=1) called by buttons
@@ -414,6 +458,9 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
     if (sel.length == 1) {
       selNode = sel[0];
+      var tmp:any = selNode;
+      tmp.vueContext.$el.style.transform = "scale(1)";
+      
       posX = selNode.position[0] + 300;
       posY = selNode.position[1];
 

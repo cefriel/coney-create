@@ -6,7 +6,7 @@ const VueValueControl = Vue.component('num', {
   template: `<div class="m-0 row" style="position: relative;">
   <span class="input-group-text p-0" style="position: absolute;z-index: 1;left: 10px;top: 3px; color: #7c7c7c"> Value </span>
   <input type="number" class="customInput" :readonly="readonly" :value="value" 
-  style="display: inline-block; text-align: right" @input="change($event)" min="1" max="5" />
+  style="display: inline-block; text-align: right" @input="change($event)" min="0" />
 </div>`,
   data() {
     return {

@@ -907,7 +907,7 @@ export class HomeComponent implements OnInit {
       this.operationFeedbackMessage("warning", "Publish the conversation first");
       return;
     }
-    var url = environment.baseUrl + "/coney/inspect?data="+this.currentConversationId;
+    var url = environment.baseUrl + "/coney/inspect/#/?data="+this.currentConversationId;
     sessionStorage.setItem('conv', this.currentConversationId);
     window.location.href = url;
   }

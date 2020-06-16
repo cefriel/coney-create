@@ -71,7 +71,7 @@
                 <img class="topBarImg" src="./assets/navbar/delete.svg"></button>
             </ng-template>
   
-            <button mat-button *ngIf="enterprise" (click)="userLogout()" id="logoutBtn" class="ml-1 mr-1" style="padding: 0px 0px!important; min-width: 32px!important;">
+           <button mat-button *ngIf="enterprise" (click)="userLogout()" id="logoutBtn" class="ml-1 mr-1" style="padding: 0px 0px!important; min-width: 32px!important;">
               <img class="topBarImg" src="./assets/navbar/logout.svg" ></button>
             </div>
         </div>
@@ -160,6 +160,12 @@
           </button>
         </li>
         
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Export" type="button" class="commands" (click)="exportButtonPressed()">
+            <img class="topBarImg" src="./assets/navbar/export.svg">
+          </button>
+        </li>
+
   
         <li *ngIf="conversationTags.length != 0;" id="drbtn" class="nav-item" class="hideOnMobile">
           <div class="row m-0" id="selectedFilterTag">
@@ -217,14 +223,14 @@
   <!--HELP-->
   <div *ngIf="showHelp" id="guide">
     <button mat-button id="guideCloseBtn" (click)="helpButtonPressed('close')">&times;</button>
-    <p><kbd>Ctrl</kbd><kbd>Space</kbd> -Quick new node</p>
-    <p><kbd>Ctrl</kbd><kbd>E</kbd> - Create template</p>
-    <p><kbd>Ctrl</kbd><kbd>Q</kbd> - Add Template nodes</p>
+    <p><kbd>Ctrl</kbd><kbd>Space</kbd> - Quick new node</p>
     <p><kbd>Ctrl</kbd><kbd>S</kbd> - Save</p>
     <p><kbd>Ctrl</kbd><kbd>P</kbd> - Preview</p>
     <p><kbd>Ctrl</kbd><kbd>O</kbd> - Open</p>
     <p><kbd>Ctrl</kbd><kbd>M</kbd> - New Conversation</p>
-    <p><kbd>Ctrl</kbd><kbd>L</kbd> - Connect nodes (2)</p>
+    <p><kbd>Ctrl</kbd><kbd>L</kbd> - Connect nodes (2)</p> 
+    <p><kbd>Shift</kbd><kbd>C</kbd> - Add comment</p> 
+    <p><kbd>Shift</kbd> - Zoom on node</p> 
     <p><kbd>Ctrl</kbd> <kbd>&#8592;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd><kbd>&#8595;</kbd> - Move Nodes</p>
   </div>
 

@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { AuthenticationService } from './services/authentication.service';
 import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
+import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 
 
 @Component({
@@ -486,6 +487,53 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  exportButtonPressed(){
+    console.log("export");
+
+    this.editedJson[ENUM_CHAT.CONV_ID] = this.currentConversationId;
+    this.editedJson[ENUM_CHAT.STATUS] = this.currentConversationStatus;
+    this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
+    this.editedJson[ENUM_CHAT.PROJECT] = this.currentConversationProject;
+    this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = this.currentAccessLevel;
+    this.editedJson[ENUM_CHAT.LANGUAGE] = this.currentConversationLanguage;
+
+    var res = JSON.stringify(this.editedJson);
+    const blob = new Blob([res], { type: 'application/json' });
+
+    saveAs(blob, this.currentConversationTitle + " - conversation");
+  }
+
+
+
+  importConversation(stringJson){
+
+    this.loadingInProgress = true;
+
+    const json = JSON.parse(JSON.stringify(stringJson));
+
+    this.currentConversationId = "";
+    this.currentConversationStatus = "";
+    this.currentConversationTitle = json[ENUM_CHAT.TITLE];
+    this.currentConversationProject = "";
+    this.currentAccessLevel = "";
+    this.currentConversationLanguage = "";
+
+    this.editorJson = json;
+
+    this.updateButtons();
+    
+
+    sessionStorage.setItem("conv", "");
+    this.router.navigate([''], { queryParams: { data: ""} });
+
+    this.delay(500);
+    this.reteComp.resetView();
+    this.getConversationTags();
+    this.loadingInProgress = false;
+  }
+ 
+
+
   deleteButtonPressed() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '300px',
@@ -535,6 +583,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(selectedChat => {
+      console.log(selectedChat);
       if (selectedChat !== undefined) {
         if (this.pendingModificationsToSave && !this.reteComp.isConversationNew()) {
           const dialog = this.dialog.open(ConfirmDialogComponent, {
@@ -550,19 +599,34 @@ export class HomeComponent implements OnInit {
                 } else {
                   this.saveConversation();
                   
-                  this.openConversation(selectedChat);
+                  if(JSON.parse(JSON.stringify(selectedChat))["import"] != undefined){
+                    this.importConversation(selectedChat.json); 
+                  } else {
+                    this.openConversation(selectedChat);
+                  }
+
                 }
               } else if (status === 'discard') {
                 this.currentConversationProject = selectedChat.projectName;
                 this.currentAccessLevel = selectedChat.accessLevel;
-                this.openConversation(selectedChat);
+                
+                if(JSON.parse(JSON.stringify(selectedChat))["import"] != undefined){
+                  this.importConversation(selectedChat.json); 
+                } else {
+                  this.openConversation(selectedChat);
+                }
               }
             }
           });
         } else {
           this.currentConversationProject = selectedChat.projectName;
           this.currentAccessLevel = selectedChat.accessLevel;
-          this.openConversation(selectedChat);
+          
+          if(JSON.parse(JSON.stringify(selectedChat))["import"] != undefined){
+            this.importConversation(selectedChat.json); 
+          } else {
+            this.openConversation(selectedChat);
+          }
         }
       }
     });
@@ -645,7 +709,6 @@ export class HomeComponent implements OnInit {
 
       this.updateButtons();
       
-
       sessionStorage.setItem("conv", this.currentConversationId);
       this.router.navigate([''], { queryParams: { data: selectedChat.conversationId} });
 
@@ -684,7 +747,6 @@ export class HomeComponent implements OnInit {
     document.getElementById("noTagBtn").classList.add("col-12");
     document.getElementById("removeTagFilterBtn").style.display = "none";
   }
-
 
   highlightTags(tag) {
     this.reteComp.highlightTags(tag);
@@ -772,7 +834,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // if (!this.reteComp.checkForInputFocus()) {}
   handleMacKeyEvents($event, focus) {
     let charCode = String.fromCharCode($event.which).toLowerCase();
 

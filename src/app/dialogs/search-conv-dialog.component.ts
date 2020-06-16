@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { BackendService } from '../services/backend.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { ENUM_CONV_STATUS } from '../model/conversational.model';
 import { environment } from 'src/environments/environment';
+import { ImportConversationDialogComponent } from './import-conversation-dialog.component';
 
 @Component({
   selector: 'app-search-conv-dialog',
@@ -25,7 +26,8 @@ export class SearchConvDialogComponent {
   isLoading = false;
   showProject = environment.enterprise;
 
-  constructor(private backend: BackendService, public dialogRef: MatDialogRef<SearchConvDialogComponent>) {
+  constructor(private backend: BackendService, public dialogRef: MatDialogRef<SearchConvDialogComponent>, 
+    public dialog: MatDialog,) {
     this.isLoading = true;
     this.startSearch();
   }
@@ -91,5 +93,26 @@ export class SearchConvDialogComponent {
 
   chatSelected(chat: JSON) {
     this.dialogRef.close(chat);
+  }
+
+  importButtonPressed(){
+    console.log("import");
+
+    const dialogRef = this.dialog.open(ImportConversationDialogComponent, {
+      width: '400px',
+      height: '300px',
+      data: {
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if(res!=undefined && res.json!=undefined && res.title != undefined && res.title!=""){
+        var output =  JSON.parse(JSON.stringify(res));
+        output["import"]=true;
+        
+        console.log("importing json file")
+        this.dialogRef.close(output);
+      }
+    });
   }
 }

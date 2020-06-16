@@ -34,6 +34,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthHtppInterceptorService } from './services/auth-http-interceptor.service';
+import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AuthHtppInterceptorService } from './services/auth-http-interceptor.ser
     SearchTagDialogComponent,
     TranslationDialogComponent,
     ShareSurveyDialogComponent,
+    ImportConversationDialogComponent,
     ReteComponent,
     LoginComponent,
     LogoutComponent
@@ -96,7 +98,8 @@ import { AuthHtppInterceptorService } from './services/auth-http-interceptor.ser
     PrintDialogComponent,
     SearchTagDialogComponent,
     TranslationDialogComponent,
-    ShareSurveyDialogComponent
+    ShareSurveyDialogComponent,
+    ImportConversationDialogComponent
   ]
 })
 export class AppModule { }

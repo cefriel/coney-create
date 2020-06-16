@@ -1,0 +1,29 @@
+<div class="row">
+
+    <h5 class="mb-5">Import a Coney survey</h5>
+    <mat-progress-bar id="loadingSpinnerConv" *ngIf="isLoading" style="width:100%; margin-top: 10px; margin-bottom: 10px;"
+    mode="indeterminate"></mat-progress-bar>
+
+    <div class="col-6">
+        <h6>{{conversationTitle}}</h6>
+    </div>
+
+    <div class="col-6 justify-content-end text-right">
+        <input style="display: none" type="file" (change)="onFileImported($event)" #fileInput>
+        
+        <button class="btn" (click)="fileInput.click()" style="height: 100%; position: relative;">
+            <img src="./assets/navbar/import.svg" >
+        </button>
+    </div>
+
+    <div class="col-12" *ngIf="error!=''">
+        <p style="color: red;">{{error}}</p>
+    </div>
+    <div class="col-12 mt-5 text-center">
+        <button mat-raised-button color="primary" (click)="import()" [disabled]="conversationTitle==''">Importa</button>
+    </div>
+    <div class="col-12 mt-2 text-center">
+        <button mat-button (click)="close()">Annulla</button>
+    </div>
+
+</div>

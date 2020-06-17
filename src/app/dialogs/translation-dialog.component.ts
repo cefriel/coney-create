@@ -47,13 +47,17 @@ export class TranslationDialogComponent {
 
   fileChangeListener($event: any): void {
 
+    var encoding = "utf-8";
+    if(this.selectedLanguage.tag == "it"){
+      encoding = "ansi_x3.4-1968"; 
+    }
+    
     this.emptyFields = false;
     var files = $event.srcElement.files;
-
     if (this.isCSVFile(files[0])) {
-      
+
       this.papa.parse(files[0], {
-        encoding: "ansi_x3.4-1968",
+        encoding: encoding,
         complete: (result) => {
           let headersRow = result.data[0];
           if (!this.isHeaderValid(headersRow)) {
@@ -66,7 +70,7 @@ export class TranslationDialogComponent {
           this.csvRecords = this.getDataRecordsArrayFromCSVFile(result.data, headersRow.length);
           this.uploadButtonEnabled = true;
         }
-        
+
       });
     } else {
       alert("Please import valid .csv file.");
@@ -92,9 +96,11 @@ export class TranslationDialogComponent {
       let row = csvRecordsArray[i];
       if (row.length == headerLength) {
         let blockRecord: any = {};
-
+        //btoa(string);
+        console.log(row[3])
         blockRecord.block_id = row[0].trim().replace(/"/g, ""),
           blockRecord.translation = row[3].trim().replace(/"/g, "")
+
         if (blockRecord.translation != "") {
           this.areTranslationsPresent = true;
         }

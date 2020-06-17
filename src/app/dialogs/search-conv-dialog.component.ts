@@ -100,7 +100,7 @@ export class SearchConvDialogComponent {
 
     const dialogRef = this.dialog.open(ImportConversationDialogComponent, {
       width: '400px',
-      height: '300px',
+      height: '500px',
       data: {
       }
     });

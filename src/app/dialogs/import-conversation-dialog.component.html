@@ -20,7 +20,7 @@
         <p style="color: red;">{{error}}</p>
     </div>
     <div class="col-12 mt-5 text-center">
-        <button mat-raised-button color="primary" (click)="import()" [disabled]="conversationTitle==''">Importa</button>
+        <button mat-raised-button color="primary" (click)="import()" [disabled]="conversationTitle==undefined || conversationTitle==''">Importa</button>
     </div>
     <div class="col-12 mt-2 text-center">
         <button mat-button (click)="close()">Annulla</button>

@@ -48,6 +48,14 @@ export class ImportConversationDialogComponent {
             const json = JSON.parse(JSON.parse(JSON.stringify(fileReader.result)));
 
             this.conversationTitle = json[ENUM_CHAT.TITLE];
+
+            if (json["title"] == undefined) {
+                //TODO print error
+                this.error = "Unable to read the Title, check the file structure"
+                this.isLoading = false;
+                return;
+            }
+
             this.conversationJson = json;
             this.isLoading = false;
         }

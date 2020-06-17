@@ -20,7 +20,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <input #fileImportInput type="file" class="mt-2 mb-4" id="file" (change)="fileChangeListener($event)" accept=".csv" >
+    <input #fileImportInput [disabled]="selectedLanguage == undefined || selectedLanguage.lang==''" type="file" class="mt-2 mb-4" id="file" (change)="fileChangeListener($event)" accept=".csv" >
   </div>
 
   <br>

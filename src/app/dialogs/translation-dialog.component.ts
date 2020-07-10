@@ -33,6 +33,7 @@ export class TranslationDialogComponent {
   errorMessage = "All fields are required";
   conversationId = "";
   conversationTitle = "";
+  translatedTitle = "";
   csvContent: string;
   jsonToReturn: any;
   public csvRecords: any[] = [];
@@ -133,7 +134,7 @@ export class TranslationDialogComponent {
   }
 
   uploadCSV() {
-    if (this.selectedLanguage == undefined || this.selectedLanguage.tag == undefined || this.csvRecords.length == 0) {
+    if (this.selectedLanguage == undefined || this.translatedTitle == "" || this.selectedLanguage.tag == undefined || this.csvRecords.length == 0) {
       this.errorMessage = "All fields are required";
       this.emptyFields = true;
       return;
@@ -146,6 +147,7 @@ export class TranslationDialogComponent {
     this.jsonToReturn = {
       conversationId: this.conversationId,
       language: this.selectedLanguage.tag,
+      title: this.translatedTitle,
       blocks: this.csvRecords
     };
 

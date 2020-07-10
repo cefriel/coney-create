@@ -13,6 +13,13 @@
 
   <div class="row m-0 text-center justify-content-center">
     <mat-form-field style="line-height: 1.5;">
+      <input matInput type="text" placeholder="Translated Title" [(ngModel)]="translatedTitle" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+   
+  </div>
+
+  <div class="row m-0 text-center justify-content-center">
+    <mat-form-field style="line-height: 1.5;">
       <mat-label>Language</mat-label>
       <mat-select [(value)]="selectedLanguage"  (selectionChange)="selectSelChanged()">
         <mat-option *ngFor="let i of languages" [value]="i">

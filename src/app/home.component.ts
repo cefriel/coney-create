@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { Params, ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { BackendService } from './services/backend.service';
 import { SearchConvDialogComponent } from './dialogs/search-conv-dialog.component';
@@ -19,10 +19,8 @@ import { ReteComponent } from './rete/rete.component';
 
 import * as CryptoJS from 'crypto-js';
 import { environment } from '../environments/environment';
-import { AuthenticationService } from './services/authentication.service';
 import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
-import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 
 
 @Component({
@@ -102,17 +100,9 @@ export class HomeComponent implements OnInit {
       console.log( sessionStorage.getItem("conv"));
       var tmp = {conversationId : sessionStorage.getItem("conv")};
       this.openConversation(tmp);
-    } else {
-      this.route.queryParams.forEach((params: Params) => {
-        if(params["data"]!= undefined && params["data"]!= null && params["data"] != ""){
-          console.log("entered data param");
-          console.log(params["data"]);
-          var tmp = {conversationId : params["data"]};
-          this.openConversation(tmp);
-          this.getConversationProject(params["data"]);
-        }
-      });
-    }
+      this.getConversationProject(tmp)
+    } 
+
     this.pendingModificationsToSave = false;
   }
 
@@ -161,8 +151,7 @@ export class HomeComponent implements OnInit {
     this.editorJson = JSON.parse(JSON.stringify(newChat));
     this.node.id = 1;
 
-    sessionStorage.setItem("conv", null);
-    this.router.navigate([''], { queryParams: { data: ""} });
+    sessionStorage.removeItem("conv");
     this.updateButtons();
 
   }
@@ -523,8 +512,7 @@ export class HomeComponent implements OnInit {
     this.updateButtons();
     
 
-    sessionStorage.setItem("conv", "");
-    this.router.navigate([''], { queryParams: { data: ""} });
+    sessionStorage.removeItem("conv");
 
     this.delay(500);
     this.reteComp.resetView();
@@ -710,7 +698,6 @@ export class HomeComponent implements OnInit {
       this.updateButtons();
       
       sessionStorage.setItem("conv", this.currentConversationId);
-      this.router.navigate([''], { queryParams: { data: selectedChat.conversationId} });
 
       this.delay(500);
       this.reteComp.resetView();

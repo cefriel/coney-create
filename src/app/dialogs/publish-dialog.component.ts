@@ -25,9 +25,7 @@ export class PublishDialogComponent {
 
   publish() {
 
-    console.log(this.data);
-    console.log(this.privacyActive + "-" + this.imageActive + "-" + this.textActive);
-    console.log(this.text);
+  
     let toSend = this.data.conversation;
    
     if(this.imageActive){
@@ -53,18 +51,6 @@ export class PublishDialogComponent {
         document.getElementById("publishBtn").innerHTML = "done";
       }
     );
-  }
-
-  change(variable){
-    
-    if(variable=="image"){
-      this.imageActive = !this.imageActive;
-    } else if(variable=="privacy"){
-      this.privacyActive = !this.privacyActive;
-    } else if(variable=="text"){
-      this.textActive = !this.textActive;
-    }
-
   }
 
   close() {

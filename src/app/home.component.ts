@@ -315,7 +315,8 @@ export class HomeComponent implements OnInit {
             this.updateButtons();
 
             this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.SAVED);
-
+            sessionStorage.setItem("conv", this.currentConversationId);
+            
           }, err => {
             if (err.status === 409) {
               this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_ERROR.RES_409);
@@ -366,6 +367,7 @@ export class HomeComponent implements OnInit {
       this.previewButtonEnabled = true;
     }, err => {
       this.loadingInProgress = false;
+      this.previewButtonEnabled = true;
     });
   }
 
@@ -452,7 +454,6 @@ export class HomeComponent implements OnInit {
             this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.PUBLISHED);
           }
         } else {
-          this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
           this.loadingInProgress = false;
         }
       });
@@ -462,6 +463,10 @@ export class HomeComponent implements OnInit {
   unpublishButtonPressed() {
     let endpoint = '/create/unpublishConversation';
     endpoint = endpoint + '?conversationId=' + this.currentConversationId;
+
+    if(environment.enterprise){
+      endpoint = endpoint + '&project=' + this.currentConversationProject;
+    }
 
     this.backend.getRequest(endpoint).subscribe(
       res => {
@@ -492,8 +497,6 @@ export class HomeComponent implements OnInit {
     saveAs(blob, this.currentConversationTitle + " - conversation");
   }
 
-
-
   importConversation(stringJson){
 
     this.loadingInProgress = true;
@@ -520,8 +523,6 @@ export class HomeComponent implements OnInit {
     this.loadingInProgress = false;
   }
  
-
-
   deleteButtonPressed() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '300px',
@@ -625,8 +626,8 @@ export class HomeComponent implements OnInit {
     //TODO
 
     const dialogRef = this.dialog.open(TranslationDialogComponent, {
-      width: '500px',
-      maxHeight: '600px',
+      width: '70%',
+      maxHeight: '90vh',
       data: {
         conversationId: this.currentConversationId,
         conversationTitle: this.currentConversationTitle
@@ -955,7 +956,7 @@ export class HomeComponent implements OnInit {
       this.operationFeedbackMessage("warning", "Publish the conversation first");
       return;
     }
-    var url = environment.baseUrl + "/coney/inspect/#/?data="+this.currentConversationId;
+    var url = environment.baseUrl + "/inspect/#/?data="+this.currentConversationId;
     sessionStorage.setItem('conv', this.currentConversationId);
     window.location.href = url;
   }
@@ -1056,7 +1057,7 @@ export class HomeComponent implements OnInit {
       this.searchButtonPressed();
       return;
     }
-    var url = environment.baseUrl + "/coney/home";
+    var url = environment.baseUrl + "/home";
     window.location.href = url;
   }
 

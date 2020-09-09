@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BackendService } from '../services/backend.service';
 import { saveAs } from 'file-saver';
 import { Papa } from 'ngx-papaparse';
+import { CSVRecord } from '../model/CSVModel';
 
 @Component({
   selector: 'translation-dialog',
@@ -25,6 +26,11 @@ export class TranslationDialogComponent {
   { lang: "Russian", tag: "ru" }, { lang: "Scottish", tag: "gd" }, { lang: "Slovak", tag: "sk" }, { lang: "Slovenian", tag: "sl" },
   { lang: "Serbian", tag: "sr" }, { lang: "Spanish", tag: "es" }, { lang: "Swedish", tag: "sv" }, { lang: "Turkish", tag: "tr" }, { lang: "Ukranian", tag: "uk" }];
 
+  availableLanguages = [];
+  activeData = [];
+  activeTitle = "";
+  activeLanguage = "";
+
   isLoading = false;
   isBeingConfirmed = false;
   emptyFields = false;
@@ -42,17 +48,43 @@ export class TranslationDialogComponent {
     private papa: Papa,
     public dialogRef: MatDialogRef<TranslationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
+
     this.conversationId = data.conversationId;
     this.conversationTitle = data.conversationTitle;
+    this.getLanguagesOfConversation();
+
   }
 
+  getLanguagesOfConversation() {
+    this.backend.getRequest("/chat/getLanguagesOfConversation?conversationId=" + this.conversationId).subscribe(json => { // /create
+
+      var lan: [any] = JSON.parse(json);
+      for (var i = 0; i < lan.length; i++) {
+        var index = this.languages.findIndex(obj => obj.tag == lan[i].language);
+
+        if (index != -1) {
+
+          var tmpL = {
+            tag: this.languages[index].tag,
+            lang: this.languages[index].lang,
+            title: lan[i].title
+          }
+
+          this.availableLanguages.push(tmpL);
+        }
+      }
+      console.log(this.availableLanguages);
+    });
+  }
+
+  //CSV UPLOAD METHOD
   fileChangeListener($event: any): void {
 
     var encoding = "utf-8";
-    if(this.selectedLanguage.tag == "it"){
-      encoding = "ansi_x3.4-1968"; 
+    if (this.selectedLanguage.tag == "it") {
+      encoding = "ansi_x3.4-1968";
     }
-    
+
     this.emptyFields = false;
     var files = $event.srcElement.files;
     if (this.isCSVFile(files[0])) {
@@ -133,6 +165,16 @@ export class TranslationDialogComponent {
     this.emptyFields = false;
   }
 
+  updateTranslation(){
+    this.jsonToReturn = {
+      conversationId: this.conversationId,
+      language: this.activeLanguage,
+      title: this.activeTitle,
+      blocks: this.activeData
+    }
+    this.sendData();
+  }
+
   uploadCSV() {
     if (this.selectedLanguage == undefined || this.translatedTitle == "" || this.selectedLanguage.tag == undefined || this.csvRecords.length == 0) {
       this.errorMessage = "All fields are required";
@@ -180,18 +222,38 @@ export class TranslationDialogComponent {
     );
   }
 
-  downloadCSV() {
+  downloadCSV(operation, language) {
 
     this.isLoading = true;
 
     var strt = "translation_";
     let endpoint = '/create/getTranslationCSV';
     endpoint = endpoint + '?conversationId=' + this.conversationId;
+    console.log(operation);
+
+    if (operation == "display" && language != undefined) {
+      endpoint = endpoint + '&language=' + language;
+
+      //find title
+      var index = this.availableLanguages.findIndex(obj => obj.tag == language);
+      this.activeTitle = this.availableLanguages[index].title;
+      this.activeLanguage = this.availableLanguages[index].tag;
+      console.log(this.activeTitle);
+    }
 
     this.backend.getRequest(endpoint).subscribe(
       (res) => {
-        const blob = new Blob([res], { type: 'text/plain' });
-        saveAs(blob, strt + this.conversationTitle + ".csv");
+
+        if (operation == "save") {
+
+          console.log("saving file...");
+          const blob = new Blob([res], { type: 'text/plain' });
+          saveAs(blob, strt + this.conversationTitle + ".csv");
+
+        } else {
+          this.getTranslatedRecordsArrayFromCSVFile(res);
+        }
+
         this.isLoading = false;
       }, err => {
         this.isLoading = false;
@@ -201,5 +263,33 @@ export class TranslationDialogComponent {
 
   dismissDialog() {
     this.dialogRef.close("translation_uploaded");
+  }
+
+  getTranslatedRecordsArrayFromCSVFile(csvData: any) {
+
+    let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+
+    let headers = (<string>csvRecordsArray[0]).split(',');
+    let headerArray = [];
+
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+
+    let csvArr = [];
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+
+      var currentRecord = (<string>csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      if (currentRecord.length == headerArray.length) {
+        let csvRecord: CSVRecord = new CSVRecord();
+        csvRecord.block_id = currentRecord[headerArray.findIndex(x => x == "block_id")].trim().replace(/['"]+/g, '');
+        csvRecord.type = currentRecord[headerArray.findIndex(x => x == "type")].trim().replace(/["]+/g, '');
+        csvRecord.text = currentRecord[headerArray.findIndex(x => x == "text")].trim().replace(/"/g, "");
+        csvRecord.translation = currentRecord[headerArray.findIndex(x => x == "translation")].trim().replace(/["]+/g, '');
+        csvArr.push(csvRecord);
+      }
+    }
+
+    this.activeData = csvArr;
   }
 }

@@ -7,14 +7,14 @@
         <div class="row" style="flex-direction:column; justify-content: center; height: 100%;">
 
 
-        <mat-checkbox  (click)="change('privacy')">Use custom privacy policy</mat-checkbox>
+        <mat-checkbox [(ngModel)]="privacyActive" [ngModelOptions]="{standalone: true}">Use custom privacy policy</mat-checkbox>
 
         <mat-form-field [hidden]="!privacyActive" style="width: 100%;">
           <mat-label>Link to personal privacy policy</mat-label>
           <input matInput type="url" placeholder="https://..." [(ngModel)]="privacyLink"  [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         
-        <mat-checkbox (click)="change('image')">Use custom logo</mat-checkbox>
+        <mat-checkbox [(ngModel)]="imageActive" [ngModelOptions]="{standalone: true}">Use custom logo</mat-checkbox>
 
         <mat-form-field [hidden]="!imageActive" style="width: 100%;">
           <mat-label>Link to custom logo</mat-label>
@@ -22,7 +22,7 @@
         </mat-form-field>
 
   
-        <mat-checkbox (click)="change('text')">Use custom text screen</mat-checkbox>
+        <mat-checkbox [(ngModel)]="textActive" [ngModelOptions]="{standalone: true}">Use custom text screen</mat-checkbox>
 
         <mat-form-field [hidden]="!textActive" style="width: 100%;">
           <mat-label>Custom text</mat-label>

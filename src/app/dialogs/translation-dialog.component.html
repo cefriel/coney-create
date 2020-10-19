@@ -1,3 +1,8 @@
+<style>
+  mat-form-field{
+    width: 100%;
+  }
+</style>
 <div *ngIf="!isBeingConfirmed" class="row justify-content-center">
 
   <div class="row m-0" style="position: relative;">
@@ -22,7 +27,7 @@
       <button mat-raised-button (click)="downloadCSV('save', undefined)" style="position: absolute; right: 1.5rem;">Download translation CSV</button>
     </div>
 
-    <div *ngIf="activeTitle != ''" class="row my-2">
+    <div class="row my-2">
       
       <div class="col-3">
         <h6 style="padding-top: .5rem!important; color: gray;">Translated title:</h6></div>
@@ -32,17 +37,21 @@
       </mat-form-field></div>
     </div>
 
-    <div *ngIf="activeTitle != ''" class="row my-2">
+    <div *ngIf="updateSuccessful" class="col-12" style="color: green">
+      <h6>Update Successful!</h6>
+    </div>
+
+    <div class="row my-2">
       <div class="col-5">
-        <h6 class="pb-2" style="color: gray;">Messages</h6></div>
+        <h6 class="pb-2" style="color: gray;">Messages: </h6></div>
     </div>
   
-    <div *ngFor="let item of activeData" class="row" style="border-bottom: 1px solid #2d3c765c;">
+    <div *ngFor="let item of activeData" class="row pt-3" style="border-bottom: 1px solid #2d3c765c;">
       <div class="col-2 pt-3">{{item.type}}</div>
       <div class="col-5 py-3">{{item.text}}</div>
       <div class="col-5">
         <mat-form-field>
-          <input matInput placeholder="translation" [(ngModel)]="item.translation">
+          <textarea matInput placeholder="translation" [(ngModel)]="item.translation"></textarea>
         </mat-form-field>
       </div>
     </div>

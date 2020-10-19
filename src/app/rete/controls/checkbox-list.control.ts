@@ -94,10 +94,8 @@ const VueCheckboxListControl = Vue.component('text', {
         return;
       }
       var index = this.values.length - 1;
-
-      
-
       var n = this.emitter.selected.list[0];
+
       return new Promise(resolve => {
         setTimeout(() => {
           var x = document.getElementById(index + "");
@@ -155,21 +153,33 @@ const VueCheckboxListControl = Vue.component('text', {
     
           var isPresent = false;
           var position = 0;
+          var otherPosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "none") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
+            if(this.values[i].type == "other"){
+              otherPosition = i;
+            }
           }
     
+          
           if (isPresent && !this.noOpChecked) {
+            console.log("removing");
             this.values.splice(position, 1);
           }
+          if(otherPosition != null){
+            this.values.splice(otherPosition, 1);
+          }
+
           if (!isPresent && this.noOpChecked) {
             var it = { v: this.noOpText, order:99, type:"none" };
             this.values.push(it);
           }
+          
+          console.log(this.values);
         }, 20);
       });
 
@@ -192,21 +202,30 @@ const VueCheckboxListControl = Vue.component('text', {
     
           var isPresent = false;
           var position = 0;
+          var nonePosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "other") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
+            if(this.values[i].type == "none"){
+              nonePosition = i;
+            }
           }
-    
+
+
+          if(nonePosition != null){
+            this.values.splice(nonePosition, 1);
+          }
           if (isPresent && !this.otherChecked) {
             this.values.splice(position, 1);
           }
           if (!isPresent && this.otherChecked) {
-            var it = { v: this.other, order:99, type: "other" };
+            var it = { v: this.other, order:98, type: "other" };
             this.values.push(it);
           }
+          console.log(this.values);
         }, 20);
       });
 

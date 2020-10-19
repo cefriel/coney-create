@@ -210,11 +210,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
-        else if (connection.output.node.data.visualization === "slider" && outputConnections.length > 9) {
-          ReteComponent.editor.removeConnection(connection);
-          this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
-        }
-        else if (connection.output.node.data.visualization === "star" && outputConnections.length > 10) {
+        else if ((connection.output.node.data.visualization === "slider" || connection.output.node.data.visualization === "star") && outputConnections.length > 10) {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
@@ -310,11 +306,12 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       }
     }),
 
+    /* DISABLED FOR CAPS UX 
     ReteComponent.editor.on('keydown', e => {
       if(e.key == "Shift"){
         this.zoomSelected();
       }
-    }),
+    }),*/
 
     ReteComponent.editor.on('nodeselect', (node:any) => {
       var tmp: any;

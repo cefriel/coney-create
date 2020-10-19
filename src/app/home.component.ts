@@ -271,19 +271,20 @@ export class HomeComponent implements OnInit {
       height: '550px',
       data: {
         title: this.currentConversationTitle,
-        role: this.currentConversationProject
+        project: this.currentConversationProject,
+        language: this.currentConversationLanguage
       }
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
-
+        console.log(res);
         var title = res.title;
 
         if(environment.enterprise){
           this.currentConversationProject = res.projectName;
           this.currentAccessLevel = res.accessLevel;
-          this.editedJson[ENUM_CHAT.PROJECT] = this.currentConversationProject;
+          this.editedJson[ENUM_CHAT.PROJECT] = res.projectName;
           this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = res.accessLevel;
         }
         
@@ -293,6 +294,7 @@ export class HomeComponent implements OnInit {
           this.saveConversation();
           return;
         }
+
         this.editedJson[ENUM_CHAT.CONV_ID] = '';
         this.editedJson[ENUM_CHAT.STATUS] = '';
         this.editedJson[ENUM_CHAT.TITLE] = title;

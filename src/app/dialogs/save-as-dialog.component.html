@@ -31,7 +31,7 @@
   <mat-form-field style="width: 100%;">
     <mat-label>Language</mat-label>
     <mat-select [(value)]="languageValue">
-      <mat-option *ngFor="let language of languages" [value]="language.tag">
+      <mat-option *ngFor="let language of languages" [value]="language">
         {{language.lang}}
       </mat-option>
     </mat-select>

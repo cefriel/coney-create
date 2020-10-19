@@ -41,6 +41,7 @@ export class TranslationDialogComponent {
   conversationTitle = "";
   translatedTitle = "";
   csvContent: string;
+  updateSuccessful = false;
   jsonToReturn: any;
   public csvRecords: any[] = [];
 
@@ -166,6 +167,11 @@ export class TranslationDialogComponent {
   }
 
   updateTranslation(){
+
+    if(this.activeTitle == null){
+      this.activeTitle = "";
+    }
+
     this.jsonToReturn = {
       conversationId: this.conversationId,
       language: this.activeLanguage,
@@ -205,6 +211,7 @@ export class TranslationDialogComponent {
 
     this.isLoading = true;
     var json = JSON.parse(JSON.stringify(this.jsonToReturn));
+    console.log(json);
 
     let endpoint = '/create/uploadTranslation';
 
@@ -213,7 +220,10 @@ export class TranslationDialogComponent {
 
         var r: boolean = (JSON.stringify(res) == "true");
         if (r) {
-          this.dismissDialog();
+          this.updateSuccessful = true;;
+          //this.dismissDialog();
+        } else {
+          this.updateSuccessful = false;
         }
         this.isLoading = false;
       }, err => {

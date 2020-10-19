@@ -6,10 +6,10 @@ const VueVisualizationControl = Vue.component('txt-field', {
   template: '<div style="width:100%">'+
   '<p style="width:100%"> {{ error }} </p>'+
     '<select @input="change($event)" :value="text" class="custom-select">' + 
+      '<option value="options">🔘 Options</option>' + 
       '<option value="star">⭐ Star rating</option>' + 
       '<option value="emoji">😄 Emoji</option>' + 
       '<option value="slider">➖ Slide</option>' + 
-      '<option value="options">🔘 Options</option>' + 
       '<option value="select">🔽 Select</option>' + 
     '</select></div>',
   data() {
@@ -36,13 +36,7 @@ const VueVisualizationControl = Vue.component('txt-field', {
           e.target.value = this.text;
           return;
         }
-      } else if(e.target.value == "slider"){
-        if(answers>9){
-          this.error = "Max of 9 answers for "+e.target.value;
-          e.target.value = this.text;
-          return;
-        }
-      } else if(e.target.value == "star"){
+      } else if(e.target.value == "star" || e.target.value == "slider"){
         if(answers>10){
           this.error = "Max of 10 answers for "+e.target.value;
           e.target.value = this.text;
@@ -72,7 +66,7 @@ const VueVisualizationControl = Vue.component('txt-field', {
   mounted() {
     
     if (this.getData(this.ikey) == undefined || this.getData(this.ikey) == "") {
-      this.text = "star";
+      this.text = "options";
       this.update();
     } else {
       this.text = this.getData(this.ikey);

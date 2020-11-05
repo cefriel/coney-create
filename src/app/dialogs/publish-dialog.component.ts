@@ -13,11 +13,16 @@ export class PublishDialogComponent {
 
   privacyActive=false;
   imageActive=false;
+  colorActive=false;
   textActive=false;
 
-  privacyLink="";
-  imageLink="";
-  text="";
+  privacyLink="https://www.cefriel.com/en/privacy";
+  imageLink="https://coney.cefriel.com/app/chat/assets/messages.svg";
+  text="Please take a moment to review our policy prior to answering the survey questions";
+
+  primaryColor:any="#2d3c76";
+  secondaryColor:any="#ffc107";
+  textColor:any="#ffffff";
 
   constructor(private backend: BackendService,
     public dialogRef: MatDialogRef<PublishDialogComponent>,
@@ -36,6 +41,11 @@ export class PublishDialogComponent {
     }
     if(this.textActive){
       toSend.chatIntroText = this.text;
+    }
+    if(this.colorActive){
+      toSend.chatPrimaryColor = this.primaryColor; 
+      toSend.chatSecondaryColor = this.secondaryColor; 
+      toSend.chatTextColor = this.textColor; 
     }
     
     document.getElementById("publishBtn").innerHTML = "uploading...";

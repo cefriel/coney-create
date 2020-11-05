@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit {
   }
 
   saveButtonPressed() {
-    if (environment.enterprise && (this.currentConversationTitle === '' || this.currentAccessLevel == undefined || this.currentConversationProject == "")) {
+    if (environment.enterprise && (this.currentConversationTitle === '' || this.currentAccessLevel == undefined || this.currentConversationProject == "" || this.currentConversationLanguage === '')) {
       this.saveAsButtonPressed();
     } else if(!environment.enterprise && (this.currentConversationTitle === '' || this.currentConversationLanguage === '')){
       this.saveAsButtonPressed();
@@ -416,7 +416,7 @@ export class HomeComponent implements OnInit {
   }
 
   publishButtonPressed() {
-    
+    this.saveConversation();
     if (!this.manualCheckButtonPressed()) {
     } else {
       this.loadingInProgress = true;
@@ -426,7 +426,7 @@ export class HomeComponent implements OnInit {
       this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
 
       const dialogRef = this.dialog.open(PublishDialogComponent, {
-        maxWidth: '55vw',
+        maxWidth: '70vw',
         maxHeight: '85vh',
         data: {
           conversation: this.editedJson

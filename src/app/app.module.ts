@@ -19,6 +19,8 @@ import { RoutingService } from './services/routing.service';
 import { ReteComponent } from './rete/rete.component';
 import { AppRoutingModule } from './routing.module';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatInputModule, MatDialogModule, MatProgressSpinnerModule,
@@ -74,6 +76,7 @@ import { ImportConversationDialogComponent } from './dialogs/import-conversation
     NgbModule,
     RouterModule,
     NgxPrintModule,
+    ColorPickerModule,
     ToastrModule.forRoot()
   ],
   exports: [

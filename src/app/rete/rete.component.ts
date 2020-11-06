@@ -92,9 +92,9 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       ReteComponent.editor.use(HistoryPlugin, { keyboard: true });
       ReteComponent.editor.use(MinimapPlugin);
       ReteComponent.editor.use(AreaPlugin, { scaleExtent: { min: 0.1, max: 1.5 } });
-      ReteComponent.editor.use(CommentPlugin, { 
+      /*ReteComponent.editor.use(CommentPlugin, { 
         margin: 20 // indent for new frame comments by default 30 (px)
-      })
+      })*/
       ReteComponent.editor.use(ContextMenuPlugin, {
         searchBar: false,
         allocate() {

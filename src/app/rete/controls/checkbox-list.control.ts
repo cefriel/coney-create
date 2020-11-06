@@ -20,7 +20,7 @@ const VueCheckboxListControl = Vue.component('text', {
                 <div class="col-12 p-0" >
                   <textarea rows="2" class="pr-2 checkboxInput" :id="index" @input="update()" type="text"
                       placeholder="Add answer" v-model="value.v"  v-on:keyup="resize($event)"
-                      maxlength="100"></textarea>
+                      maxlength="150"></textarea>
                   <button class="del-cb-line-btn" @click="deleteRow(index)">X</button>
                   <div v-bind:class="cbmid" v-on:drop="updateList()">
                   ➖
@@ -36,7 +36,7 @@ const VueCheckboxListControl = Vue.component('text', {
               <div style="width: 100%; position: relative" class="row my-0 mt-0 mb-2 checkbox">
                   <input v-model="noOpChecked" type="checkbox" @input="manageNone()" id="noneCheckbox">
                   <input v-model="noOpText" :disabled="!noOpChecked"  v-on:blur="manageNone()" class="customInput col-12"
-                      style="padding-left: 36px;" maxlength="30" type="text" id="noneInput" placeholder="Add 'none of the above'">
+                      style="padding-left: 36px;" maxlength="150" type="text" id="noneInput" placeholder="Add 'none of the above'">
               </div>
           
               <div style="width: 100%; position: relative" class="row m-0 checkbox">
@@ -142,9 +142,9 @@ const VueCheckboxListControl = Vue.component('text', {
       return new Promise(resolve => {
         setTimeout(() => {
 
-          if(this.otherChecked){
-            this.otherChecked = false;
-          }
+          //if(this.otherChecked){
+          //  this.otherChecked = false;
+          //}
 
           var text = this.noOpText;
           if (this.noOpText == "") {
@@ -153,16 +153,16 @@ const VueCheckboxListControl = Vue.component('text', {
     
           var isPresent = false;
           var position = 0;
-          var otherPosition = null;
+          //var otherPosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "none") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
-            if(this.values[i].type == "other"){
-              otherPosition = i;
-            }
+            //if(this.values[i].type == "other"){
+            //  otherPosition = i;
+            //}
           }
     
           
@@ -170,9 +170,9 @@ const VueCheckboxListControl = Vue.component('text', {
             console.log("removing");
             this.values.splice(position, 1);
           }
-          if(otherPosition != null){
-            this.values.splice(otherPosition, 1);
-          }
+          //if(otherPosition != null){
+          //  this.values.splice(otherPosition, 1);
+          //}
 
           if (!isPresent && this.noOpChecked) {
             var it = { v: this.noOpText, order:99, type:"none" };
@@ -191,9 +191,9 @@ const VueCheckboxListControl = Vue.component('text', {
       return new Promise(resolve => {
         setTimeout(() => {
 
-          if(this.noOpChecked){
-            this.noOpChecked = false;
-          }
+          //if(this.noOpChecked){
+          //  this.noOpChecked = false;
+          //}
 
           var text = this.otherText;
           if (this.otherText == "") {
@@ -202,22 +202,22 @@ const VueCheckboxListControl = Vue.component('text', {
     
           var isPresent = false;
           var position = 0;
-          var nonePosition = null;
+          //var nonePosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "other") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
-            if(this.values[i].type == "none"){
-              nonePosition = i;
-            }
+            //if(this.values[i].type == "none"){
+            //  nonePosition = i;
+            //}
           }
 
 
-          if(nonePosition != null){
-            this.values.splice(nonePosition, 1);
-          }
+          //if(nonePosition != null){
+          //  this.values.splice(nonePosition, 1);
+          //}
           if (isPresent && !this.otherChecked) {
             this.values.splice(position, 1);
           }

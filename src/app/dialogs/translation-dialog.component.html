@@ -6,28 +6,35 @@
 <div *ngIf="!isBeingConfirmed" class="row justify-content-center">
 
   <div class="row m-0" style="position: relative;">
-    <h3 class="pl-3">Translation</h3>
+    <h3 class="pl-3">Translation <br> <small style="color: gray;">
+      <b *ngIf="defaultlanguage!=undefined" class="pl-1">{{defaultlanguage.tag}}</b> {{conversationTitle}}</small></h3>
     
-    <button *ngIf="!displayUpload" mat-raised-button color="primary" (click)="displayUpload = true" style="position: absolute; right: 1.5rem;">Upload Data</button>
-    <button *ngIf="displayUpload" mat-raised-button color="primary" (click)="displayUpload = false" style="position: absolute; right: 1.5rem;">Display Data</button>
+   
+    <button *ngIf="!displayUpload" mat-raised-button color="primary" (click)="displayUpload = true" style="position: absolute; right: 1.5rem;">Upload CSV</button>
+    <button *ngIf="displayUpload" mat-raised-button color="primary" (click)="displayUpload = false" style="position: absolute; right: 1.5rem;">Display Languages</button>
+
+    <button mat-raised-button [matMenuTriggerFor]="menu" color="primary" 
+    style="position: absolute; right: 1.5rem; top: 3rem; background-color: green;">+ Translation</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="downloadCSV('display', language.tag)" *ngFor="let language of languages"
+      >{{language.lang}}</button>
+    </mat-menu>
   </div>
+<div class="row pl-3">
+  <mat-chip-list aria-label="languages">
+    <mat-chip *ngFor="let language of availableLanguages" style="cursor: pointer;" (click)="downloadCSV('display', language.tag)">{{language.lang}}</mat-chip>
+  </mat-chip-list>
+</div>
 
   <hr *ngIf="!isLoading && !emptyFields" style="width: 100%;" class="m-4">
   <p *ngIf="!isLoading && emptyFields" style="width: 100%; color: red;" class="pt-1 m-4 text-center">{{errorMessage}}
   </p>
-  <mat-progress-bar *ngIf="isLoading && !emptyFields" style="width:100%" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="isLoading && !emptyFields" style="widows: 80%" mode="indeterminate"></mat-progress-bar>
 
-  <div class="container" *ngIf="!displayUpload" style="max-height: 50vh; overflow-y: auto">
-    <div class="row mb-4" style="position: relative;">
-      <div class="col-9">
-        <div class="row">
-          <h6 style="padding-top: .5rem!important; color: gray;">Available: </h6><button mat-button *ngFor="let language of availableLanguages" (click)="downloadCSV('display', language.tag)">{{language.lang}}</button>
-        </div>
-      </div>
-      <button mat-raised-button (click)="downloadCSV('save', undefined)" style="position: absolute; right: 1.5rem;">Download translation CSV</button>
-    </div>
+  <div class="container-fluid" *ngIf="!displayUpload" style="max-height: 60vh; overflow-y: auto">
+   
 
-    <div class="row my-2">
+    <div class="row my-2" *ngIf="languageInTranslation != undefined">
       
       <div class="col-3">
         <h6 style="padding-top: .5rem!important; color: gray;">Translated title:</h6></div>
@@ -37,18 +44,16 @@
       </mat-form-field></div>
     </div>
 
-    <div *ngIf="updateSuccessful" class="col-12" style="color: green">
-      <h6>Update Successful!</h6>
-    </div>
+    
 
-    <div class="row my-2">
+    <div class="row my-2" *ngIf="languageInTranslation != undefined">
       <div class="col-5">
         <h6 class="pb-2" style="color: gray;">Messages: </h6></div>
     </div>
   
-    <div *ngFor="let item of activeData" class="row pt-3" style="border-bottom: 1px solid #2d3c765c;">
+    <div *ngFor="let item of activeData" class="row pt-3" style="border-bottom: 1px solid #2d3c7621;">
       <div class="col-2 pt-3">{{item.type}}</div>
-      <div class="col-5 py-3">{{item.text}}</div>
+      <div class="col-5 py-3" style="word-break: break-word;">{{item.text}}</div>
       <div class="col-5">
         <mat-form-field>
           <textarea matInput placeholder="translation" [(ngModel)]="item.translation"></textarea>
@@ -56,12 +61,20 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-center pt-4" *ngIf="!displayUpload">
+
+
+  <div class="row justify-content-between pt-4 px-4" *ngIf="!displayUpload && languageInTranslation != undefined">
+    <div *ngIf="updateSuccessful" class="col-12" style="color: green">
+      <h6>Update Successful!</h6>
+    </div>
+    <button mat-stroked-button (click)="downloadCSV('save', undefined)">Download <i>{{languageInTranslation}}</i> translation CSV</button>
     <button mat-raised-button color="accent" (click)="updateTranslation()">UPDATE</button>
   </div>
 
+
+  
   <!--UPLOAD-->
-  <div class="container" *ngIf="displayUpload">
+  <div class="container-fluid" *ngIf="displayUpload">
     <div class="row m-0 text-center justify-content-center">
       <mat-form-field style="line-height: 1.5;">
         <input matInput type="text" placeholder="Translated Title" [(ngModel)]="translatedTitle"
@@ -98,6 +111,7 @@
 
   </div>
   <div class="row m-0 text-center justify-content-center">
+   
     <mat-progress-bar *ngIf="isLoading" style="width:100%" mode="indeterminate"></mat-progress-bar>
     <button mat-button color="primary" (click)="goBack()">EDIT</button>
     <button mat-raised-button color="primary" (click)="sendData()">UPLOAD</button>

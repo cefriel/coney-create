@@ -628,11 +628,12 @@ export class HomeComponent implements OnInit {
     //TODO
 
     const dialogRef = this.dialog.open(TranslationDialogComponent, {
-      width: '70%',
-      maxHeight: '90vh',
+      width: '90%',
+      height: '90vh',
       data: {
         conversationId: this.currentConversationId,
-        conversationTitle: this.currentConversationTitle
+        conversationTitle: this.currentConversationTitle,
+        defaultLanguage: this.currentConversationLanguage
       }
     });
 

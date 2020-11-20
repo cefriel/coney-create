@@ -30,6 +30,8 @@ export class TranslationDialogComponent {
   activeData = [];
   activeTitle = "";
   activeLanguage = "";
+  defaultlanguage = {lang:"none", tag: "none"};
+  languageInTranslation = undefined;
 
   isLoading = false;
   isBeingConfirmed = false;
@@ -50,8 +52,15 @@ export class TranslationDialogComponent {
     public dialogRef: MatDialogRef<TranslationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
 
+      
+    this.defaultlanguage = {lang:"none", tag: "none"};
     this.conversationId = data.conversationId;
     this.conversationTitle = data.conversationTitle;
+    var index = this.languages.findIndex(obj => obj.tag == data.defaultLanguage);
+    if(index!=-1){
+      this.defaultlanguage = this.languages[index];
+    }
+    
     this.getLanguagesOfConversation();
 
   }
@@ -61,6 +70,8 @@ export class TranslationDialogComponent {
 
       var lan: [any] = JSON.parse(json);
       for (var i = 0; i < lan.length; i++) {
+        if(lan[i].language == this.defaultlanguage.tag){
+          console.log("skipping default: "+lan[i].language); continue;}
         var index = this.languages.findIndex(obj => obj.tag == lan[i].language);
 
         if (index != -1) {
@@ -232,6 +243,8 @@ export class TranslationDialogComponent {
     );
   }
 
+ 
+
   downloadCSV(operation, language) {
 
     this.isLoading = true;
@@ -242,13 +255,20 @@ export class TranslationDialogComponent {
     console.log(operation);
 
     if (operation == "display" && language != undefined) {
+      this.languageInTranslation = language;
       endpoint = endpoint + '&language=' + language;
 
       //find title
       var index = this.availableLanguages.findIndex(obj => obj.tag == language);
-      this.activeTitle = this.availableLanguages[index].title;
-      this.activeLanguage = this.availableLanguages[index].tag;
-      console.log(this.activeTitle);
+      if(index!=-1){
+        this.activeTitle = this.availableLanguages[index].title;
+        this.activeLanguage = this.availableLanguages[index].tag;
+        console.log(this.activeTitle);
+      } else {
+        this.activeLanguage = language;
+      }
+      
+      
     }
 
     this.backend.getRequest(endpoint).subscribe(

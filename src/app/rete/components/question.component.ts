@@ -2,7 +2,7 @@ import {Component, Input, Output} from 'rete';
 import { QuestionAnswerType, TalkType } from '../sockets';
 import {TextAreaControl} from '../controls/text-area.control';
 import {TagFieldControl} from '../controls/tag-field.control';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {ENUM_RETE_COMPONENT} from '../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
 import { OptionalControl } from '../controls/optional.control';

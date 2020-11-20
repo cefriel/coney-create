@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BackendService } from '../services/backend.service';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ENUM_CONV_STATUS } from '../model/conversational.model';
 import { environment } from 'src/environments/environment';
 import { ImportConversationDialogComponent } from './import-conversation-dialog.component';

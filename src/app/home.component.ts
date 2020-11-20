@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BackendService } from './services/backend.service';
 import { SearchConvDialogComponent } from './dialogs/search-conv-dialog.component';
 import { SaveAsDialogComponent } from './dialogs/save-as-dialog.component';

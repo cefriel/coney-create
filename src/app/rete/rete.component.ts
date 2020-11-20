@@ -14,7 +14,7 @@ import MinimapPlugin from 'rete-minimap-plugin';
 import CommentPlugin from 'rete-comment-plugin';
 
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { QuestionComponent } from './components/question.component';
 import { AnswerSingleComponent } from './components/answer-open.component';

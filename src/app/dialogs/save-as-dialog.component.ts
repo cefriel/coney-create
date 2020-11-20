@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BackendService } from '../services/backend.service';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,7 @@ export class SaveAsDialogComponent implements OnInit {
   levelValue = 1;
   errorMessage = "All fields are required";
   projects = [];
-  levels = [1, 2, 3];
+  levels = [ { value: 1, tag: "public" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }];
   languageValue: any;
   languages = [{ lang: "Afrikaans", tag: "af" }, { lang: "Albanian ", tag: "sp" }, { lang: "Arabic", tag: "ar" }, { lang: "Basque", tag: "eu" },
   { lang: "Byelorussian ", tag: "be" }, { lang: "Bulgarian", tag: "bg" }, { lang: "Catalan", tag: "va" }, { lang: "Croatian", tag: "hr" }, { lang: "Czech", tag: "cs" },
@@ -71,11 +71,13 @@ export class SaveAsDialogComponent implements OnInit {
 
   projectChanged() {
     if (this.projectValue.accessLevel == 3) {
-      this.levels = [1, 2, 3];
+      this.levels = [
+        { value: 1, tag: "public" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }
+      ];
     } else if (this.projectValue.accessLevel == 2) {
-      this.levels = [1, 2];
+      this.levels = [ { value: 1, tag: "public" }, { value: 2, tag: "restricted" }];
     } else {
-      this.levels = [1];
+      this.levels = [ { value: 1, tag: "public" }];
     }
   }
 

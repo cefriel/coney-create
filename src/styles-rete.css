@@ -256,6 +256,18 @@ background-color:lightblue!important;
   background: white;
 }
 
+#maxAnsCheckbox{
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  position: absolute;
+  z-index: 2;
+  left: 0px;
+  background-color: white;
+  border: 2px solid white;
+  background: white;
+}
+
 div[class^="cb-move"] {
   position: absolute;
   left: -20px;

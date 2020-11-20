@@ -4,13 +4,16 @@ import Vue from 'vue';;
 const VueMaxAnswControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<div class="m-0 row" style="position: relative;">
-  <span class="input-group-text p-0" style="position: absolute;z-index: 1;left: 10px;top: 3px; color: #7c7c7c"> Max answers </span>
-  <input type="number" class="customInput" :readonly="readonly" :value="value" 
+  <span class="input-group-text p-0" style="position: absolute;z-index: 1;left: 10px;top: 3px; color: #7c7c7c; padding-left: 1.5rem!important;"> 
+  <input v-model="maxChecked" type="checkbox" @input="cbChanged()" id="maxAnsCheckbox">
+  Max answers </span>
+  <input type="number" :disabled="!maxChecked" class="customInput" :readonly="readonly" :value="value" 
   style="display: inline-block; text-align: right" @input="change($event)" min="0" />
 </div>`,
   data() {
     return {
-      value: 1
+      value: 1,
+      maxChecked: false
     };
   },
   methods: {
@@ -23,6 +26,11 @@ const VueMaxAnswControl = Vue.component('num', {
         this.putData(this.ikey, this.value);
       }
       this.emitter.trigger('process');
+    },
+    cbChanged(){
+      if(this.maxChecked){
+        this.value = 0;
+      }  
     }
   },
   mounted() {

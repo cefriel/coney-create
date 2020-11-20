@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { BackendService } from '../services/backend.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ENUM_OPERATION_FEEDBACK, ENUM_ERROR } from '../model/conversational.model';

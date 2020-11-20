@@ -22,11 +22,16 @@ import { AppRoutingModule } from './routing.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatInputModule, MatDialogModule, MatProgressSpinnerModule,
-  MatSliderModule, MatSelectModule, MatCheckboxModule, MatRadioModule,
-  MatButtonModule, MatProgressBarModule
-} from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

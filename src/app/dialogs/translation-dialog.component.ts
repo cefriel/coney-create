@@ -231,7 +231,13 @@ export class TranslationDialogComponent {
 
         var r: boolean = (JSON.stringify(res) == "true");
         if (r) {
-          this.updateSuccessful = true;;
+          this.updateSuccessful = true;
+
+          var index = this.languages.findIndex(x => x.tag == json.language);
+          var index2 = this.availableLanguages.findIndex(x => x.tag == json.language);
+          if(index!=-1 && index2==-1){
+            this.availableLanguages.push(this.languages[index]);
+          }
           //this.dismissDialog();
         } else {
           this.updateSuccessful = false;

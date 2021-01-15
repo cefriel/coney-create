@@ -64,7 +64,7 @@
             
             <img class="my-2" style="height: 50px; width: auto;" [src]="imageLink">
               <p style="font-size: 80%; width: 100%; text-align: center;"> {{text}} <br>
-              <a  style="font-weight: 500;" [style.color]="primaryColor" [href]="privacylink">Privacy Notice</a></p>
+              <a  style="font-weight: 500;" [style.color]="primaryColor" [href]="privacyLink">Privacy Notice</a></p>
 
             <button [style.background]="primaryColor" [style.color]="textColor" id="preview_button" class="mt-3">START</button>
           </div>
@@ -99,12 +99,12 @@
     </p>
   </div>
 
-  <div class="form-group">
-    <button mat-raised-button color="primary" type="button" id="publishBtn"style="width: 100%;" (click)="publish()"
+  <div class="form-group text-center">
+    <button mat-raised-button color="primary" type="button" id="publishBtn" (click)="publish()"
       [disabled]="!canPress">Publish</button>
   </div>
 
   <div class="form-group">
-    <button mat-button type="button" style="width: 100%;" (click)="close()">Close</button>
+    <button mat-button type="button"  (click)="close()">Close</button>
   </div>
 </form>

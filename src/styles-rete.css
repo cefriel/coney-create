@@ -33,9 +33,12 @@
   border-radius: 4px!important;
   height: 32px!important;
   position: relative;
+  min-width: 70px;
   flex: 1 1 auto;
   width: 1%;
-  border: 1px solid #a9a9a9;
+  background-color: white!important;
+  border: 0px;
+  border-bottom: 1px solid #a9a9a9;
 }
 
 
@@ -111,7 +114,7 @@ border-color: #7c7c7c;
   width: -moz-fit-content; 
   width: -webkit-fit-content;
   position: fixed; 
-  right: 20px;
+  right: 28px;
   width: 60px;
 }
 
@@ -224,7 +227,7 @@ background-color:lightblue!important;
   background: #e4e4e4!important;
   color: black!important;
   font-size: 1rem!important;
-  border-radius: 5px!important;
+  border-radius: 4px!important;
   border: 3px solid #cecece!important;
   padding: 5px!important;
   max-width: 200px!important;
@@ -235,9 +238,24 @@ background-color:lightblue!important;
   border-color: #8bc34a!important;
 }
 
+.customTextarea{
+  width: 100%;
+  max-height: 200px !important;
+  min-height: 40px !important;
+  border-radius: 4px;
+  font-size: 18px;
+  outline-width: 0px;
+  padding: 5px;
+  border: 0px;
+  border-bottom: 1px solid #a9a9a9;
+}
+
 .checkboxInput{
   border-radius: 4px!important;
-  border: 1px solid #a9a9a9;
+  padding-right: 1rem;
+  padding-left: 1.5rem;
+  border: 0px;
+  border-bottom: 1px solid #a9a9a9;
   max-height: 65px!important;
   height: 33px;
   width: 100%!important;
@@ -270,13 +288,19 @@ background-color:lightblue!important;
 
 div[class^="cb-move"] {
   position: absolute;
-  left: -20px;
+  left: 2px;
+  top: 2px;
   font-size: x-small;
-  bottom: 37%;
+  bottom: 8px;
   border: none;
-  padding: 2px 5px;
+  padding: 2px 3px;
   background: transparent;
+  border-radius: 2px;
   cursor: pointer;
+  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .add-checkbox{
@@ -289,20 +313,35 @@ div[class^="cb-move"] {
 }
 
 .del-cb-line-btn{
-  position: absolute;
-  right: 18px;
-  top: 0px;
-  font-size: 10px;
-  border: none;
-  padding: 2px 5px;
-  background: transparent;
-  color: darkred;
-  cursor: pointer;
+    border-radius: 50%;
+    font-size: 8px;
+    border: none;
+    padding: 2px 5px;
+    background: #0000004f;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.op-label{
-  font-family:  Quicksand,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+.del-cb-line-btn:hover, .del-cb-line-col:hover{
+  background: red;
 }
+
+
+.del-cb-line-col{
+  position: absolute;
+  right: .2rem;
+  border-radius: 2px;
+  top: 2px;
+  bottom: 8px;
+  display: flex;
+  padding: 2px 3px;
+  cursor: pointer;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
 
 .message_preview{
     text-align: left;
@@ -331,4 +370,13 @@ div[class^="cb-move"] {
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   padding: 0 16px;
   border-radius: 4px;
+}
+
+.chip_custom{
+  padding: 0px 8px;
+  border-radius: 4px;
+  align-items: center;
+  text-align: center;
+  background-color: lightgray;
+  color: black;
 }

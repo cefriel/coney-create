@@ -46,7 +46,7 @@ export class QuestionComponent extends Component {
 
     const in1 = new Input('in', 'Talk/Answer', TalkType, true);
     const out1 = new Output('out', 'Answer', QuestionAnswerType, true);
-    
+    let readonly:any = this.editor.plugins.get('readonly');
     const cont = new TextAreaControl(this.editor, "text");
 
     return node

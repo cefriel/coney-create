@@ -15,7 +15,6 @@ import { SearchTagDialogComponent } from './dialogs/search-tag-dialog.component'
 import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
 import { BackendService } from './services/backend.service';
-import { RoutingService } from './services/routing.service';
 import { ReteComponent } from './rete/rete.component';
 import { AppRoutingModule } from './routing.module';
 
@@ -28,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -44,6 +44,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthHtppInterceptorService } from './services/auth-http-interceptor.service';
 import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
+import { UtilsService } from './services/utils.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ImportConversationDialogComponent } from './dialogs/import-conversation
     MatRadioModule,
     MatInputModule,
     MatMenuModule,
+    MatIconModule,
     MatChipsModule,
     NgbModule,
     RouterModule,
@@ -97,7 +99,7 @@ import { ImportConversationDialogComponent } from './dialogs/import-conversation
       provide: HTTP_INTERCEPTORS, useClass: AuthHtppInterceptorService, multi: true
     },
     BackendService,
-    RoutingService,
+    UtilsService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

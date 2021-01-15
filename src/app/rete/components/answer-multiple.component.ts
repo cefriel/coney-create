@@ -51,7 +51,7 @@ export class AnswerMultipleComponent extends Component {
       .addControl(new NumControl(this.editor, 'sort'))
       .addControl(new ValueControl(this.editor, 'value'))
       .addControl(new TextAreaLimitedControl(this.editor, 'text'))
-      .addControl(new PointsFieldControl(this.editor, "points"))
+      //.addControl(new PointsFieldControl(this.editor, "points"))
       .addOutput(out1);
   }
 

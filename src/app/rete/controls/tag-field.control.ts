@@ -7,9 +7,9 @@ var dialog: MatDialog;
 
 const VueTagFieldControl = Vue.component('txt-field', {
     props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-    template: '<div><div v-if="text!=\'\' && text!=undefined" id="results" @click="deleteOne($event)">' +
+    template: '<div :disabled="readonly"><div v-if="text!=\'\' && text!=undefined" id="results" @click="deleteOne($event)">' +
     '<span> {{ text }} </span></div>' +
-    '<button id="tagsIn" class="tag-btn" style="float: right" @click="openTagDialog($event)">TAG</button></div>',
+    '<button id="tagsIn" class="tag-btn" style="float: right" @click="openTagDialog($event)" :disabled="readonly">TAG</button></div>',
     data() {
         return {
             text: "",
@@ -70,6 +70,7 @@ export class TagFieldControl extends Control {
 
     constructor(public emitter, public key, public dialogMod: MatDialog, readonly = false) {
         super(key);
+        readonly = emitter.plugins.get('readonly').enabled;
         dialog = dialogMod;
         this.component = VueTagFieldControl;
         this.props = { emitter, ikey: key, readonly };

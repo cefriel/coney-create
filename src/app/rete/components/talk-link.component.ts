@@ -31,7 +31,6 @@ var CustomNode = {
   }
 }
 
-
 export class TalkLinkComponent extends Component {
   data: any;
   constructor() {

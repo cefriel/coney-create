@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 const VueTextFieldControl = Vue.component('txt-field', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<input :value="text" class="customInput pl-2" style="outline-width: 0; width:100%;" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""' +
+  template: '<input :value="text" class="customInput pl-2" style="outline-width: 0; width:100%;" @dblclick.stop="" @pointermove.stop="" :readonly="readonly"' +
     '@input="change($event)" placeholder="Displayed text" maxlength="30"/>',
   data() {
     return {
@@ -20,6 +20,13 @@ const VueTextFieldControl = Vue.component('txt-field', {
         this.putData(this.ikey, this.text);
       }
       this.emitter.trigger('process');
+
+      var n = this.emitter.selected.list[0];
+      return new Promise(resolve => {
+        setTimeout(() => {
+          this.emitter.view.updateConnections({ node: n });
+        }, 10);
+      });
     }
   },
   mounted() {
@@ -34,7 +41,7 @@ export class TextFieldControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
-
+    readonly = emitter.plugins.get('readonly').enable;
     this.component = VueTextFieldControl;
     this.props = { emitter, ikey: key, readonly };
   }

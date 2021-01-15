@@ -1,7 +1,7 @@
 <div style="height: 100vh" tabindex="0" (keydown)="keyPressed($event)">
   <!-- Top Bar -->
   <div class="menu">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding:0px!important; border-radius: 4px!important;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding:0px!important; border-radius: 0px!important;">
      
         <div class="row navTitle">
 
@@ -116,24 +116,24 @@
         </li>
   
         <li class="nav-item">
-          <button mat-button class="commands" title="Empty question" (click)="addQuestionButtonPressed()"><img
+          <button mat-button class="commands" title="Add empty question" (click)="addQuestionButtonPressed()"><img
               class="topBarImg" src="./assets/navbar/plus.svg"></button>
         </li>
   
         <li class="nav-item">
-          <button mat-button title="Questions" type="button" class="commands" *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">
+          <button mat-button title="Show questions" type="button" class="commands" *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">
             <img class="topBarImg" src="./assets/navbar/list.svg">
           </button>
         </li>
   
         <li class="nav-item">
-          <button mat-button title="Questions" type="button" class="commands" *ngIf="currentConversationStatus == 'saved' || currentConversationStatus == ''" (click)="oldPrintButtonPressed()">
+          <button mat-button title="Show questions" type="button" class="commands" *ngIf="currentConversationStatus == 'saved' || currentConversationStatus == ''" (click)="oldPrintButtonPressed()">
             <img class="topBarImg" src="./assets/navbar/list.svg">
           </button>
         </li>
 
         <li class="nav-item">
-          <button mat-button *ngIf="previewButtonEnabled; else previewButtonDisabled" type="button" title="Preview" class=""
+          <button mat-button *ngIf="previewButtonEnabled; else previewButtonDisabled" type="button" title="Start preview" class=""
             (click)="previewButtonPressed()"><img class="topBarImg" src="./assets/navbar/preview.svg"></button>
           <ng-template #previewButtonDisabled>
             <button mat-button type="button" title="Preview" class="" disabled><img class="topBarImg"
@@ -215,8 +215,11 @@
   </div>
 
   <!-- RETE EDITOR -->
-  <app-rete (click)="helpButtonPressed('close')" class="rete" (changedPosition)="reteChangedPosition($event)"
-    [sourceJson]="editorJson" (conversationTags)="reteChangedConversationTags($event)"
+  <app-rete (click)="helpButtonPressed('close')" class="rete" 
+  (changedPosition)="reteChangedPosition($event)"
+    [sourceJson]="editorJson" 
+    [currentConversationStatus]="currentConversationStatus" 
+    (conversationTags)="reteChangedConversationTags($event)"
     (editedJson)="reteEditedJson($event)" (reteObject)="reteMessage($event)"></app-rete>
 
 

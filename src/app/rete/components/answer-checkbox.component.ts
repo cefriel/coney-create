@@ -50,10 +50,11 @@ export class AnswerCheckboxComponent extends Component {
     return node.addInput(in1)
       .addControl(new MaxAnswControl(this.editor, 'max_answer'))
       .addControl(new CheckboxListControl(this.editor, 'checkbox'))
-      .addControl(new PointsFieldControl(this.editor, "points"))
+      //.addControl(new PointsFieldControl(this.editor, "points"))
       .addOutput(out1);
   }
 
-  worker(node, inputs, outputs) { }
+  worker(node, inputs, outputs) { 
+  }
 
 }

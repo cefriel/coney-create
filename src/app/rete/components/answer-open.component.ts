@@ -9,7 +9,7 @@ var CustomNode = {
   template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
     <div class="title">
     <h6 class="m-0">{{node.data.type}}</h6>
-    <small style="color: #777">{{node.data.subtype}}</small>
+    <small style="color: #777">open</small>
     </div>
     <!-- Outputs-->
     <div class="output" v-for="output in outputs()" :key="output.key">
@@ -49,7 +49,7 @@ export class AnswerSingleComponent extends Component {
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
     return node.addInput(in1)
     .addControl(new OptionalControl(this.editor, "optional"))
-    .addControl(new PointsFieldControl(this.editor, "points"))
+    //.addControl(new PointsFieldControl(this.editor, "points"))
     .addOutput(out1);
   }
 

@@ -96,11 +96,9 @@ export class HomeComponent implements OnInit {
       && sessionStorage.getItem("conv") != ""
       && sessionStorage.getItem("conv") != "null"){
         
-      console.log("entered session storage");
-      console.log( sessionStorage.getItem("conv"));
       var tmp = {conversationId : sessionStorage.getItem("conv")};
       this.openConversation(tmp);
-      this.getConversationProject(tmp)
+      this.getConversationProject(tmp.conversationId)
     } 
 
     this.pendingModificationsToSave = false;
@@ -165,9 +163,9 @@ export class HomeComponent implements OnInit {
     if (this.showingMap) {
       this.showingMap = false;
       map.style.display = "none";
-      resetBtn.style.bottom = "24px";
+      resetBtn.style.right = "10px";
     } else {
-      resetBtn.style.bottom = "180px";
+      resetBtn.style.right = "235px";
       await this.reteComp.delay(300);
       map.style.display = "block";
       this.showingMap = true;
@@ -629,6 +627,7 @@ export class HomeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TranslationDialogComponent, {
       width: '90%',
+      minHeight: '110px',
       height: '90vh',
       data: {
         conversationId: this.currentConversationId,
@@ -910,19 +909,19 @@ export class HomeComponent implements OnInit {
     switch (type) {
       case ENUM_OPERATION_FEEDBACK.SUCCESS:
         this.toastr.success(msg, '');
-        audio.src = './assets/SuccessSound.mp3';
+        audio.src = './assets/sounds/SuccessSound.mp3';
         break;
       case ENUM_OPERATION_FEEDBACK.INFO:
         this.toastr.info(msg, '');
-        audio.src = './assets/InfoSound.mp3';
+        audio.src = './assets/sounds/InfoSound.mp3';
         break;
       case ENUM_OPERATION_FEEDBACK.WARNING:
         this.toastr.warning(msg, '');
-        audio.src = './assets/WarningSound.mp3';
+        audio.src = './assets/sounds/WarningSound.mp3';
         break;
       case ENUM_OPERATION_FEEDBACK.ERROR:
         this.toastr.error(msg, '');
-        audio.src = './assets/ErrorSound.mp3';
+        audio.src = './assets/sounds/ErrorSound.mp3';
         break;
     }
 

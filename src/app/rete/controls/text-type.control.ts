@@ -9,7 +9,6 @@ const VueTextTypeControl = Vue.component('txt-field', {
       '<option value="number">🔢 Numbers</option>' +
       '<option value="date">📆 Date</option>' +
       '<option value="time">⏱️ Time</option>' +
-      '<option value="url">🔗 Link</option>' +
       '<option value="email">📧 Email</option>' +
     '</select></div>',
   data() {
@@ -47,7 +46,7 @@ export class TextTypeControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
-
+    readonly = emitter.plugins.get('readonly').enable;
     this.component = VueTextTypeControl;
     this.props = { emitter, ikey: key, readonly };
   }

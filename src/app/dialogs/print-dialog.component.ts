@@ -18,10 +18,10 @@ export class PrintDialogComponent {
     this.title = data.title;
 
     this.questions = JSON.parse(data.questions);
-
+    
     for (var i = 0; i < this.questions.length; i++) {
       var qElement = this.questions[i];
-     
+      console.log(qElement);
       for (var j = 0; j < qElement.answers.length; j++) {
         var aElement = qElement.answers[j];
         var questionReteId = aElement.nextQuestionId;

@@ -4,6 +4,7 @@ import { BackendService } from '../services/backend.service';
 import { saveAs } from 'file-saver';
 import { Papa } from 'ngx-papaparse';
 import { CSVRecord } from '../model/CSVModel';
+import { UtilsService } from '../services/utils.service';
 
 @Component({
   selector: 'translation-dialog',
@@ -15,23 +16,21 @@ export class TranslationDialogComponent {
   @ViewChild('fileImportInput', { static: false }) fileImportInput: any;
 
   selectedLanguage: any;
-  languages = [{ lang: "Afrikaans", tag: "af" }, { lang: "Albanian ", tag: "sp" }, { lang: "Arabic", tag: "ar" }, { lang: "Basque", tag: "eu" },
-  { lang: "Byelorussian ", tag: "be" }, { lang: "Bulgarian", tag: "bg" }, { lang: "Catalan", tag: "va" }, { lang: "Croatian", tag: "hr" }, { lang: "Czech", tag: "cs" },
-  { lang: "Danish", tag: "da" }, { lang: "Dutch", tag: "nl" }, { lang: "English", tag: "en" }, { lang: "Esperanto", tag: "eo" }, { lang: "Estonian", tag: "et" },
-  { lang: "Finnish", tag: "fi" }, { lang: "Faronese", tag: "fo" }, { lang: "French", tag: "fr" },
-  { lang: "Galician", tag: "gl" }, { lang: "German", tag: "de" }, { lang: "Greek", tag: "el" }, { lang: "Hebrew", tag: "he" }, { lang: "Hungarian", tag: "hu" },
-  { lang: "Icelandic", tag: "is" }, { lang: "Italian", tag: "it" }, { lang: "Irish", tag: "ga" }, { lang: "Japanese", tag: "ja" }, { lang: "Korean", tag: "ko" },
-  { lang: "Latvian", tag: "lv" }, { lang: "Macedonian", tag: "mk" }, { lang: "Maltese", tag: "mt" }, { lang: "Norwegian", tag: "nb" },
-  { lang: "Polish", tag: "pl" }, { lang: "Portuguese", tag: "pt" }, { lang: "Romanian", tag: "ro" },
-  { lang: "Russian", tag: "ru" }, { lang: "Scottish", tag: "gd" }, { lang: "Slovak", tag: "sk" }, { lang: "Slovenian", tag: "sl" },
-  { lang: "Serbian", tag: "sr" }, { lang: "Spanish", tag: "es" }, { lang: "Swedish", tag: "sv" }, { lang: "Turkish", tag: "tr" }, { lang: "Ukranian", tag: "uk" }];
+  
 
   availableLanguages = [];
   activeData = [];
   activeTitle = "";
   activeLanguage = "";
-  defaultlanguage = {lang:"none", tag: "none"};
+  activeIntroText = "";
+  activePrivacyLink = "";
+
+  displayedLanguage = "";
+  defaultlanguage:any = {lang:"none", tag: "none"};
   languageInTranslation = undefined;
+  languages = [];
+
+  displayScreen = "search";
 
   isLoading = false;
   isBeingConfirmed = false;
@@ -42,43 +41,50 @@ export class TranslationDialogComponent {
   conversationId = "";
   conversationTitle = "";
   translatedTitle = "";
+  translatedIntroText = "";
+  translatedPrivacyLink = "";
   csvContent: string;
   updateSuccessful = false;
   jsonToReturn: any;
   public csvRecords: any[] = [];
 
   constructor(private backend: BackendService,
+    private utils: UtilsService,
     private papa: Papa,
     public dialogRef: MatDialogRef<TranslationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
 
-      
+    
     this.defaultlanguage = {lang:"none", tag: "none"};
     this.conversationId = data.conversationId;
     this.conversationTitle = data.conversationTitle;
-    var index = this.languages.findIndex(obj => obj.tag == data.defaultLanguage);
-    if(index!=-1){
-      this.defaultlanguage = this.languages[index];
-    }
+
+    this.defaultlanguage = this.utils.getLanguageFromTag(data.defaultLanguage);
+    
+    this.languages = utils.getLanguageArray();
     
     this.getLanguagesOfConversation();
 
   }
 
   getLanguagesOfConversation() {
+    this.availableLanguages = [];
     this.backend.getRequest("/chat/getLanguagesOfConversation?conversationId=" + this.conversationId).subscribe(json => { // /create
 
       var lan: [any] = JSON.parse(json);
       for (var i = 0; i < lan.length; i++) {
         if(lan[i].language == this.defaultlanguage.tag){
           console.log("skipping default: "+lan[i].language); continue;}
-        var index = this.languages.findIndex(obj => obj.tag == lan[i].language);
 
-        if (index != -1) {
+        var lang = this.utils.getLanguageFromTag(lan[i].language);
+        
+        if (lang != undefined) {
 
           var tmpL = {
-            tag: this.languages[index].tag,
-            lang: this.languages[index].lang,
+            tag: lang.tag,
+            lang: lang.lang,
+            introText: lan[i].introText,
+            privacyLink: lan[i].privacyLink,
             title: lan[i].title
           }
 
@@ -187,9 +193,11 @@ export class TranslationDialogComponent {
       conversationId: this.conversationId,
       language: this.activeLanguage,
       title: this.activeTitle,
+      introText: this.activeIntroText,
+      privacyLink: this.activePrivacyLink,
       blocks: this.activeData
     }
-    this.sendData();
+    this.sendData(false);
   }
 
   uploadCSV() {
@@ -207,6 +215,8 @@ export class TranslationDialogComponent {
       conversationId: this.conversationId,
       language: this.selectedLanguage.tag,
       title: this.translatedTitle,
+      introText: this.translatedIntroText,
+      privacyLink: this.translatedPrivacyLink,
       blocks: this.csvRecords
     };
 
@@ -218,7 +228,7 @@ export class TranslationDialogComponent {
     this.isBeingConfirmed = false;
   }
 
-  sendData() {
+  sendData(reset) {
 
     this.isLoading = true;
     var json = JSON.parse(JSON.stringify(this.jsonToReturn));
@@ -243,13 +253,24 @@ export class TranslationDialogComponent {
           this.updateSuccessful = false;
         }
         this.isLoading = false;
+        if(reset){
+          this.changeDisplay('search');
+          this.getLanguagesOfConversation();
+        }
       }, err => {
         this.isLoading = false;
       }
     );
   }
 
- 
+  changeDisplay(change: string) {
+    console.log(change);
+    console.log(this.languageInTranslation);
+    if(change == 'display' && this.languageInTranslation == undefined){
+      change = 'search';
+    }
+    this.displayScreen = change;
+  }
 
   downloadCSV(operation, language) {
 
@@ -259,9 +280,11 @@ export class TranslationDialogComponent {
     let endpoint = '/create/getTranslationCSV';
     endpoint = endpoint + '?conversationId=' + this.conversationId;
     console.log(operation);
+    
 
     if (operation == "display" && language != undefined) {
       this.languageInTranslation = language;
+      this.changeDisplay(operation);
       endpoint = endpoint + '&language=' + language;
 
       //find title
@@ -269,9 +292,15 @@ export class TranslationDialogComponent {
       if(index!=-1){
         this.activeTitle = this.availableLanguages[index].title;
         this.activeLanguage = this.availableLanguages[index].tag;
+        this.activeIntroText = this.availableLanguages[index].introText;
+        this.activePrivacyLink = this.availableLanguages[index].privacyLink;
+        this.displayedLanguage = this.availableLanguages[index].lang;
         console.log(this.activeTitle);
       } else {
         this.activeLanguage = language;
+        this.displayedLanguage = this.utils.getLanguageFromTag(language).lang;
+        this.activeIntroText = "";
+        this.activePrivacyLink = "";
       }
       
       
@@ -314,7 +343,6 @@ export class TranslationDialogComponent {
 
     let csvArr = [];
     for (let i = 1; i < csvRecordsArray.length; i++) {
-
       var currentRecord = (<string>csvRecordsArray[i]).split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       if (currentRecord.length == headerArray.length) {
         let csvRecord: CSVRecord = new CSVRecord();

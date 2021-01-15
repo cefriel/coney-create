@@ -11,64 +11,67 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 </div> 
 
 v-on:keyup.enter="addRow('enter')"
-*/ 
+*/
 const VueCheckboxListControl = Vue.component('text', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: `<div class="input-group mt-2" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="">
-              <ul v-bind:id="listid" style="padding: 0px 0px 0px 5px!important; list-style: none; position: relative; width: 100%;">
+  template: `<div class="input-group mt-2" @dblclick.stop="" @pointermove.stop="" :readonly="readonly">
+              <ul v-bind:id="listid" style="margin-bottom: 0!important; padding: 0px!important; list-style: none; position: relative; width: 100%;">
                 <li v-for="(value, index) in values" v-if="value.type != 'other' && value.type != 'none'">
                 <div class="col-12 p-0" >
-                  <textarea rows="2" class="pr-2 checkboxInput" :id="index" @input="update()" type="text"
-                      placeholder="Add answer" v-model="value.v"  v-on:keyup="resize($event)"
+                  <textarea rows="2" :readonly="readonly" class="checkboxInput" :id="index" @input="update($event)" type="text"
+                      placeholder="Add answer" v-model="value.v" 
                       maxlength="150"></textarea>
-                  <button class="del-cb-line-btn" @click="deleteRow(index)">X</button>
-                  <div v-bind:class="cbmid" v-on:drop="updateList()">
-                  ➖
+                      <div class="del-cb-line-col"  @click="deleteRow(index)" v-if="!readonly">
+                        <button class="del-cb-line-btn" :disabled="readonly">x</button>
+                      </div>
+                  
+                  <div v-bind:class="cbmid" v-on:drop="updateList()" v-if="!readonly" >
+                    <img src="./assets/icons/ic_drag.svg" style="height:1rem" >
                   </div>
                 </div>
                 </li>
               </ul>
-              <div id="inline-checkbox-controls" class="col-12 mb-2 pr-0 text-right">
-                <button class="add-checkbox" @click="addRow(undefined)">
+              <div id="inline-checkbox-controls" class="col-12 mb-2 pr-0 text-right" style="margin-bottom: 1rem!important;">
+                <button class="add-checkbox" @click="addRow(undefined)" v-if="!readonly">
                     +
                 </button>
               </div>
               <div style="width: 100%; position: relative" class="row my-0 mt-0 mb-2 checkbox">
-                  <input v-model="noOpChecked" type="checkbox" @input="manageNone()" id="noneCheckbox">
-                  <input v-model="noOpText" :disabled="!noOpChecked"  v-on:blur="manageNone()" class="customInput col-12"
+                  <input v-model="noOpChecked" type="checkbox" @input="manageNone()" id="noneCheckbox" v-if="!readonly">
+                  <input v-model="noOpText" :disabled="!noOpChecked || readonly"  v-on:blur="manageNone()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="150" type="text" id="noneInput" placeholder="Add 'none of the above'">
               </div>
           
               <div style="width: 100%; position: relative" class="row m-0 checkbox">
-                  <input v-model="otherChecked" type="checkbox" @input="manageOther()" id="otherCheckbox">
-                  <input v-model="otherText" :disabled="!otherChecked" v-on:blur="manageOther()" class="customInput col-12"
+                  <input v-model="otherChecked" type="checkbox" @input="manageOther()" id="otherCheckbox" v-if="!readonly">
+                  <input v-model="otherText"  :disabled="!otherChecked || readonly" v-on:blur="manageOther()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="30" type="text" id="otherInput" placeholder="Add 'other'">
               </div>
             </div>`,
   data() {
-    
-    
+
+
     return {
       noOpText: "",
       noOpChecked: false,
       otherChecked: false,
       otherText: "",
-      listid: "list-"+Math.floor((Math.random() * 100000) + 10000),
-      cbmid: "cb-move-"+Math.floor((Math.random() * 100000) + 10000),
+      listid: "list-" + Math.floor((Math.random() * 100000) + 10000),
+      cbmid: "cb-move-" + Math.floor((Math.random() * 100000) + 10000),
       values: [],
       sortable: Sortable
     };
   },
   methods: {
     change() {
-      
-    },
-    resize(event){
-      event.srcElement.style.height = "1px";
-      event.srcElement.style.height = (5+event.srcElement.scrollHeight)+"px";
-    },
-    update() {
 
+    },
+    resize(event) {
+      event.srcElement.style.height = "1px";
+      event.srcElement.style.height = (5 + event.srcElement.scrollHeight) + "px";
+    },
+    update(event) {
+      this.resize(event)
       if (this.ikey) {
         this.putData(this.ikey, this.values);
       }
@@ -81,14 +84,13 @@ const VueCheckboxListControl = Vue.component('text', {
         }, 10);
       });
 
-     
+
     },
     addRow(e) {
-
-      if(this.values.length == 15){
+      if (this.values.length == 15) {
         return;
       }
-      this.values.push({ v: "", order:98, type: "normal" });
+      this.values.push({ v: "", order: 98, type: "normal" });
       this.updateList();
       if (e == undefined) {
         return;
@@ -108,7 +110,7 @@ const VueCheckboxListControl = Vue.component('text', {
           this.emitter.view.updateConnections({ node: n });
         }, 10);
       });
-     
+
     },
     deleteRow(index) {
       if (this.values.length > 1) {
@@ -125,15 +127,15 @@ const VueCheckboxListControl = Vue.component('text', {
     insertData() {
       for (var i = 0; i < this.values.length; i++) {
         if (this.values[i].type == "none") {
-         this.noOpChecked = true;
-         this.noOpText = this.values[i].v;
+          this.noOpChecked = true;
+          this.noOpText = this.values[i].v;
 
         }
         if (this.values[i].type == "other") {
           this.otherChecked = true;
           this.otherText = this.values[i].v;
- 
-         }
+
+        }
       }
     },
     manageNone() {
@@ -142,44 +144,32 @@ const VueCheckboxListControl = Vue.component('text', {
       return new Promise(resolve => {
         setTimeout(() => {
 
-          //if(this.otherChecked){
-          //  this.otherChecked = false;
-          //}
 
           var text = this.noOpText;
           if (this.noOpText == "") {
             text = "None of the above";
-          } 
-    
+          }
+
           var isPresent = false;
           var position = 0;
-          //var otherPosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "none") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
-            //if(this.values[i].type == "other"){
-            //  otherPosition = i;
-            //}
           }
-    
-          
+
+
           if (isPresent && !this.noOpChecked) {
-            console.log("removing");
             this.values.splice(position, 1);
           }
-          //if(otherPosition != null){
-          //  this.values.splice(otherPosition, 1);
-          //}
 
           if (!isPresent && this.noOpChecked) {
-            var it = { v: this.noOpText, order:99, type:"none" };
+            var it = { v: this.noOpText, order: 99, type: "none" };
             this.values.push(it);
           }
-          
-          console.log(this.values);
+
         }, 20);
       });
 
@@ -191,86 +181,73 @@ const VueCheckboxListControl = Vue.component('text', {
       return new Promise(resolve => {
         setTimeout(() => {
 
-          //if(this.noOpChecked){
-          //  this.noOpChecked = false;
-          //}
-
           var text = this.otherText;
           if (this.otherText == "") {
             text = "None of the above";
-          } 
-    
+          }
+
           var isPresent = false;
           var position = 0;
-          //var nonePosition = null;
           for (var i = 0; i < this.values.length; i++) {
             if (this.values[i].type == "other") {
               isPresent = true;
               position = i;
               this.values[i].v = text;
             }
-            //if(this.values[i].type == "none"){
-            //  nonePosition = i;
-            //}
           }
 
-
-          //if(nonePosition != null){
-          //  this.values.splice(nonePosition, 1);
-          //}
           if (isPresent && !this.otherChecked) {
             this.values.splice(position, 1);
           }
           if (!isPresent && this.otherChecked) {
-            var it = { v: this.other, order:98, type: "other" };
+            var it = { v: this.other, order: 98, type: "other" };
             this.values.push(it);
           }
-          console.log(this.values);
         }, 20);
       });
 
     },
-    updateList(){
-      console.log("updating");
+    updateList() {
       var listElements = this.sortable.el.children;
-      for(var z = 0; z<listElements.length; z++){
+      for (var z = 0; z < listElements.length; z++) {
         var liEl = listElements[z];
         var content = liEl.firstChild.firstChild.value;
         var index = this.values.findIndex(obj => obj.v == content)
-        if(index != -1){
-          this.values[index].order = z+1;
+        if (index != -1) {
+          this.values[index].order = z + 1;
         }
       }
-  
+
       //this.values.sort((a, b) => (a.order > b.order) ? 1 : -1)
     }
   },
   mounted() {
 
-   
+
     this.values = this.getData(this.ikey);
     if (this.values == undefined) {
       this.values = [];
-      this.values.push({ v: "", order:98, type: "normal" });
+      this.values.push({ v: "", order: 98, type: "normal" });
     }
 
     this.values.sort((a, b) => (a.order > b.order) ? 1 : -1)
-    
+
     this.insertData();
 
     //ponly after view is rendered
     this.$nextTick(function () {
-      console.log("mounted");
       var el = document.getElementById(this.listid);
 
       this.sortable = Sortable.create(el, {
-        handle: "."+this.cbmid,animation: 150
-      });    
-     
+        handle: "." + this.cbmid, animation: 150
+      });
+      var listElements = this.sortable.el.children;
+      for (var i = 0; i < listElements.length; i++) {
+        var e = listElements[i].firstChild.firstChild;
+        e.style.height = "1px";
+        e.style.height = (5 + e.scrollHeight) + "px";
+      }
     })
-
-   
-
   }
 })
 
@@ -282,6 +259,7 @@ export class CheckboxListControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
+    readonly = emitter.plugins.get('readonly').enabled;
     this.component = VueCheckboxListControl;
     this.props = { emitter, ikey: key, readonly };
   }

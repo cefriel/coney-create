@@ -59,12 +59,23 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('nodeEditor', { static: false }) el: ElementRef;
   @Input() sourceJson: any;
+  @Input() currentConversationStatus: any;
   @Output() changedPosition: EventEmitter<Array<number>> = new EventEmitter<Array<number>>();
   @Output() editedJson: EventEmitter<JSON> = new EventEmitter<JSON>();
   @Output() reteObject: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() conversationTags: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog, private ngZone: NgZone) { };
+
+  ngOnInit(): void {
+    if(this.currentConversationStatus == ENUM_CONV_STATUS.PUBLISHED  || this.currentConversationStatus == ENUM_CONV_STATUS.UNPUBLISHED ){
+      this.readonly.enabled = true;
+    } else {
+      this.readonly.enabled = false;
+    }
+  }
+
+
 
   async ngAfterViewInit() {
     const container = this.el.nativeElement;
@@ -141,7 +152,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
             }
             n.data.subtype="multiple";
             await this.delay(200);
-            ReteComponent.editor.view.updateConnections({ node: n });
+            //ReteComponent.editor.view.updateConnections({ node: n });
           }
 
         } else if (connection.input.node.name.includes("open") || connection.input.node.name.includes("checkbox")) {
@@ -150,7 +161,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
             n.data.visualization = "";
             n.controls.delete("visualization");
             await this.delay(100);
-            ReteComponent.editor.view.updateConnections({ node: n });
+            //ReteComponent.editor.view.updateConnections({ node: n });
           }
 
           if(connection.input.node.name.includes("open")){
@@ -232,10 +243,9 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
     //saves edits on the "Rete json"
     ReteComponent.editor.on(['process', 'nodecreated', 'connectioncreated', 'noderemoved', 'connectionremoved'], async () => {
+      
       this.reteEditedJson(ReteComponent.editor.toJSON());
     });
-
-
 
     /*
     manages the changes in node selection and the connection creation on node creation:
@@ -294,7 +304,6 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     });
 
     ReteComponent.editor.on('keyup', e => {
-
       if (e.key == "Delete" && !this.checkForInputFocus()) {
         var sel = [];
         sel = ReteComponent.editor.selected["list"];
@@ -417,14 +426,10 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     this.checkValue = true;
 
     connection.input.node.data.sort = valueToSet;
-    connection.input.node.data.value = valueToSet;
     var n: Node; n = connection.input.node;
     var control: any;
     control = n.controls.get("sort");
     control.setValue(valueToSet);
-    var conntrolValue: any;
-    conntrolValue = n.controls.get("value");
-    conntrolValue.setValue(valueToSet);
   }
 
   /*//methods to generate nodes, get the XY coordinates, the first nodes and an array of the answers if any
@@ -605,16 +610,16 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
   async ngOnChanges() {
 
+    if(this.currentConversationStatus == ENUM_CONV_STATUS.PUBLISHED  || this.currentConversationStatus == ENUM_CONV_STATUS.UNPUBLISHED ){
+      this.readonly.enabled = true;
+    } else {
+      this.readonly.enabled = false;
+    }
+
     if (this.sourceJson != null) {
       this.createLink = false;
       await ReteComponent.engine.abort();
       await ReteComponent.editor.fromJSON(this.sourceJson);
-
-      if (this.sourceJson['status'] === ENUM_CONV_STATUS.PUBLISHED || this.sourceJson['status'] === ENUM_CONV_STATUS.UNPUBLISHED) {
-        this.readonly.enabled = true;
-      } else {
-        this.readonly.enabled = false;
-      }
 
       ReteComponent.editor.trigger('process');
     } this.createLink = true;
@@ -828,20 +833,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
   //returns true if the user is focusing an input/textarea field
   public checkForInputFocus() {
-    var res = false;
-
-    var txtarea = document.getElementsByTagName("textarea");
-    var input = document.getElementsByTagName("input");
-    for (var i = 0; i < txtarea.length; i++) {
-      if (document.activeElement == txtarea[i]) {
-        res = true;
-      }
-    }
-    for (var i = 0; i < input.length; i++) {
-      if (document.activeElement == input[i]) {
-        res = true;
-      }
-    }
+    var res = document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA";
     return res;
   }
 

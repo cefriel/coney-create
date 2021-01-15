@@ -3,8 +3,13 @@ import Vue from 'vue';;
 
 const VueTextAreaControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: '<textarea class="txtarea-control" :value="text" v-on:keyup="resize($event)" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""' +
-    'style="width:100%; max-height:200px!important; min-height:80px!important; border-radius: 4px; font-size: 18px; outline-width: 0; padding: 5px"></textarea>',
+  template: `<textarea class="txtarea-control customTextarea" 
+  :value="text"
+  :readonly="readonly" 
+  v-on:keyup="resize($event)" 
+  @input="change($event)" 
+  @dblclick.stop="" 
+  @pointermove.stop=""></textarea>`,
   data() {
     return {
       text: ''
@@ -20,6 +25,13 @@ const VueTextAreaControl = Vue.component('txt-area', {
         this.putData(this.ikey, this.text);
       }
       this.emitter.trigger('process');
+
+      var n = this.emitter.selected.list[0];
+      return new Promise(resolve => {
+        setTimeout(() => {
+          this.emitter.view.updateConnections({ node: n });
+        }, 10);
+      });
     },
     resize(event){
       event.srcElement.style.height = "1px";
@@ -39,6 +51,8 @@ export class TextAreaControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
+    
+    readonly = emitter.plugins.get('readonly').enabled;
 
     this.component = VueTextAreaControl;
     this.props = { emitter, ikey: key, readonly };

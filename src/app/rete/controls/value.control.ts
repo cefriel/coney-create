@@ -3,14 +3,18 @@ import Vue from 'vue';;
 
 const VueValueControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: `<div class="m-0 row" style="position: relative;">
-  <span class="input-group-text p-0" style="position: absolute;z-index: 1;left: 10px;top: 3px; color: #7c7c7c"> Value </span>
-  <input type="number" class="customInput" :readonly="readonly" :value="value" 
-  style="display: inline-block; text-align: right" @input="change($event)" min="0" />
-</div>`,
+  template: `
+  
+  <div style="width: 100%; position: relative" class="row m-0 checkbox">
+                  <span class="input-group-text p-0" style="position: absolute; z-index: 1; left: 32px; top: 3px; color: #7c7c7c"> Map Value </span>
+                  <input v-model="valueChecked" type="checkbox" @input="manageValue()" id="otherCheckbox">
+                  <input type="number" :disabled="!valueChecked" :readonly="readonly" :value="value"  class="customInput col-12"
+                      style="padding-left: 36px; text-align: right; padding-right: 2px;" @input="change($event)" min="0"  id="otherInput" placeholder="">
+    </div>`,
   data() {
     return {
-      value: 1
+      value: 0,
+      valueChecked : false
     };
   },
   methods: {
@@ -23,6 +27,13 @@ const VueValueControl = Vue.component('num', {
         this.putData(this.ikey, this.value);
       }
       this.emitter.trigger('process');
+    },
+    manageValue(){
+      if(this.valueChecked){
+        this.value = 0;
+      } else {
+        this.value = this.emitter.selected.list[0].data.sort;
+      }
     }
   },
   mounted() {
@@ -42,6 +53,7 @@ export class ValueControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
+    readonly = emitter.plugins.get('readonly').enable;
     this.component = VueValueControl;
     this.props = { emitter, ikey: key, readonly };
   }

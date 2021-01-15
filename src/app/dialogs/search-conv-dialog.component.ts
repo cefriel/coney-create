@@ -18,11 +18,11 @@ export class SearchConvDialogComponent {
   selectedProject = "all";
 
   projects = ["all"];
-  chats = [];
+  conversations = [];
   noTitleChats = [];
   statuses = ["all", "saved", "published", "unpublished"];
   initialChats = [];
-  chatsFound = true;
+  conversationsFound = true;
   isLoading = false;
   showProject = environment.enterprise;
 
@@ -45,16 +45,16 @@ export class SearchConvDialogComponent {
       this.noTitleChats = this.noTitleChats.filter(x => x.status.toLowerCase() == this.selectedStatus.toLowerCase());
     } 
 
-    this.chats = this.noTitleChats;
+    this.conversations = this.noTitleChats;
     this.titleSelectionChanged();
     
   }
 
   titleSelectionChanged() {
     if (this.titleValue !== "") {
-      this.chats = this.noTitleChats.filter(x => x.conversationTitle.toLowerCase().includes(this.titleValue.toLowerCase()));
+      this.conversations = this.noTitleChats.filter(x => x.conversationTitle.toLowerCase().includes(this.titleValue.toLowerCase()));
     } else {
-      this.chats = this.noTitleChats;
+      this.conversations = this.noTitleChats;
     }
   }
 
@@ -64,27 +64,27 @@ export class SearchConvDialogComponent {
     this.backend.getRequest(endpoint).subscribe(json => {
       
       this.isLoading = false;
-      this.chats = JSON.parse(json);
-      this.chats.sort(function(a, b) {
+      this.conversations = JSON.parse(json);
+      this.conversations.sort(function(a, b) {
         return a.conversationTitle.toLowerCase().localeCompare(b.conversationTitle.toLowerCase());
       });
 
-      if (this.chats.length > 0) {
-        this.chatsFound = true;
-        this.initialChats = this.chats;
-        this.noTitleChats = this.chats;
+      if (this.conversations.length > 0) {
+        this.conversationsFound = true;
+        this.initialChats = this.conversations;
+        this.noTitleChats = this.conversations;
         if(this.showProject){
           this.getProjects();
         }
       } else {
-        this.chatsFound = false;
+        this.conversationsFound = false;
       }
     });
   }
 
   getProjects(){
-    for(var i = 0; i<this.chats.length; i++){
-      var pr = this.chats[i].projectName;
+    for(var i = 0; i<this.conversations.length; i++){
+      var pr = this.conversations[i].projectName;
       if(!this.projects.includes(pr)){
         this.projects.push(pr);
       }

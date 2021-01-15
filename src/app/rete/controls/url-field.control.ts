@@ -34,6 +34,7 @@ export class UrlFieldControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
+    readonly = emitter.plugins.get('readonly').enable;
     this.component = VueUrlFieldControl;
     this.props = { emitter, ikey: key, readonly };
   }

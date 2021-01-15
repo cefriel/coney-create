@@ -3,9 +3,9 @@ import Vue from 'vue';;
 
 const VueOptionalControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: `<div class="m-0 row justify-content-center">
-        <input @dblclick.stop="" @pointerdown.stop="" @pointermove.stop="" v-model="value" @input="checkChange()" type="checkbox" class="mr-2" style="margin-top: .35rem!important;"> 
-        <span class="op-label"> Optional</span>
+  template: `<div class="m-0 row px-1 mb-2">
+        <input @dblclick.stop="" @pointermove.stop="" :readonly="readonly" v-model="value" @input="checkChange()" type="checkbox" class="mr-2" style="margin-top: .35rem!important;"> 
+        <span class="op-label">Make optional</span>
     </div>`,
   
   data() {
@@ -20,7 +20,6 @@ const VueOptionalControl = Vue.component('num', {
       this.update();
     },
     update() {
-      console.log(this.value + " -> " + this.optional);
       if (this.ikey) {
         this.putData(this.ikey, this.optional);
       }
@@ -32,7 +31,6 @@ const VueOptionalControl = Vue.component('num', {
       } else {
         this.optional = 0;
       }
-      console.log("post: " + this.value + " -> " + this.optional);
       this.update();
     }
   },
@@ -55,6 +53,7 @@ export class OptionalControl extends Control {
 
   constructor(public emitter, public key, readonly = false) {
     super(key);
+    readonly = emitter.plugins.get('readonly').enabled;
     this.component = VueOptionalControl;
     this.props = { emitter, ikey: key, readonly };
   }

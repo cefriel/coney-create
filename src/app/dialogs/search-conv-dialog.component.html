@@ -9,11 +9,11 @@
 <div style="height:100%; position: relative;">
   <div class="row align-items-center m-0 p-0">
 
-      <button mat-button title="Import" type="button" class="commands" (click)="importButtonPressed()" style="position: absolute; top: 1rem; right: 1rem;">
+      <button mat-button title="Import" type="button" class="commands" (click)="importButtonPressed()" style="position: absolute; top: 0rem; right: 0rem;">
         <img class="topBarImg" src="./assets/navbar/import.svg">
       </button>
 
-    <p class="text-center" style="width: 100%; font-size: 20px">Open Conversation</p>
+    <p class="pl-2" style="width: 100%; font-size: 20px">Open Conversation</p>
     <form class="row" style="margin: 0px; width: 100%">
       <div class="col-12 mt-3">
         <mat-form-field  style="width: 100%;">
@@ -59,6 +59,37 @@
   <mat-progress-bar id="loadingSpinnerConv" *ngIf="isLoading" style="width:100%"
     mode="indeterminate"></mat-progress-bar>
 
+    <div id="convList">
+
+      <p class="text-light text-center" *ngIf="!conversationsFound; else showConversations">No conversations found</p>
+
+      <ng-template #showConversations>
+
+        <div *ngFor="let conversation of conversations" (click)="chatSelected(conversation)">
+
+          <button mat-button type="button" style="width: 100%" class="text-left p-0">
+
+            <div class="row" style="width: auto!important; line-height: 1; margin-left: 2.5rem!important; padding-bottom: 1rem!important; padding-top: 1rem!important;"> 
+              <h3 class="m-0" style="font-weight: 500;font-size: 16px!important;">{{conversation.conversationTitle}}</h3>
+              <p style="width: 100%; color: gray; text-align: left;" class="m-0"> {{conversation.projectName}} </p>
+              <span *ngIf="conversation.accessLevel == 1" style="position: absolute;  right: 1.5rem; top: 1.5rem; color: gray;">Public</span>
+              <span *ngIf="conversation.accessLevel == 2" style="position: absolute;  right: 1.5rem; top: 1.5rem; color: gray;">Restricted</span>
+              <span *ngIf="conversation.accessLevel == 3" style="position: absolute;  right: 1.5rem; top: 1.5rem; color: gray;">Private</span>
+            </div>
+
+            <p *ngIf="conversation.status == 'published'" class="px-2 status-indicator"  style="background-color: #4caf50">P</p>
+            <p *ngIf="conversation.status == 'saved'" class="px-2 status-indicator"  style="background-color: #6c757d">S</p>
+            <p *ngIf="conversation.status == 'unpublished'" class="px-2 status-indicator"  style="background-color: #03a9f4">U</p>
+            
+
+          </button>
+          
+        </div>
+      </ng-template>
+
+    </div>
+
+<!--
   <div class="row" style="position: relative;">
     <p class="pl-2" *ngIf="!chatsFound; else showChats" style="text-align: center">No
       chats found</p>
@@ -83,5 +114,5 @@
         </div>
       </form>
     </ng-template>
-  </div>
+  </div>-->
 </div>

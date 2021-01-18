@@ -183,9 +183,9 @@ export class HomeComponent implements OnInit {
   }
 
   saveButtonPressed() {
-    if (environment.enterprise && (this.currentConversationTitle === '' || this.currentAccessLevel == undefined || this.currentConversationProject == "" || this.currentConversationLanguage === '')) {
+    if (environment.enterprise && (this.currentConversationId === '' || this.currentConversationTitle === '' || this.currentAccessLevel == undefined || this.currentConversationProject == "" || this.currentConversationLanguage === '')) {
       this.saveAsButtonPressed();
-    } else if(!environment.enterprise && (this.currentConversationTitle === '' || this.currentConversationLanguage === '')){
+    } else if(!environment.enterprise && (this.currentConversationId === '' || this.currentConversationTitle === '' || this.currentConversationLanguage === '')){
       this.saveAsButtonPressed();
     } else {
       this.saveConversation();
@@ -504,11 +504,18 @@ export class HomeComponent implements OnInit {
     const json = JSON.parse(JSON.stringify(stringJson));
 
     this.currentConversationId = "";
-    this.currentConversationStatus = "";
+    this.currentConversationStatus = " ";
     this.currentConversationTitle = json[ENUM_CHAT.TITLE];
     this.currentConversationProject = "";
     this.currentAccessLevel = "";
+    json[ENUM_CHAT.PROJECT] = "";
+    json[ENUM_CHAT.ACCESS_LEVEL] = "";
+   
+
     this.currentConversationLanguage = "";
+    if(json[ENUM_CHAT.LANGUAGE]!=undefined){
+      this.currentConversationLanguage = json[ENUM_CHAT.LANGUAGE]
+    }
 
     this.editorJson = json;
 

@@ -24,7 +24,7 @@ export class SaveAsDialogComponent implements OnInit {
   levelValue = 1;
   errorMessage = "All fields are required";
   projects = [];
-  levels = [ { value: 1, tag: "public" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }];
+  levels = [ { value: 1, tag: "project" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }];
   languageValue: any;
   languages = [{ lang: "Afrikaans", tag: "af" }, { lang: "Albanian ", tag: "sp" }, { lang: "Arabic", tag: "ar" }, { lang: "Basque", tag: "eu" },
   { lang: "Byelorussian ", tag: "be" }, { lang: "Bulgarian", tag: "bg" }, { lang: "Catalan", tag: "va" }, { lang: "Croatian", tag: "hr" }, { lang: "Czech", tag: "cs" },

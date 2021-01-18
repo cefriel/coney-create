@@ -1,17 +1,16 @@
 import { Control } from 'rete';
-import Vue from 'vue';;
+import Vue from 'vue';
 
 const VueTextAreaLimitedControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<textarea class="txtarea-control customTextarea" 
   :value="text"
-  :readonly="readonly
+  :readonly="readonly"
   v-on:keyup="resize($event)"
   @dblclick.stop="" 
-  @pointermove.stop="" "  
+  @pointermove.stop=""   
   @input="change($event)"   
-  maxlength="200"
-  ></textarea>`,
+  maxlength="200"></textarea>`,
   data() {
     return {
       text: ''
@@ -42,6 +41,7 @@ const VueTextAreaLimitedControl = Vue.component('txt-area', {
     }
   },
   mounted() {
+    console.log("mounted")
     this.text = this.getData(this.ikey);
   }
 })

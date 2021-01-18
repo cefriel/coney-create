@@ -36,9 +36,7 @@
   min-width: 70px;
   flex: 1 1 auto;
   width: 1%;
-  background-color: white!important;
   border: 0px;
-  border-bottom: 1px solid #a9a9a9;
 }
 
 
@@ -247,7 +245,6 @@ background-color:lightblue!important;
   outline-width: 0px;
   padding: 5px;
   border: 0px;
-  border-bottom: 1px solid #a9a9a9;
 }
 
 .checkboxInput{
@@ -286,6 +283,10 @@ background-color:lightblue!important;
   background: white;
 }
 
+.force-white{
+  background:white!important;
+}
+
 div[class^="cb-move"] {
   position: absolute;
   left: 2px;
@@ -315,16 +316,18 @@ div[class^="cb-move"] {
 .del-cb-line-btn{
     border-radius: 50%;
     font-size: 8px;
+    width:100%;
+    height:100%;
     border: none;
     padding: 2px 5px;
-    background: #0000004f;
-    color: white;
+    color: #f44336;
     font-weight: 600;
     cursor: pointer;
 }
 
-.del-cb-line-btn:hover, .del-cb-line-col:hover{
-  background: red;
+.del-cb-line-btn:hover{
+  background: #f44336;
+  color: white;
 }
 
 
@@ -332,7 +335,7 @@ div[class^="cb-move"] {
   position: absolute;
   right: .2rem;
   border-radius: 2px;
-  top: 2px;
+  top: 1px;
   bottom: 8px;
   display: flex;
   padding: 2px 3px;

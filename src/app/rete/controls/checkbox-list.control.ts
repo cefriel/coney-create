@@ -38,13 +38,13 @@ const VueCheckboxListControl = Vue.component('text', {
               </div>
               <div style="width: 100%; position: relative" class="row my-0 mt-0 mb-2 checkbox">
                   <input v-model="noOpChecked" type="checkbox" @input="manageNone()" id="noneCheckbox" v-if="!readonly">
-                  <input v-model="noOpText" :disabled="!noOpChecked || readonly"  v-on:blur="manageNone()" class="customInput col-12"
+                  <input v-model="noOpText" v-bind:class="{ 'force-white': noOpChecked }"  :disabled="!noOpChecked || readonly"  v-on:blur="manageNone()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="150" type="text" id="noneInput" placeholder="Add 'none of the above'">
               </div>
           
               <div style="width: 100%; position: relative" class="row m-0 checkbox">
                   <input v-model="otherChecked" type="checkbox" @input="manageOther()" id="otherCheckbox" v-if="!readonly">
-                  <input v-model="otherText"  :disabled="!otherChecked || readonly" v-on:blur="manageOther()" class="customInput col-12"
+                  <input v-model="otherText" v-bind:class="{ 'force-white': otherChecked }"  :disabled="!otherChecked || readonly" v-on:blur="manageOther()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="30" type="text" id="otherInput" placeholder="Add 'other'">
               </div>
             </div>`,

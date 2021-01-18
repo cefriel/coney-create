@@ -18,7 +18,7 @@ export class PrintDialogComponent {
     this.title = data.title;
 
     this.questions = JSON.parse(data.questions);
-    
+
     for (var i = 0; i < this.questions.length; i++) {
       var qElement = this.questions[i];
       console.log(qElement);
@@ -28,6 +28,8 @@ export class PrintDialogComponent {
         var index = this.questions.findIndex(obj => obj.id == questionReteId);
         if (index != -1 && questionReteId != 0) {
           this.questions[i].answers[j].nextQuestionId = this.questions[index].order;
+        } else {
+          this.questions[i].answers[j].nextQuestionId = -1
         }
       }
 

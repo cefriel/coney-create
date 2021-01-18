@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:80',
+  baseUrl: 'https://coney.cefriel.com/app',
+  privacyUrl: 'https://www.cefriel.com/en/privacy',
   enterprise: true
 };

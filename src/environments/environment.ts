@@ -3,12 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-   baseUrl: 'http://localhost:80',//'https://ns3056488.ip-213-32-26.eu/v2',//'http://localhost:80',
-   privacyUrl: 'https://www.cefriel.com/en/privacy',
-	enterprise: true
+  production: true,
+  baseUrl: 'https://coney.cefriel.com/app',
+  privacyUrl: 'https://www.cefriel.com/en/privacy',
+  enterprise: true
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

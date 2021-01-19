@@ -26,6 +26,9 @@ const VueTextAreaControl = Vue.component('txt-area', {
       }
       this.emitter.trigger('process');
 
+      if(this.emitter.selected.list.length == 0){
+        return;
+      }
       var n = this.emitter.selected.list[0];
       return new Promise(resolve => {
         setTimeout(() => {

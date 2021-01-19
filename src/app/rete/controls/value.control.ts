@@ -31,16 +31,19 @@ const VueValueControl = Vue.component('num', {
     manageValue(){
       if(this.valueChecked){
         this.value = 0;
-      } else {
+      } else if(this.value==0){
         this.value = this.emitter.selected.list[0].data.sort;
-      }
+      } 
+      this.update();
     }
   },
   mounted() {
     this.value = this.getData(this.ikey);
-    if(this.value == undefined){
+    if(this.value == undefined || this.value == 0){
       this.value = 0;
       this.update();
+    } else {
+      this.valueChecked = true;
     }
   }
 })

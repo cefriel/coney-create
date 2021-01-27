@@ -17,7 +17,7 @@ export class PublishDialogComponent {
   textActive=false;
 
   privacyLink="https://www.cefriel.com/en/privacy";
-  imageLink="https://coney.cefriel.com/app/chat/assets/messages.svg";
+  imageLink="https://coney.cefriel.com/app/chat/assets/icons/ic_logo.svg";
   text="Please take a moment to review our policy prior to answering the survey questions";
 
   primaryColor:any="#2d3c76";

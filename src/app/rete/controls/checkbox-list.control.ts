@@ -228,6 +228,15 @@ const VueCheckboxListControl = Vue.component('text', {
     if (this.values == undefined) {
       this.values = [];
       this.values.push({ v: "", order: 98, type: "normal" });
+    } else {
+      for(var i = 0; i<this.values.length; i++){
+        if(this.values[i].order == undefined){
+          this.values[i].order = i+1;
+        }
+        if(this.values[i].type == undefined){
+          this.values[i].type = "normal";
+        }
+      }
     }
 
     this.values.sort((a, b) => (a.order > b.order) ? 1 : -1)

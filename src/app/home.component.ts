@@ -655,7 +655,7 @@ export class HomeComponent implements OnInit {
   addQuestionButtonPressed() {
 
     const dialogRef = this.dialog.open(AddQuickQuestionDialogComponent, {
-      width: '600px',
+      maxWidth: '800px',
       height: '500px',
       data: {}
     });

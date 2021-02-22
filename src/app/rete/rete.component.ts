@@ -545,20 +545,11 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     this.createLink = false;
     //creates question
     var nQuestion: Node;
-    if (type == "multiple") {
-      nQuestion = await this.createNode("Question", "star", "", "", 0, 0, "", "", posX, posY);
-    } else if (type == "checkbox") {
-      nQuestion = await this.createNode("Question", "checkbox", "", "", 0, 0, "", "", posX, posY);
-    } else {
-      nQuestion = await this.createNode("Question", "text", "", "", 0, 0, "", "", posX, posY);
-    }
+    nQuestion = await this.createNode("Question", type, "", "", 0, 0, "", "", posX, posY);
+  
 
     await ReteComponent.editor.addNode(nQuestion);
 
-    //create talk
-    var nTalk: Node;
-    nTalk = await this.createNode("Talk", "text", "", "", 0, 0, "", "", posX + 600, posY);
-    await ReteComponent.editor.addNode(nTalk);
 
     posY -= 300;
     //creates answers and link them
@@ -571,11 +562,11 @@ export class ReteComponent implements AfterViewInit, OnChanges {
         txt = answerContent[i - 1];
       }
       var nAnswer: Node;
-      nAnswer = await this.createNode("Answer", type, txt, "", i, i, "", "", posX + 300, posY + (i * 200));
+      nAnswer = await this.createNode("Answer", "multiple", txt, "", i, i, "", "", posX + 300, posY + (i * 200));
       await ReteComponent.editor.addNode(nAnswer);
       //link nodes
       await ReteComponent.editor.connect(nQuestion.outputs.get("out"), nAnswer.inputs.get("in"));
-      await ReteComponent.editor.connect(nAnswer.outputs.get("out"), nTalk.inputs.get("in"));
+      //await ReteComponent.editor.connect(nAnswer.outputs.get("out"), nTalk.inputs.get("in"));
     }
     this.createLink = true;
 

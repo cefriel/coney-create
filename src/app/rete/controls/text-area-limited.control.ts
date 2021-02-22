@@ -4,6 +4,7 @@ import Vue from 'vue';
 const VueTextAreaLimitedControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<textarea class="txtarea-control customTextarea" 
+  v-bind:id="areaId" 
   :value="text"
   :readonly="readonly"
   v-on:keyup="resize($event)"
@@ -13,7 +14,8 @@ const VueTextAreaLimitedControl = Vue.component('txt-area', {
   maxlength="200"></textarea>`,
   data() {
     return {
-      text: ''
+      text: '',
+      areaId: "textarea-" + Math.floor((Math.random() * 100000) + 10000),
     }
   },
   methods: {
@@ -41,8 +43,13 @@ const VueTextAreaLimitedControl = Vue.component('txt-area', {
     }
   },
   mounted() {
-    console.log("mounted")
     this.text = this.getData(this.ikey);
+
+    this.$nextTick(function () {
+      var el = document.getElementById(this.areaId);
+      el.style.height = "1px";
+      el.style.height = (10+el.scrollHeight)+"px";
+    })
   }
 })
 

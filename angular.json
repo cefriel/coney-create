@@ -47,7 +47,7 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "docker":{
+            "docker": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -71,7 +71,7 @@
                 }
               ]
             },
-            "docker-test":{
+            "docker-test": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -95,7 +95,7 @@
                 }
               ]
             },
-            "upm":{
+            "upm": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -207,5 +207,8 @@
       }
     }
   },
-  "defaultProject": "coney-create"
+  "defaultProject": "coney-create",
+  "cli": {
+    "analytics": false
+  }
 }

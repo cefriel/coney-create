@@ -158,6 +158,7 @@ export class TranslationDialogComponent {
         dataArr.push(blockRecord);
       }
     }
+    console.log(this.areTranslationsPresent);
     return dataArr;
   }
 
@@ -201,7 +202,8 @@ export class TranslationDialogComponent {
   }
 
   uploadCSV() {
-    if (this.selectedLanguage == undefined || this.translatedTitle == "" || this.selectedLanguage.tag == undefined || this.csvRecords.length == 0) {
+   
+    if (this.selectedLanguage == undefined || this.selectedLanguage.tag == undefined || this.csvRecords.length == 0) {
       this.errorMessage = "All fields are required";
       this.emptyFields = true;
       return;
@@ -211,6 +213,7 @@ export class TranslationDialogComponent {
       return;
     }
 
+    console.log("uploading CSV");
     this.jsonToReturn = {
       conversationId: this.conversationId,
       language: this.selectedLanguage.tag,

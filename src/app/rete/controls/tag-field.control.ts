@@ -7,12 +7,13 @@ var dialog: MatDialog;
 
 const VueTagFieldControl = Vue.component('txt-field', {
     props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-    template: '<div :disabled="readonly"><div v-if="text!=\'\' && text!=undefined" id="results" @click="deleteOne($event)">' +
-    '<span> {{ text }} </span></div>' +
-    '<button id="tagsIn" class="tag-btn" style="float: right" @click="openTagDialog($event)" :disabled="readonly">TAG</button></div>',
+    template: `<div :disabled="readonly"><div v-if="text!=\'\' && text!=undefined" id="results" @click="deleteOne($event)">
+    <span> {{ text }} </span></div>
+    <button v-if="displayBtn" id="tagsIn" class="tag-btn" @click="openTagDialog($event)" :disabled="readonly">TAG</button></div>`,
     data() {
         return {
             text: "",
+            displayBtn : true
         }
     },
     methods: {
@@ -23,6 +24,7 @@ const VueTagFieldControl = Vue.component('txt-field', {
             }
             el.textContent = "";
             this.text = "";
+            this.displayBtn = true;
             this.update();
         },
         change(e) {
@@ -53,13 +55,22 @@ const VueTagFieldControl = Vue.component('txt-field', {
             dialogRef.afterClosed().subscribe(selectedTag => {
                 if (selectedTag !== undefined) {
                     this.text = selectedTag;
+                    this.displayBtn = false;
+                } else {
+                    this.displayBtn = true;
                 }
+
                 this.update();
             });
         }
     },
     mounted() { 
         this.text = this.getData(this.ikey);
+        if(this.text == undefined || this.text == ""){
+            this.displayBtn = true;
+        } else {
+            this.displayBtn = false;
+        }
     }
 });
 

@@ -84,7 +84,7 @@
 
         <div class="col-4">
           <mat-form-field style="width: 100%;">
-            <input matInput placeholder="Privacy message" [(ngModel)]="activeIntroText">
+            <input matInput placeholder="Intro text" [(ngModel)]="activeIntroText">
           </mat-form-field>
         </div>
 
@@ -161,20 +161,32 @@
 
     <div class="row m-0 text-center justify-content-center">
       <mat-form-field style="line-height: 1.5;">
-        <mat-label>Language</mat-label>
+        <mat-label>Language*</mat-label>
         <mat-select [(value)]="selectedLanguage" (selectionChange)="selectSelChanged()">
           <mat-option *ngFor="let i of languages" [value]="i">
             {{i.lang}}
           </mat-option>
         </mat-select>
+        <mat-hint>*required</mat-hint>
       </mat-form-field>
       <input #fileImportInput [disabled]="selectedLanguage == undefined || selectedLanguage.lang==''" type="file"
         class="mt-2 mb-4" id="file" (change)="fileChangeListener($event)" accept=".csv">
     </div>
 
+    <div *ngIf="!areTranslationsPresent && uploadButtonEnabled" class="row m-0 text-center justify-content-center">
+        <p style="color: brown">All the fields in the document are empty</p>
+    </div>
+
     <br>
-    <button mat-raised-button [disabled]="!uploadButtonEnabled" color="primary" (click)="uploadCSV()">Upload translation
-      CSV</button>
+
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <p>Make sure that you are uploading a file downloaded from this conversation, it won't work with a cloned one!</p>
+      </div>
+      <button mat-raised-button [disabled]="!uploadButtonEnabled || !areTranslationsPresent" color="primary" (click)="uploadCSV()">Upload translation
+        CSV</button>
+    </div>
+   
 
   </div>
 

@@ -8,9 +8,16 @@ import VueRender from 'rete-vue-render-plugin';
 var CustomNode = {
   template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">{{node.data.type}}</h6>
+  <h6 class="m-0">Message</h6>
   <small style="color: #777">{{node.data.subtype}}</small>
   </div>
+  <!-- Inputs-->
+    <div class="input" v-for="input in inputs()" :key="input.key">
+      <Socket v-socket:input="input" type="input" :socket="input.socket"></Socket>
+      <div class="input-title" v-show="!input.showControl()">{{input.name}}</div>
+      <div class="input-control" v-show="input.showControl()" v-control="input.control"></div>
+    </div>
+
     <!-- Outputs-->
     <div class="output" v-for="output in outputs()" :key="output.key">
       <div class="output-title">{{output.name}}</div>
@@ -18,12 +25,7 @@ var CustomNode = {
     </div>
     <!-- Controls-->
     <div class="control" v-for="control in controls()" v-control="control"></div>
-    <!-- Inputs-->
-    <div class="input" v-for="input in inputs()" :key="input.key">
-      <Socket v-socket:input="input" type="input" :socket="input.socket"></Socket>
-      <div class="input-title" v-show="!input.showControl()">{{input.name}}</div>
-      <div class="input-control" v-show="input.showControl()" v-control="input.control"></div>
-    </div>
+    
 </div>`,
   mixins: [VueRender.mixin],
   components: {

@@ -3,7 +3,7 @@
   border: 2px solid transparent;
   border-radius: 4px;
   cursor: pointer;
-  min-width: 180px;
+  min-width: 200px;
   max-width: 260px;
   height: auto;
   padding-bottom: 6px;
@@ -24,9 +24,17 @@
 }  
 .output {
   text-align: right;
+  width: 49%;
+  display: inline-block;
 }
 .input{
   text-align: left;
+  width: 49%;
+  display: inline-block;
+}
+.input-output{
+  display: block;
+  text-align: unset!important;
 }
 
 .customInput{
@@ -199,15 +207,13 @@ background-color:lightblue!important;
 }
 
 #tagsIn{
-  position: fixed;
   box-shadow: 3px 3px 3px 0 rgba(60,64,67,.08);
-  bottom: 12px;
-  right: 20px;
   color: #686868;
   font-size: 0.7rem;
-  background: white;
+  background: #ffffff;
   border-radius: 4px;
   padding: 2px 10px;
+  font-weight: 500;
 }
 
 .tag-btn{
@@ -258,7 +264,7 @@ background-color:lightblue!important;
   width: 100%!important;
 }
 
-#noneCheckbox, #otherCheckbox{
+.noneCheckbox, .otherCheckbox{
   height: 16px;
   width: 16px;
   vertical-align: middle;

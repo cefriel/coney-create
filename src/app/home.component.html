@@ -34,7 +34,7 @@
             [(ngModel)]="currentConversationTitle" maxlength="300" placeholder="Untitled Conversation">
 
           <ng-template #titleDisabled>
-            <input style="background: transparent!important;" id="forminput1" class="m-0 p-2 halfWidthOnMobile"
+            <input style="background: transparent!important; min-width: 60vw;" id="forminput1" class="m-0 p-2 halfWidthOnMobile"
               [(ngModel)]="currentConversationTitle" placeholder="Title" disabled>
           </ng-template>
           </div>

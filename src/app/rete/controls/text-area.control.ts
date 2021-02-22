@@ -3,7 +3,7 @@ import Vue from 'vue';;
 
 const VueTextAreaControl = Vue.component('txt-area', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: `<textarea class="txtarea-control customTextarea" 
+  template: `<textarea class="txtarea-control customTextarea" v-bind:id="areaId" 
   :value="text"
   :readonly="readonly" 
   v-on:keyup="resize($event)" 
@@ -12,7 +12,8 @@ const VueTextAreaControl = Vue.component('txt-area', {
   @pointermove.stop=""></textarea>`,
   data() {
     return {
-      text: ''
+      text: '',
+      areaId: "textarea-" + Math.floor((Math.random() * 100000) + 10000),
     }
   },
   methods: {
@@ -43,6 +44,12 @@ const VueTextAreaControl = Vue.component('txt-area', {
   },
   mounted() {
     this.text = this.getData(this.ikey);
+
+    this.$nextTick(function () {
+    var el = document.getElementById(this.areaId);
+    el.style.height = "1px";
+    el.style.height = (10+el.scrollHeight)+"px";
+    })
   }
 })
 
@@ -50,7 +57,6 @@ export class TextAreaControl extends Control {
   component: any;
   props: any;
   vueContext: any;
-  remChar = "asd";
 
   constructor(public emitter, public key, readonly = false) {
     super(key);

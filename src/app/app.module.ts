@@ -45,6 +45,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthHtppInterceptorService } from './services/auth-http-interceptor.service';
 import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 import { UtilsService } from './services/utils.service';
+import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { UtilsService } from './services/utils.service';
     TranslationDialogComponent,
     ShareSurveyDialogComponent,
     ImportConversationDialogComponent,
+    StylizeDialogComponent,
     ReteComponent,
     LoginComponent,
     LogoutComponent
@@ -113,7 +115,8 @@ import { UtilsService } from './services/utils.service';
     SearchTagDialogComponent,
     TranslationDialogComponent,
     ShareSurveyDialogComponent,
-    ImportConversationDialogComponent
+    ImportConversationDialogComponent,
+    StylizeDialogComponent
   ]
 })
 export class AppModule { }

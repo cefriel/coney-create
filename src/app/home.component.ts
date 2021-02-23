@@ -21,6 +21,7 @@ import * as CryptoJS from 'crypto-js';
 import { environment } from '../environments/environment';
 import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
+import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
 
 
 @Component({
@@ -629,9 +630,26 @@ export class HomeComponent implements OnInit {
     
   }
 
-  translationDialogButtonPressed(){
-    //TODO
+  styleDialogButtonPressed(){
+    const dialogRef = this.dialog.open(StylizeDialogComponent, {
+      width: '90%',
+      minHeight: '110px',
+      height: '90vh',
+      data: {
+        conversationId: this.currentConversationId,
+        conversationTitle: this.currentConversationTitle
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(res => {
+      if(res=="style_updated"){
+        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, "Translation successfully uploaded");
+      }
+    });
+  }
+
+  translationDialogButtonPressed(){
+    
     const dialogRef = this.dialog.open(TranslationDialogComponent, {
       width: '90%',
       minHeight: '110px',

@@ -32,21 +32,6 @@ export class PublishDialogComponent {
 
   
     let toSend = this.data.conversation;
-   
-    if(this.imageActive){
-      toSend.chatImage = this.imageLink;
-    }
-    if(this.privacyActive){
-      toSend.chatPrivacyNotice = this.privacyLink;
-    }
-    if(this.textActive){
-      toSend.chatIntroText = this.text;
-    }
-    if(this.colorActive){
-      toSend.chatPrimaryColor = this.primaryColor; 
-      toSend.chatSecondaryColor = this.secondaryColor; 
-      toSend.chatTextColor = this.textColor; 
-    }
     
     document.getElementById("publishBtn").innerHTML = "uploading...";
     this.canPress = false;

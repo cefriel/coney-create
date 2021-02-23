@@ -1,99 +1,7 @@
 <form>
   <div class="form-group">
 
-    <div class="row">
-      <div class="col-8">
-
-        <div class="row" style="flex-direction:column; justify-content: center; height: 100%;">
-
-
-        <mat-checkbox [(ngModel)]="privacyActive" [ngModelOptions]="{standalone: true}">Use custom privacy policy</mat-checkbox>
-
-        <mat-form-field [hidden]="!privacyActive" style="width: 100%;">
-          <mat-label>Link to personal privacy policy</mat-label>
-          <input matInput type="url" placeholder="https://..." [(ngModel)]="privacyLink"  [ngModelOptions]="{standalone: true}">
-        </mat-form-field>
-        
-        <mat-checkbox [(ngModel)]="imageActive" [ngModelOptions]="{standalone: true}">Use custom logo</mat-checkbox>
-
-        <mat-form-field [hidden]="!imageActive" style="width: 100%;">
-          <mat-label>Link to custom logo</mat-label>
-          <input matInput type="url" placeholder="https://..." [(ngModel)]="imageLink"  [ngModelOptions]="{standalone: true}">
-        </mat-form-field>
-
-  
-        <mat-checkbox [(ngModel)]="textActive" [ngModelOptions]="{standalone: true}">Use custom text screen</mat-checkbox>
-
-        <mat-form-field [hidden]="!textActive" style="width: 100%;">
-          <mat-label>Custom text</mat-label>
-          <textarea matInput placeholder="Ex. This survey was made by ... for ... " [(ngModel)]="text"  [ngModelOptions]="{standalone: true}"></textarea>
-        </mat-form-field>
-
-        <mat-checkbox [(ngModel)]="colorActive" [ngModelOptions]="{standalone: true}">Use custom colors</mat-checkbox>
-        <div *ngIf="colorActive" style="width: 100%;">
-        <div class="row py-1">
-          <div class="col-8">
-            Primary color <small>(for colored backgrounds or buttons)</small>
-          </div>
-          <div class="col-4">
-            <input [(colorPicker)]="primaryColor" [style.background]="primaryColor" style="width: 50px" />
-          </div>
-        </div>
-        <div class="row py-1">
-          <div class="col-8">
-            Secondary color <small>(for sliders, stars and color accent)</small>
-          </div>
-          <div class="col-4">
-            <input [(colorPicker)]="secondaryColor" [style.background]="secondaryColor" style="width: 50px" />
-          </div>
-        </div>
-        <div class="row py-1">
-          <div class="col-8">
-            Text color <small>(color of the text inside the buttons with the primary color)</small>
-          </div>
-          <div class="col-4">
-            <input [(colorPicker)]="textColor" [style.background]="textColor" style="width: 50px"/>
-          </div>
-        </div>
-      </div>
-      </div>
-      </div>
-      <div class="col-4" style="text-align: end;">
-        <div class="card p-3" style="height: 100%;">
-          <div class="row justify-content-center">
-            
-            <img class="my-2" style="height: 50px; width: auto;" [src]="imageLink">
-              <p style="font-size: 80%; width: 100%; text-align: center;"> {{text}} <br>
-              <a  style="font-weight: 500;" [style.color]="primaryColor" [href]="privacyLink">Privacy Notice</a></p>
-
-            <button [style.background]="primaryColor" [style.color]="textColor" id="preview_button" class="mt-3">START</button>
-          </div>
-
-          <hr>
-
-          
-          <div class="row justify-content-left my-1">
-            <p class="message_preview">
-              This is Coney
-            </p>
-          </div>
-
-          <div class="row justify-content-right my-1">
-            <p class="answer_preview" [style.background]="primaryColor" [style.color]="textColor">
-              This is the user
-            </p>
-          </div>
-
-        </div>
-        
-      </div>
-      
-    </div>
-
-
-
-
-    <p class="text-center mt-5">
+    <p class="text-center mt-4">
       Publishing this chat, you won't be able to modify the conversation and the above boxes in the future.
       Do you confirm this operation?
     </p>
@@ -104,7 +12,7 @@
       [disabled]="!canPress">Publish</button>
   </div>
 
-  <div class="form-group">
+  <div class="form-group text-center mt-3">
     <button mat-button type="button"  (click)="close()">Close</button>
   </div>
 </form>

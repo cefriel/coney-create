@@ -4,3 +4,4 @@ export const environment = {
   privacyUrl: 'https://www.cefriel.com/en/privacy',
   enterprise: true
 };
+

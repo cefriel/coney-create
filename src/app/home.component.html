@@ -5,7 +5,7 @@
      
         <div class="row navTitle">
 
-          <img src="./assets/navbar/coney_create.png" class="m-1 pl-2" (click)="openDeliver()"
+          <img src="./assets/icons/navbar/coney_create.png" class="m-1 pl-2" (click)="openDeliver()"
           style="height: 45px; width: auto; cursor: pointer;">
 
 
@@ -45,7 +45,7 @@
             <button mat-raised-button *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" 
             (click)="translationDialogButtonPressed()" class="ml-1 mr-2" type="button" 
             style="padding: 0px 8px!important; min-width: 32px!important;" title="Chat translation">
-              <img class="topBarImg" src="./assets/navbar/translation.svg">
+              <img class="topBarImg" src="./assets/icons/navbar/translation.svg">
             </button>
 
             <button mat-raised-button *ngIf="currentConversationStatus != ''" (click)="styleDialogButtonPressed()" class="ml-1 mr-3" 
@@ -73,14 +73,14 @@
   
             <button mat-raised-button *ngIf="deleteButtonEnabled; else deleteButtonDisabled" type="button" color="warn"
               class="ml-1 mr-1" (click)="deleteButtonPressed()"  style="padding: 0px 8px!important; min-width: 32px!important;">
-              <img class="topBarImg" src="./assets/navbar/delete.svg" ></button>
+              <img class="topBarImg" src="./assets/icons/navbar/delete.svg" ></button>
             <ng-template #deleteButtonDisabled>
               <button mat-raised-button color="warn" type="button" class="ml-1 mr-1" style="padding: 0px 8px!important; min-width: 32px!important;" disabled>
-                <img class="topBarImg" src="./assets/navbar/delete.svg"></button>
+                <img class="topBarImg" src="./assets/icons/navbar/delete.svg"></button>
             </ng-template>
   
            <button mat-button *ngIf="enterprise" (click)="userLogout()" id="logoutBtn" class="ml-1 mr-1" style="padding: 0px 0px!important; min-width: 32px!important;">
-              <img class="topBarImg" src="./assets/navbar/logout.svg" ></button>
+              <img class="topBarImg" src="./assets/icons/navbar/logout.svg" ></button>
             </div>
         </div>
        
@@ -89,97 +89,78 @@
     
     <div id="commands-container">
       <ul class="m-2 p-2" id="commandsUl">
+
         <li class="nav-item">
           <button mat-button title="New" *ngIf="newButtonEnabled; else newButtonDisabled" type="button" class="commands"
-            (click)="newButtonPressed()"><img class="topBarImg" src="./assets/navbar/file.svg"></button>
+            (click)="newButtonPressed()"><img class="topBarImg" src="./assets/icons/navbar/file.svg"></button>
           <ng-template #newButtonDisabled>
             <button mat-button title="New" type="button" class="commands" disabled><img class="topBarImg"
-                src="./assets/navbar/file.svg"></button>
+                src="./assets/icons/navbar/file.svg"></button>
           </ng-template>
         </li>
         <li class="nav-item">
           <button mat-button title="Open" type="button" class="commands" (click)="searchButtonPressed()"><img
-              class="topBarImg" src="./assets/navbar/open.svg"></button>
+              class="topBarImg" src="./assets/icons/navbar/open.svg"></button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Save" *ngIf="saveButtonEnabled; else saveButtonDisabled" type="button" class="commands"
-            (click)="saveButtonPressed()"><img class="topBarImg" src="./assets/navbar/save.svg"></button>
+            (click)="saveButtonPressed()"><img class="topBarImg" src="./assets/icons/navbar/save.svg"></button>
           <ng-template #saveButtonDisabled>
             <button mat-button title="Save" type="button" class="btn commands" disabled><img class="topBarImg"
-                src="./assets/navbar/save.svg"></button>
+                src="./assets/icons/navbar/save.svg"></button>
           </ng-template>
         </li>
   
         <li class="nav-item">
-          <button mat-button title="Save As" *ngIf="saveAsButtonEnabled; else saveAsButtonDisabled" type="button"
+          <button mat-button title="Duplicate" *ngIf="saveAsButtonEnabled; else saveAsButtonDisabled" type="button"
             class="commands" (click)="saveAsButtonPressed()"><img class="topBarImg"
-              src="./assets/navbar/save_as.svg"></button>
+              src="./assets/icons/navbar/save_as.svg"></button>
           <ng-template #saveAsButtonDisabled>
             <fieldset disabled>
-              <button mat-button title="Save As" type="button" class="commands" disabled><img class="topBarImg"
-                  src="./assets/navbar/save_as.svg"></button>
+              <button mat-button title="Duplicate" type="button" class="commands" disabled><img class="topBarImg"
+                  src="./assets/icons/navbar/save_as.svg"></button>
             </fieldset>
           </ng-template>
+        </li>
+
+        <li class="nav-item hideOnMobile">
+          <hr>
         </li>
   
         <li class="nav-item">
           <button mat-button class="commands" title="Question templates" (click)="addQuestionButtonPressed()"><img
-              class="topBarImg" src="./assets/navbar/plus.svg"></button>
+              class="topBarImg" src="./assets/icons/navbar/plus.svg"></button>
         </li>
   
         
         <li class="nav-item">
           <button mat-button title="Show questions" type="button" class="commands" *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">
-            <img class="topBarImg" src="./assets/navbar/list.svg">
+            <img class="topBarImg" src="./assets/icons/navbar/list.svg">
           </button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Show questions" type="button" class="commands" *ngIf="currentConversationStatus == 'saved' || currentConversationStatus == ''" (click)="oldPrintButtonPressed()">
-            <img class="topBarImg" src="./assets/navbar/list.svg">
+            <img class="topBarImg" src="./assets/icons/navbar/list.svg">
           </button>
         </li>
 
         <li class="nav-item">
           <button mat-button *ngIf="previewButtonEnabled; else previewButtonDisabled" type="button" title="Start preview" class=""
-            (click)="previewButtonPressed()"><img class="topBarImg" src="./assets/navbar/preview.svg"></button>
+            (click)="previewButtonPressed()"><img class="topBarImg" src="./assets/icons/navbar/preview.svg"></button>
           <ng-template #previewButtonDisabled>
             <button mat-button type="button" title="Preview" class="" disabled><img class="topBarImg"
-                src="./assets/navbar/preview.svg"></button>
+                src="./assets/icons/navbar/preview.svg"></button>
           </ng-template>
         </li>
-  
-        <li class="nav-item hideOnMobile">
-          <button mat-button title="Toggle Map" type="button" class="commands" (click)="toggleMapButtonPressed()">
-            <img class="topBarImg" src="./assets/navbar/map.svg">
-          </button>
-        </li>
-  
-        <li class="nav-item">
-          <button mat-button title="Check for mistakes" type="button" class="commands"
-            (click)="manualCheckButtonPressed()">
-            <img class="topBarImg" src="./assets/navbar/check.svg">
-          </button>
-        </li>
-  
-        <li class="nav-item hideOnMobile">
-          <button mat-button title="Help" type="button" class="commands" (click)="helpButtonPressed('btn')">
-            <img class="topBarImg" src="./assets/navbar/information.svg">
-          </button>
-        </li>
-        
-        <li class="nav-item hideOnMobile">
-          <button mat-button title="Export" type="button" class="commands" (click)="exportButtonPressed()">
-            <img class="topBarImg" src="./assets/navbar/export.svg">
-          </button>
-        </li>
 
-  
-        <li *ngIf="conversationTags.length != 0;" id="drbtn" class="nav-item" class="hideOnMobile">
+          
+        <li  id="drbtn" class="nav-item" class="hideOnMobile">
           <div class="row m-0" id="selectedFilterTag">
-            <button mat-button title="Tag" id="noTagBtn" type="button" class="col-12 commands mb-0">
-              <img class="topBarImg" src="./assets/navbar/tag.svg">
+            <button mat-button [disabled]="conversationTags.length == 0"
+            title="Tag" id="noTagBtn" type="button" class="col-12 commands mb-0">
+              <img class="topBarImg" src="./assets/icons/navbar/tag.svg">
             </button>
            
           </div>
@@ -189,19 +170,50 @@
             </li>
           </ul>
         </li>
+        
+        <li class="nav-item hideOnMobile">
+          <hr>
+        </li>
+  
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Toggle Map" type="button" class="commands" (click)="toggleMapButtonPressed()">
+            <img class="topBarImg" src="./assets/icons/navbar/map.svg">
+          </button>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button title="Check for mistakes" type="button" class="commands"
+            (click)="manualCheckButtonPressed()">
+            <img class="topBarImg" src="./assets/icons/navbar/check.svg">
+          </button>
+        </li>
+  
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Help" type="button" class="commands" (click)="helpButtonPressed('btn')">
+            <img class="topBarImg" src="./assets/icons/navbar/information.svg">
+          </button>
+        </li>
+        
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Export" type="button" class="commands" (click)="exportButtonPressed()">
+            <img class="topBarImg" src="./assets/icons/navbar/export.svg">
+          </button>
+        </li>
+
+
 
 
         <li class="nav-item" *ngIf="!enterprise && currentConversationStatus=='published'">
           <button mat-raised-button color="primary" title="Generic Link" type="button" class="commands mt-2" (click)="generateGenericLink(undefined)" [disabled]="currentConversationId == ''"
           style="padding: 0px 0px!important; min-width: 32px!important;">
-            <img class="topBarImg" src="./assets/navbar/link.svg">
+            <img class="topBarImg" src="./assets/icons/navbar/link.svg">
           </button>
         </li>
 
         <li class="nav-item" *ngIf="!enterprise && (currentConversationStatus =='published' || currentConversationStatus =='unpublished')">
           <button mat-raised-button color="primary" title="Survey results" type="button" class="commands mt-2" (click)="openInspect()" [disabled]="currentConversationId == ''"
           style="padding: 0px 0px!important; min-width: 32px!important;">
-            <img class="topBarImg" src="./assets/navbar/inspect_pie.svg">
+            <img class="topBarImg" src="./assets/icons/navbar/inspect_pie.svg">
           </button>
         </li>
   

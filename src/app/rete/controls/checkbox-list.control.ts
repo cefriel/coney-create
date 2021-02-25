@@ -67,8 +67,8 @@ const VueCheckboxListControl = Vue.component('text', {
 
     },
     resize(event) {
-      event.srcElement.style.height = "1px";
-      event.srcElement.style.height = (5 + event.srcElement.scrollHeight) + "px";
+      //event.srcElement.style.height = "1px";
+      //event.srcElement.style.height = (5 + event.srcElement.scrollHeight) + "px";
     },
     update(event) {
       this.resize(event)
@@ -253,8 +253,8 @@ const VueCheckboxListControl = Vue.component('text', {
       var listElements = this.sortable.el.children;
       for (var i = 0; i < listElements.length; i++) {
         var e = listElements[i].firstChild.firstChild;
-        e.style.height = "1px";
-        e.style.height = (5 + e.scrollHeight) + "px";
+        //e.style.height = "1px";
+        //e.style.height = (5 + e.scrollHeight) + "px";
       }
     })
   }

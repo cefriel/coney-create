@@ -320,7 +320,7 @@ div[class^="cb-move"] {
 }
 
 .del-cb-line-btn{
-    border-radius: 50%;
+    border-radius: 2px;
     font-size: 8px;
     width:100%;
     height:100%;
@@ -339,7 +339,7 @@ div[class^="cb-move"] {
 
 .del-cb-line-col{
   position: absolute;
-  right: .2rem;
+  right: .3rem;
   border-radius: 2px;
   top: 1px;
   bottom: 8px;

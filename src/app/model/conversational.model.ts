@@ -28,9 +28,10 @@ export enum ENUM_RETE_COMPONENT {
   ANSWER_OPEN = 'Answer [open]',
   ANSWER_CHECKBOX = 'Answer [checkbox]',
   QUESTION_TEXT = 'Question [text]',
+  TALK_IFRAME = 'Talk [iframe][BETA]',
   TALK_LINK = 'Talk [link]',
   TALK_TEXT = 'Talk [text]',
-  TALK_URL = 'Talk [imageUrl]'
+  TALK_IMAGE = 'Talk [imageUrl]'
 }
 
 export enum ENUM_NODE_TYPE{
@@ -98,6 +99,7 @@ export enum ENUM_ERROR {
   RES_404 = 'Resource not Found',
   RES_404_NEXT = 'Single block added',
   NOT_DELETED = 'An error occurred, chat not deleted',
+  RES_405 = 'Change the name or the project!',
   GENERIC = 'Something went wrong'
 }
 

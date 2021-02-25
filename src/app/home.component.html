@@ -129,10 +129,20 @@
         </li>
   
         <li class="nav-item">
-          <button mat-button class="commands" title="Question templates" (click)="addQuestionButtonPressed()"><img
+          <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
+          class="commands" title="Question templates" (click)="addQuestionButtonPressed()"><img
               class="topBarImg" src="./assets/icons/navbar/plus.svg"></button>
         </li>
   
+        <li class="nav-item hideOnMobile">
+          <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
+          class="commands" title="Clone nodes [BETA]" (click)="duplicateNodesPressed()"><img
+              class="topBarImg" src="./assets/icons/ic_duplicate.svg"></button>
+        </li>
+
+        <li class="nav-item hideOnMobile">
+          <hr>
+        </li>
         
         <li class="nav-item">
           <button mat-button title="Show questions" type="button" class="commands" *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">

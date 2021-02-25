@@ -60,7 +60,7 @@ export class AddQuickQuestionDialogComponent {
     } else {
       this.answersAmount = 5;
       this.content = $event;
-      this.pickedType = "slide";
+      this.pickedType = "slider";
       this.save();
     }
   }

@@ -21,7 +21,7 @@ import { AnswerSingleComponent } from './components/answer-open.component';
 import { TalkTextComponent } from './components/talk-text.component';
 import { AnswerMultipleComponent } from './components/answer-multiple.component';
 import { AnswerCheckboxComponent } from './components/answer-checkbox.component';
-import { TalkUrlComponent } from './components/talk-url.component';
+import { TalkImageComponent } from './components/talk-image.component';
 import { TalkLinkComponent } from './components/talk-link.component';
 import { VisualizationControl } from './controls/visualization.control';
 import {
@@ -31,6 +31,7 @@ import {
 import { Transform } from 'rete/types/view/area';
 import { TextTypeControl } from './controls/text-type.control';
 import { ToastrService } from 'ngx-toastr';
+import { TalkIframeComponent } from './components/talk-iframe.component';
 
 @Component({
   selector: 'app-rete',
@@ -50,6 +51,8 @@ export class ReteComponent implements AfterViewInit, OnChanges {
   checkValue;
   globalPath;
   errorFound: boolean;
+
+  autoConnect= true;
 
 
   translateCheck = true;
@@ -89,8 +92,9 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       new AnswerMultipleComponent(),
       new AnswerCheckboxComponent(),
       new TalkTextComponent(),
-      new TalkUrlComponent(),
-      new TalkLinkComponent()
+      new TalkImageComponent(),
+      new TalkLinkComponent(),
+//      new TalkIframeComponent()
     ];
 
 
@@ -168,7 +172,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
             n.data.subtype="single";
             n.data.visualization="text";
             n.addControl(new TextTypeControl(ReteComponent.editor, "text_type"));
-
+            
           } else {
 
             if(n.controls.get("text_type") != undefined){
@@ -201,11 +205,15 @@ export class ReteComponent implements AfterViewInit, OnChanges {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MULTI_ELEMENT);
         }
-        else if (connection.input.node.name === ENUM_RETE_COMPONENT.TALK_URL) {
+        else if (connection.input.node.name === ENUM_RETE_COMPONENT.TALK_IMAGE) {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MULTI_ELEMENT);
         }
         else if (connection.input.node.name === ENUM_RETE_COMPONENT.TALK_LINK) {
+          ReteComponent.editor.removeConnection(connection);
+          this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MULTI_ELEMENT);
+        }
+        else if (connection.input.node.name === ENUM_RETE_COMPONENT.TALK_IFRAME) {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MULTI_ELEMENT);
         }
@@ -268,6 +276,10 @@ export class ReteComponent implements AfterViewInit, OnChanges {
           n.data.type = "Talk";
           n.data.subtype = "text";
         }
+      }
+      
+      if(!this.autoConnect){
+        return;
       }
       
       this.lastNode = n;
@@ -339,7 +351,13 @@ export class ReteComponent implements AfterViewInit, OnChanges {
       node.vueContext.$el.parentElement.style.zIndex = this.zIndex;
     });
 
+    ReteComponent.editor.on('nodecreated', (node:any) => {
+      this.zIndex ++;
+      node.vueContext.$el.parentElement.style.zIndex = this.zIndex;
+    });
+
     ReteComponent.editor.on('click', () => {
+      console.log("click")
       var tmp: any =  ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-1];
       if(tmp!=undefined){tmp.vueContext.$el.style.transform = "scale(1)";}
       ReteComponent.editor.selected.clear();
@@ -375,6 +393,38 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     } else {
       ReteComponent.editor.view.area.zoom(tmpTransf.k - 0.10, 0, 0, "touch");
     }
+  }
+
+  public async duplicateNodes(){
+    
+    var list = ReteComponent.editor.selected.list;
+    ReteComponent.editor.selected.clear();
+    ReteComponent.editor.nodes.map(n => n.update())
+
+    list.forEach(async element => {
+
+      this.autoConnect = false;
+
+      var node: Node = element;
+      
+      var tag: string = "";
+      if(node.data.tag!=undefined){
+        tag = ""+node.data.tag;
+      }
+      var sort: any = node.data.sort;
+      var value: any = node.data.value;
+
+      var image_url: any = node.data.image_url;
+      var url: any = node.data.url;
+      
+      var newNode = await this.createNode(""+node.data.type, ""+node.data.subtype, ""+node.data.text, tag, sort, value,
+        image_url, url, node.position[0]+50, node.position[1]+50);
+
+      await ReteComponent.editor.addNode(newNode);
+
+      this.autoConnect = true;
+     
+    });
   }
 
 
@@ -431,27 +481,6 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     control = n.controls.get("sort");
     control.setValue(valueToSet);
   }
-
-  /*//methods to generate nodes, get the XY coordinates, the first nodes and an array of the answers if any
-  public async addTemplateNode(node: any, nextNodes: any, posX: number, posY: number) {
-
-    var firstNode: Node;
-    posX += 300;
-    if (node.tags == undefined) {
-      node.tags = "";
-    }
-    firstNode = await this.createNode(node.temp_type, node.temp_subtype, node.text, node.tags, node.sort, node.value, node.image_url, node.url, posX, posY);
-    await ReteComponent.editor.addNode(firstNode);
-    this.createLink = false;
-    posY -= 400;
-    for (var i = 0; i < nextNodes.length; i++) {
-      var temp = nextNodes[i]; var nextNode: Node;
-      nextNode = await this.createNode(temp.temp_type, temp.temp_subtype, temp.text, "", temp.sort, temp.value, temp.image_url, temp.url, posX + 300, posY + (i * 200))
-      await ReteComponent.editor.addNode(nextNode);
-      await ReteComponent.editor.connect(firstNode.outputs.get("out"), nextNode.inputs.get("in"));
-    }
-    this.createLink = true;
-  }*/
 
   //method for node "quick" creation, add a talk or an answer depending on the sel node
   public async addEmptyTalk(posX: number, posY: number) {

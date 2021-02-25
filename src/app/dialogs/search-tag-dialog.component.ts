@@ -103,6 +103,11 @@ export class SearchTagDialogComponent {
     this.dialogRef.close(this.tagToAdd);
   }
 
+  discard() {
+    this.dialogRef.close();
+  }
+
+
   printErr(type: string, msg: string){
     switch (type) {
       case ENUM_OPERATION_FEEDBACK.SUCCESS:

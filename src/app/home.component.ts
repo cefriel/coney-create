@@ -216,6 +216,8 @@ export class HomeComponent implements OnInit {
     }, err => {
       if (err.status === 409) {
         this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
+      } else if (err.status === 405) {
+        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
       } else {
         this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
       }
@@ -749,6 +751,10 @@ export class HomeComponent implements OnInit {
   async getConversationTags() {
     await this.delay(1000);
     this.reteComp.getConversationTags();
+  }
+
+  duplicateNodesPressed(){
+    this.reteComp.duplicateNodes();
   }
 
   reteChangedConversationTags(tags) {

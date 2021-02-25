@@ -32,10 +32,10 @@ var CustomNode = {
   }
 }
 
-export class TalkUrlComponent extends Component {
+export class TalkImageComponent extends Component {
   data: any;
   constructor() {
-    super(ENUM_RETE_COMPONENT.TALK_URL);
+    super(ENUM_RETE_COMPONENT.TALK_IMAGE);
     this.data.component = CustomNode;
   }
 

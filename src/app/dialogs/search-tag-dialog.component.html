@@ -29,7 +29,7 @@
 
   <div class="row m-1 align-items-center" style="max-height: 200px;">
     <p class="m-0 text-left col-7 gray-italic text-center" *ngIf="!tagsAdded; else showAddedTags">No tag added yet</p>
-    <button mat-button *ngIf="!tagsAdded" class="col-5" (click)="tagsSelected($event)">Close</button>
+    <button mat-button *ngIf="!tagsAdded" class="col-5" (click)="discard()">Close</button>
     <ng-template #showAddedTags>
       <div class="col-7">
         <button mat-raised-button color="accent" type="button" (click)="deleteOne($event)" id="aboutToBeAddedTag" >{{tagToAdd}}</button>

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { UtilsService } from '../services/utils.service';
 
 @Component({
     selector: 'app-share-survey-dialog',
@@ -13,7 +13,7 @@ export class ShareSurveyDialogComponent {
 
     constructor(public dialogRef: MatDialogRef<ShareSurveyDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) data,
-        private toastr: ToastrService){
+        private utilsService: UtilsService){
         if(data!=undefined){
             this.genericLink = data;
         }
@@ -32,15 +32,11 @@ export class ShareSurveyDialogComponent {
           document.execCommand('copy');
           document.body.removeChild(selBox);
     
-          this.printSuccess("Copied to clipboard!");
+          this.utilsService.feedbackMessage("info", "Copied to clipboard!");
       }
 
     close(){
         this.dialogRef.close();
-    }
-
-    printSuccess(msg: string){
-        this.toastr.info(msg, '');
     }
     
 }

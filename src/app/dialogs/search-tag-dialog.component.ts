@@ -2,8 +2,8 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { BackendService } from '../services/backend.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { ENUM_OPERATION_FEEDBACK, ENUM_ERROR } from '../model/conversational.model';
+import { UtilsService } from '../services/utils.service';
 
 @Component({
   selector: 'app-search-tag-dialog',
@@ -19,7 +19,10 @@ export class SearchTagDialogComponent {
   currentTag = "";
   tagToAdd = "";
 
-  constructor(private cd : ChangeDetectorRef, private backend: BackendService, public dialogRef: MatDialogRef<SearchTagDialogComponent>, private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) data) {
+  constructor(private cd : ChangeDetectorRef, 
+    private backend: BackendService, 
+    public dialogRef: MatDialogRef<SearchTagDialogComponent>, 
+    private utilsService: UtilsService, @Inject(MAT_DIALOG_DATA) data) {
     this.startSearch();
     if(data!=undefined && data != ""){
       this.tagToAdd = data;
@@ -50,9 +53,9 @@ export class SearchTagDialogComponent {
     }
    }, err => {
     if (err.status === 409) {
-      this.printErr(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
+      this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
     } else {
-      this.printErr(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
+      this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
     }
   });
   }
@@ -105,23 +108,5 @@ export class SearchTagDialogComponent {
 
   discard() {
     this.dialogRef.close();
-  }
-
-
-  printErr(type: string, msg: string){
-    switch (type) {
-      case ENUM_OPERATION_FEEDBACK.SUCCESS:
-        this.toastr.success(msg, '');
-        break;
-      case ENUM_OPERATION_FEEDBACK.INFO:
-        this.toastr.info(msg, '');
-        break;
-      case ENUM_OPERATION_FEEDBACK.WARNING:
-        this.toastr.warning(msg, '');
-        break;
-      case ENUM_OPERATION_FEEDBACK.ERROR:
-        this.toastr.error(msg, '');
-        break;
-    }
   }
 }

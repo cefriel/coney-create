@@ -30,13 +30,12 @@ import {
 } from '../model/conversational.model';
 import { Transform } from 'rete/types/view/area';
 import { TextTypeControl } from './controls/text-type.control';
-import { ToastrService } from 'ngx-toastr';
 import { TalkIframeComponent } from './components/talk-iframe.component';
 
 @Component({
   selector: 'app-rete',
   templateUrl: './rete.component.html',
-  styleUrls: ['./rete.component.css']
+  styleUrls: ['./rete.component.scss']
 })
 export class ReteComponent implements AfterViewInit, OnChanges {
 

@@ -13,19 +13,19 @@ import { PrintDialogComponent } from './dialogs/print-dialog.component';
 import { ENUM_CHAT, ENUM_CONV_STATUS, ENUM_ERROR, RETE_ID, ENUM_OPERATION_FEEDBACK, ENUM_WARNING, ENUM_SUCCESS, ENUM_NODE_COMPONENT } from './model/conversational.model';
 import { Chat } from './model/chat';
 import { saveAs } from 'file-saver';
-import { ToastrService } from 'ngx-toastr';
 import { ReteComponent } from './rete/rete.component';
 
 
 import * as CryptoJS from 'crypto-js';
 import { environment } from '../environments/environment';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
+import { UtilsService } from './services/utils.service';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 
 export class HomeComponent implements OnInit {
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private backend: BackendService,
     public dialog: MatDialog,
-    private toastr: ToastrService,
+    private utilsService: UtilsService,
     private route: ActivatedRoute, 
     private router: Router) { }
 
@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit {
         if (status !== undefined) {
           if (status === 'save') {
             if (this.currentConversationTitle === '') {
-              this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
+               this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
             } else {
               this.saveConversation();
               this.openNewConversation();
@@ -206,15 +206,15 @@ export class HomeComponent implements OnInit {
 
       this.updateButtons();
 
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.SAVED);
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.SAVED);
 
     }, err => {
       if (err.status === 409) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
       } else if (err.status === 405) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
       } else {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
       }
 
     });
@@ -309,14 +309,14 @@ export class HomeComponent implements OnInit {
             this.editorJson = this.editedJson;
             this.updateButtons();
 
-            this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.SAVED);
+             this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.SAVED);
             sessionStorage.setItem("conv", this.currentConversationId);
             
           }, err => {
             if (err.status === 409) {
-              this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_ERROR.RES_409);
+               this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_ERROR.RES_409);
             } else {
-              this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
+               this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.GENERIC);
             }
           
           }
@@ -331,7 +331,7 @@ export class HomeComponent implements OnInit {
     this.previewButtonEnabled = false;
 
     if (this.currentConversationId === null || this.currentConversationId === "") {
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, "Save Conversation first");
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, "Save Conversation first");
       this.loadingInProgress = false;
       return;
     }
@@ -355,7 +355,7 @@ export class HomeComponent implements OnInit {
         window.open(url, "newwindow", "width=350,height=600");
 
       } else {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, "Something went wrong :(");
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, "Something went wrong :(");
       }
       this.loadingInProgress = false;
       this.previewButtonEnabled = true;
@@ -371,38 +371,38 @@ export class HomeComponent implements OnInit {
     n = this.reteComp.checkForMistakes();
     if (n == 0 || n == 1 || n == 2 || n == 3 || n == 4) {
       if (n == 0) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.NO_STARTS);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.NO_STARTS);
       } else if (n == 1) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.ISOLATED_NODE);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.ISOLATED_NODE);
       } else if (n == 2) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MULTIPLE_STARTS);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MULTIPLE_STARTS);
       } else if (n == 3) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.QUESTION_END);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.QUESTION_END);
       } else if (n == 4) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.FIELD_MISSING);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.FIELD_MISSING);
       }
 
     } /*else if (!this.reteComp.checkForLoops(n, array)) {  //TOO HEAVY WITH LONG CONVERSATIONS
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.LOOPS);
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.LOOPS);
     } */else {
 
       var x = this.reteComp.checkForMultipleValues(n);
       this.reteComp.globalPath = [];
       if (x == 1) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.SAME_VALUE);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.SAME_VALUE);
         return false;
       } else if (x == 2) {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.NO_TEXT);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.NO_TEXT);
         return false;
       } else {
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_WARNING.NO_ERRORS);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_WARNING.NO_ERRORS);
         return true;
       }
 
     }
 
     if (this.currentConversationTitle === '') {
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
       return false;
     }
   }
@@ -429,7 +429,7 @@ export class HomeComponent implements OnInit {
         this.loadingInProgress = false;
         if (res !== undefined && res != 0) {
           if (res === 409) {
-            this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
+             this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.RES_409);
           } else {
             this.currentConversationId = res[ENUM_CHAT.CONV_ID];
             this.currentConversationStatus = res[ENUM_CHAT.STATUS];
@@ -445,7 +445,7 @@ export class HomeComponent implements OnInit {
 
             this.updateButtons();
 
-            this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.PUBLISHED);
+             this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.PUBLISHED);
           }
         } else {
           this.loadingInProgress = false;
@@ -470,7 +470,7 @@ export class HomeComponent implements OnInit {
         }
 
         this.updateButtons();
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.UNPUBLISHED);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.UNPUBLISHED);
       }
     );
   }
@@ -554,9 +554,9 @@ export class HomeComponent implements OnInit {
 
           this.updateButtons();
 
-          this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.DELETED);
+           this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, ENUM_SUCCESS.DELETED);
         } else {
-          this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.NOT_DELETED);
+           this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.ERROR, ENUM_ERROR.NOT_DELETED);
         }
       }
     });
@@ -581,7 +581,7 @@ export class HomeComponent implements OnInit {
             if (status !== undefined) {
               if (status === 'save') {
                 if (this.currentConversationTitle === '') {
-                  this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
+                   this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MISSING_TITLE);
                 } else {
                   this.saveConversation();
                   
@@ -654,7 +654,7 @@ export class HomeComponent implements OnInit {
     this.backend.getRequest(endpoint).subscribe(res => {
       
       if(res == null || JSON.stringify(res) == ""){
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, "Failed to open the file");
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, "Failed to open the file");
         this.loadingInProgress = false;
         return;
       }
@@ -679,7 +679,7 @@ export class HomeComponent implements OnInit {
       this.loadingInProgress = false;
     }, err => {
       this.loadingInProgress = false;
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_ERROR.GENERIC);
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_ERROR.GENERIC);
     });
 
   }
@@ -786,7 +786,7 @@ export class HomeComponent implements OnInit {
   }
 
   reteMessage(obj: Object) {
-    this.operationFeedbackMessage(obj['type'], obj['msg']);
+     this.utilsService.feedbackMessage(obj['type'], obj['msg']);
   }
 
   keyPressed($event) {
@@ -878,32 +878,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public operationFeedbackMessage(type: string, msg: string) {
-    let audio = new Audio();
-
-    switch (type) {
-      case ENUM_OPERATION_FEEDBACK.SUCCESS:
-        this.toastr.success(msg, '');
-        audio.src = './assets/sounds/SuccessSound.mp3';
-        break;
-      case ENUM_OPERATION_FEEDBACK.INFO:
-        this.toastr.info(msg, '');
-        audio.src = './assets/sounds/InfoSound.mp3';
-        break;
-      case ENUM_OPERATION_FEEDBACK.WARNING:
-        this.toastr.warning(msg, '');
-        audio.src = './assets/sounds/WarningSound.mp3';
-        break;
-      case ENUM_OPERATION_FEEDBACK.ERROR:
-        this.toastr.error(msg, '');
-        audio.src = './assets/sounds/ErrorSound.mp3';
-        break;
-    }
-
-    audio.load();
-    audio.play();
-  }
-
   generateGenericLink(prev){
    
     var chatUrl = environment.baseUrl + "/chat/?data=";
@@ -930,7 +904,7 @@ export class HomeComponent implements OnInit {
 
   openInspect(){
     if(this.currentConversationStatus == "saved"){
-      this.operationFeedbackMessage("warning", "Publish the conversation first");
+       this.utilsService.feedbackMessage("warning", "Publish the conversation first");
       return;
     }
     var url = environment.baseUrl + "/inspect/#/?data="+this.currentConversationId;
@@ -951,7 +925,7 @@ export class HomeComponent implements OnInit {
       document.execCommand('copy');
       document.body.removeChild(selBox);
 
-      this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, "Copied to clipboard!");
+       this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.INFO, "Copied to clipboard!");
       document.getElementById("modal-generic-link").style.display = "none";
   }
 

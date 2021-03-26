@@ -1,24 +1,11 @@
-@import url("./assets/font/font_stylesheet.css");
-@import url("coney-theme.css");
-@import url("styles-rete.css");
-@import url("styles-mobile.css");
-
 html, body {
   display: block;
   height: 100%;
   margin: 0;
-  font-family: 'Euclid Circular A',Quicksand,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
 body{
   background: url(./assets/other/pattern-coney-light.png);
-}
-app-root{
-  font-family: 'Euclid Circular A',Quicksand,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-}
-
-.mat-button, .mat-select, .mat-option, .mat-input, .mat-form-field{
-  font-family: 'Euclid Circular A',Quicksand,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"!important;
 }
 
 textarea{

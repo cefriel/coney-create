@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class UtilsService {
+
+    constructor(private _snackBar: MatSnackBar){}
 
     languages = [{ lang: "Afrikaans", tag: "af" }, { lang: "Albanian ", tag: "sp" }, { lang: "Arabic", tag: "ar" }, { lang: "Basque", tag: "eu" },
         { lang: "Byelorussian ", tag: "be" }, { lang: "български език", tag: "bg" }, { lang: "Català", tag: "va" }, { lang: "Hrvatski", tag: "hr" }, { lang: "Čeština", tag: "cs" },
@@ -24,4 +27,13 @@ export class UtilsService {
       getLanguageArray(){
           return this.languages;
       }
+
+
+      public feedbackMessage(type: string, msg: string) {
+        this._snackBar.open(msg, "", {
+          duration: 4000,
+          panelClass: [type+'-snackbar']
+        });
+    
+    }
 }

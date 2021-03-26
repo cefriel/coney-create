@@ -1,0 +1,94 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$coney-palette: (
+    50 : #e6e8ef,
+    100 : #c0c5d6,
+    200 : #969ebb,
+    300 : #6c779f,
+    400 : #4d598b,
+    500 : #012060,
+    600 : #012060,
+    700 : #012060,
+    800 : #012060,
+    900 : #012060,
+    A100 : #ffe494,
+    A200 : #fddd7d,
+    A400 : #fed352,
+    A700 : #ffc107,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$coney-app-primary: mat-palette($coney-palette);
+$coney-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$coney-app-warn:    mat-palette($mat-red);
+
+$coney-typography: mat-typography-config(
+  $font-family: "'Lexend', monospace",
+  $headline: mat-typography-level(32px, 48px, 600),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+$coney-app-theme: mat-light-theme((
+  color: (
+    primary: $coney-app-primary,
+    accent: $coney-app-accent,
+    warn: $coney-app-warn,  
+  )
+));
+
+@include angular-material-theme($coney-app-theme);
+@include angular-material-typography($coney-typography);
+
+//snackbar
+.success-snackbar{
+  background-color: var(--success-color);
+  color: white;
+  text-align: center;
+  justify-content: center;
+}
+.info-snackbar{
+  background-color: var(--info-color);
+  color: white;
+  text-align: center;
+}
+.warning-snackbar{
+  background-color:  var(--warning-color);
+  color: white;
+  text-align: center;
+}
+.error-snackbar{
+  background-color:  var(--error-color);
+  color: white;
+  text-align: center;
+}
+
+//other generic
+:root {
+  --primary-color: #012060;
+  --accent-color: #ffc107;
+  --success-color: #00C851;
+  --info-color: #33b5e5;
+  --warning-color: #ffbb33;
+  --error-color: #ff4444;
+}
+
+.mat-toolbar{
+  background-color: white!important;
+}

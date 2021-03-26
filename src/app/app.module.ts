@@ -17,8 +17,6 @@ import { BackendService } from './services/backend.service';
 import { ReteComponent } from './rete/rete.component';
 import { AppRoutingModule } from './routing.module';
 
-import { ColorPickerModule } from 'ngx-color-picker';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -36,7 +34,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule } from 'ngx-toastr';
 import { NgxPrintModule } from 'ngx-print';
 
 import { LoginComponent } from './auth/login/login.component';
@@ -44,6 +41,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthHtppInterceptorService } from './services/auth-http-interceptor.service';
 import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 import { UtilsService } from './services/utils.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -76,6 +74,7 @@ import { UtilsService } from './services/utils.service';
     MatSliderModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSnackBarModule,
     MatButtonModule,
     MatRadioModule,
     MatInputModule,
@@ -85,8 +84,6 @@ import { UtilsService } from './services/utils.service';
     NgbModule,
     RouterModule,
     NgxPrintModule,
-    ColorPickerModule,
-    ToastrModule.forRoot()
   ],
   exports: [
     MatDialogModule,

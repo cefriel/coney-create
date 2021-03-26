@@ -17,7 +17,6 @@ export enum ENUM_CHAT {
   CONV_ID = 'conversationId',
   STATUS = 'status',
   TITLE = 'title',
-  ACCESS_LEVEL = "accessLevel",
   PROJECT = 'projectName',
   LANGUAGE = 'lang'
 }

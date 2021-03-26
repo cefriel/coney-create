@@ -19,9 +19,7 @@ import { ReteComponent } from './rete/rete.component';
 
 import * as CryptoJS from 'crypto-js';
 import { environment } from '../environments/environment';
-import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
-import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
 
 
 @Component({
@@ -58,7 +56,6 @@ export class HomeComponent implements OnInit {
   currentConversationProject = '';
   currentConversationTitle = '';
   currentConversationLanguage = '';
-  currentAccessLevel;
 
   position_x = 80;
   position_y = 200;
@@ -145,7 +142,6 @@ export class HomeComponent implements OnInit {
     this.currentConversationStatus = '';
     this.currentConversationTitle = '';
     this.currentConversationProject = '';
-    this.currentAccessLevel = undefined;
     this.currentConversationLanguage = '';
     this.editorJson = JSON.parse(JSON.stringify(newChat));
     this.node.id = 1;
@@ -184,7 +180,7 @@ export class HomeComponent implements OnInit {
   }
 
   saveButtonPressed() {
-    if (environment.enterprise && (this.currentConversationId === '' || this.currentConversationTitle === '' || this.currentAccessLevel == undefined || this.currentConversationProject == "" || this.currentConversationLanguage === '')) {
+    if (environment.enterprise && (this.currentConversationId === '' || this.currentConversationTitle === '' || this.currentConversationProject == "" || this.currentConversationLanguage === '')) {
       this.saveAsButtonPressed();
     } else if(!environment.enterprise && (this.currentConversationId === '' || this.currentConversationTitle === '' || this.currentConversationLanguage === '')){
       this.saveAsButtonPressed();
@@ -198,7 +194,6 @@ export class HomeComponent implements OnInit {
     this.editedJson[ENUM_CHAT.STATUS] = this.currentConversationStatus;
     this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
     this.editedJson[ENUM_CHAT.PROJECT] = this.currentConversationProject;
-    this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = this.currentAccessLevel;
     this.editedJson[ENUM_CHAT.LANGUAGE] = this.currentConversationLanguage;
 
     this.reteComp.getConversationTags();
@@ -284,9 +279,7 @@ export class HomeComponent implements OnInit {
 
         if(environment.enterprise){
           this.currentConversationProject = res.projectName;
-          this.currentAccessLevel = res.accessLevel;
           this.editedJson[ENUM_CHAT.PROJECT] = res.projectName;
-          this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = res.accessLevel;
         }
         
         this.currentConversationLanguage = res.lang;
@@ -309,7 +302,6 @@ export class HomeComponent implements OnInit {
 
             if(environment.enterprise){
               this.currentConversationProject = res[ENUM_CHAT.PROJECT];
-              this.currentAccessLevel = res[ENUM_CHAT.ACCESS_LEVEL];
             }
             
             this.currentConversationTitle = title;
@@ -354,7 +346,6 @@ export class HomeComponent implements OnInit {
     this.editedJson[ENUM_CHAT.STATUS] = this.currentConversationStatus;
     this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
     this.editedJson[ENUM_CHAT.PROJECT] = this.currentConversationProject;
-    this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = this.currentAccessLevel;
 
     this.backend.postJson('/create/previewConversation', this.editedJson).subscribe(res => {
       if (res["success"] == true) {
@@ -491,7 +482,6 @@ export class HomeComponent implements OnInit {
     this.editedJson[ENUM_CHAT.STATUS] = this.currentConversationStatus;
     this.editedJson[ENUM_CHAT.TITLE] = this.currentConversationTitle;
     this.editedJson[ENUM_CHAT.PROJECT] = this.currentConversationProject;
-    this.editedJson[ENUM_CHAT.ACCESS_LEVEL] = this.currentAccessLevel;
     this.editedJson[ENUM_CHAT.LANGUAGE] = this.currentConversationLanguage;
 
     var res = JSON.stringify(this.editedJson);
@@ -510,9 +500,7 @@ export class HomeComponent implements OnInit {
     this.currentConversationStatus = " ";
     this.currentConversationTitle = json[ENUM_CHAT.TITLE];
     this.currentConversationProject = "";
-    this.currentAccessLevel = "";
     json[ENUM_CHAT.PROJECT] = "";
-    json[ENUM_CHAT.ACCESS_LEVEL] = "";
    
 
     this.currentConversationLanguage = "";
@@ -561,7 +549,6 @@ export class HomeComponent implements OnInit {
           this.currentConversationStatus = '';
           this.currentConversationId = '';
           this.currentConversationLanguage = '';
-          this.currentAccessLevel = undefined;
 
           this.editorJson = JSON.parse(JSON.stringify(newChat));
 
@@ -607,7 +594,6 @@ export class HomeComponent implements OnInit {
                 }
               } else if (status === 'discard') {
                 this.currentConversationProject = selectedChat.projectName;
-                this.currentAccessLevel = selectedChat.accessLevel;
                 
                 if(JSON.parse(JSON.stringify(selectedChat))["import"] != undefined){
                   this.importConversation(selectedChat.json); 
@@ -619,7 +605,6 @@ export class HomeComponent implements OnInit {
           });
         } else {
           this.currentConversationProject = selectedChat.projectName;
-          this.currentAccessLevel = selectedChat.accessLevel;
           
           if(JSON.parse(JSON.stringify(selectedChat))["import"] != undefined){
             this.importConversation(selectedChat.json); 
@@ -632,51 +617,11 @@ export class HomeComponent implements OnInit {
     
   }
 
-  styleDialogButtonPressed(){
-    const dialogRef = this.dialog.open(StylizeDialogComponent, {
-      width: '90%',
-      minHeight: '110px',
-      height: '90vh',
-      data: {
-        conversationId: this.currentConversationId,
-        conversationTitle: this.currentConversationTitle
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(res => {
-      if(res=="style_updated"){
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, "Translation successfully uploaded");
-      }
-    });
-  }
-
-  translationDialogButtonPressed(){
-    
-    const dialogRef = this.dialog.open(TranslationDialogComponent, {
-      width: '90%',
-      minHeight: '110px',
-      height: '90vh',
-      data: {
-        conversationId: this.currentConversationId,
-        conversationTitle: this.currentConversationTitle,
-        defaultLanguage: this.currentConversationLanguage
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(res => {
-      if(res=="translation_uploaded"){
-        this.operationFeedbackMessage(ENUM_OPERATION_FEEDBACK.SUCCESS, "Translation successfully uploaded");
-      }
-    });
-
-
-  }
-
   addQuestionButtonPressed() {
 
     const dialogRef = this.dialog.open(AddQuickQuestionDialogComponent, {
       maxWidth: '800px',
-      height: '500px',
+      maxHeight: '80vh',
       data: {}
     });
 
@@ -720,7 +665,6 @@ export class HomeComponent implements OnInit {
       this.currentConversationStatus = json[ENUM_CHAT.STATUS];
       this.currentConversationTitle = json[ENUM_CHAT.TITLE];
       this.currentConversationProject = json[ENUM_CHAT.PROJECT];
-      this.currentAccessLevel = json[ENUM_CHAT.ACCESS_LEVEL];
       this.currentConversationLanguage = json[ENUM_CHAT.LANGUAGE];
 
       this.editorJson = json;

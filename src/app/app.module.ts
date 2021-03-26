@@ -12,7 +12,6 @@ import { PublishDialogComponent } from './dialogs/publish-dialog.component';
 import { SaveAsDialogComponent } from './dialogs/save-as-dialog.component';
 import { SearchConvDialogComponent } from './dialogs/search-conv-dialog.component';
 import { SearchTagDialogComponent } from './dialogs/search-tag-dialog.component';
-import { TranslationDialogComponent } from './dialogs/translation-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
 import { BackendService } from './services/backend.service';
 import { ReteComponent } from './rete/rete.component';
@@ -45,7 +44,6 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthHtppInterceptorService } from './services/auth-http-interceptor.service';
 import { ImportConversationDialogComponent } from './dialogs/import-conversation-dialog.component';
 import { UtilsService } from './services/utils.service';
-import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,10 +57,8 @@ import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
     SaveAsDialogComponent,
     SearchConvDialogComponent,
     SearchTagDialogComponent,
-    TranslationDialogComponent,
     ShareSurveyDialogComponent,
     ImportConversationDialogComponent,
-    StylizeDialogComponent,
     ReteComponent,
     LoginComponent,
     LogoutComponent
@@ -113,10 +109,8 @@ import { StylizeDialogComponent } from './dialogs/stylize-dialog.component';
     AddQuickQuestionDialogComponent,
     PrintDialogComponent,
     SearchTagDialogComponent,
-    TranslationDialogComponent,
     ShareSurveyDialogComponent,
     ImportConversationDialogComponent,
-    StylizeDialogComponent
   ]
 })
 export class AppModule { }

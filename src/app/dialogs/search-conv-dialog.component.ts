@@ -64,7 +64,16 @@ export class SearchConvDialogComponent {
     this.backend.getRequest(endpoint).subscribe(json => {
       
       this.isLoading = false;
-      this.conversations = JSON.parse(json);
+      this.conversations = [];
+      var tmpJson = JSON.parse(json);
+
+      for(var i = 0; i<tmpJson.length; i++){
+        if(tmpJson[i].accessLevel == 3){
+          this.conversations.push(tmpJson[i]);
+        }
+      }
+      console.log(this.conversations);
+
       this.conversations.sort(function(a, b) {
         return a.conversationTitle.toLowerCase().localeCompare(b.conversationTitle.toLowerCase());
       });

@@ -1,13 +1,15 @@
 <div class="row justify-content-center">
-  <h4 class="p-1 text-center" style="width: 100%">tag your question</h4>
+  <h4 class="p-1 mb-2" style="width: 100%">Tag your question</h4>
   <div id="tags" class="row m-1  justify-content-center">
     <div class="row ml-0 mr-0 mb-2" style="position:relative">
-      <mat-form-field style="width: 100%;">
-        <input matInput id="tagsInput" class="text-center" type="text" [(ngModel)]="currentTag"
-        (input)="filterTags($event.target.value)" placeholder="Search or create new" />
+      <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Search or create new</mat-label>
+        <input matInput id="tagsInput" type="text" [(ngModel)]="currentTag"
+        (input)="filterTags($event.target.value)"/>
       </mat-form-field>
       
-      <button mat-raised-button color="primary" style="position: absolute; right: 0px;"
+      <button mat-raised-button color="primary" style="position: absolute;right: 1rem;
+      top: 1rem;"
         (click)="addTag(undefined)">+ new</button>
     </div>
     <br>

@@ -41,18 +41,6 @@
           
           <div id="nav-right">
 
-            <h6 id="projectFieldHome" style="display: inline-block!important; padding-right: 10px; margin-bottom: 0px!important;">{{currentConversationLanguage}}</h6>
-            <button mat-raised-button *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" 
-            (click)="translationDialogButtonPressed()" class="ml-1 mr-2" type="button" 
-            style="padding: 0px 8px!important; min-width: 32px!important;" title="Chat translation">
-              <img class="topBarImg" src="./assets/icons/navbar/translation.svg">
-            </button>
-
-            <button mat-raised-button *ngIf="currentConversationStatus != ''" (click)="styleDialogButtonPressed()" class="ml-1 mr-3" 
-            type="button" style="padding: 0px 8px!important; min-width: 32px!important;" title="Chat style">
-              <img class="topBarImg" src="./assets/icons/ic_style.svg">
-            </button>
-
             <button mat-raised-button 
               *ngIf="(publishButtonEnabled && (currentConversationStatus === 'saved'));  else publishButtonDisabled"
               type="button" class="ml-1 mr-1" style="text-transform: lowercase!important; background-color: #4caf50; color: white; padding: 0px 8px!important;" 

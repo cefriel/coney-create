@@ -3,32 +3,23 @@
   <p style="color: red;" *ngIf="titleFieldEmpty || projectFieldEmpty || languageFieldEmpty">{{errorMessage}}</p>
   <div class="form-group">
 
-    <mat-form-field style="width: 100%;">
+    <mat-form-field style="width: 100%;"  appearance="outline">
       <input matInput class="form-control form-control-lg" [(ngModel)]="titleValue" (selectionChange)="changed()" 
     [ngModelOptions]="{standalone: true}" type="text" placeholder="Title" maxlength="100">
     </mat-form-field>
   
   </div>
   
-  <mat-form-field style="width: 100%;" *ngIf="showProject">
+  <mat-form-field style="width: 100%;" *ngIf="showProject" appearance="outline">
     <mat-label>Choose a Project</mat-label>
-    <mat-select [(value)]="projectValue" (selectionChange)="projectChanged()">
+    <mat-select [(value)]="projectValue">
       <mat-option *ngFor="let project of projects" [value]="project">
         {{project.projectName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field style="width: 100%;" *ngIf="showProject">
-    <mat-label>Access Level</mat-label>
-    <mat-select [(value)]="levelValue">
-      <mat-option *ngFor="let level of levels" [value]="level.value">
-        {{level.tag}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field style="width: 100%;">
+  <mat-form-field style="width: 100%;" appearance="outline">
     <mat-label>Language</mat-label>
     <mat-select [(value)]="languageValue">
       <mat-option *ngFor="let language of languages" [value]="language">

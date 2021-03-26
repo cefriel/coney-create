@@ -21,7 +21,6 @@ export class SaveAsDialogComponent implements OnInit {
   showProject = environment.enterprise;
 
   projectValue = { projectName: "", accessLevel: 0 };
-  levelValue = 1;
   errorMessage = "All fields are required";
   projects = [];
   levels = [ { value: 1, tag: "project" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }];
@@ -62,23 +61,15 @@ export class SaveAsDialogComponent implements OnInit {
     let endpoint = '/create/getCustomerProjects';
     this.backend.getRequest(endpoint).subscribe(res => {
       const json = JSON.parse(res);
-      this.projects = json;
+      for(var i = 0; i<json.length; i++){
+        if(json[i].accessLevel == 3){
+          this.projects.push(json[i]);
+        }
+      }
       this.projectValue = this.projects[0];
     }, err => {
       console.log("No projects found");
     });
-  }
-
-  projectChanged() {
-    if (this.projectValue.accessLevel == 3) {
-      this.levels = [
-        { value: 1, tag: "public" }, { value: 2, tag: "restricted" }, { value: 3, tag: "confidential" }
-      ];
-    } else if (this.projectValue.accessLevel == 2) {
-      this.levels = [ { value: 1, tag: "public" }, { value: 2, tag: "restricted" }];
-    } else {
-      this.levels = [ { value: 1, tag: "public" }];
-    }
   }
 
   changed() {
@@ -87,7 +78,6 @@ export class SaveAsDialogComponent implements OnInit {
   }
 
   save() {
-
 
     this.titleFieldEmpty = this.titleValue === '';
     this.languageFieldEmpty = this.languageValue.tag === '';
@@ -98,8 +88,10 @@ export class SaveAsDialogComponent implements OnInit {
 
       if (!this.titleFieldEmpty && !this.projectFieldEmpty && !this.languageFieldEmpty) {
         var resEnterprise = {
-          title: this.titleValue, projectName: this.projectValue.projectName,
-          accessLevel: this.levelValue, overwrite: false, lang: this.languageValue.tag
+          title: this.titleValue, 
+          projectName: this.projectValue.projectName,
+          overwrite: false, 
+          lang: this.languageValue.tag
         };
         console.log(this.oldTitle);
         console.log(this.titleValue);

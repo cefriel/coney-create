@@ -6,7 +6,7 @@ const VueValueControl = Vue.component('num', {
   template: `
   
   <div style="width: 100%; position: relative" class="row m-0 checkbox">
-                  <span class="input-group-text p-0" style="position: absolute; z-index: 1; left: 32px; top: 3px; color: #7c7c7c"> Map Value </span>
+                  <span class="input-group-text p-0" style="position: absolute; z-index: 1; left: 32px; top: 7px; color: #7c7c7c"> Map Value </span>
                   <input v-model="valueChecked" type="checkbox" @input="manageValue()" class="otherCheckbox">
                   <input type="number" :disabled="!valueChecked" :readonly="readonly" :value="value"  class="customInput col-12"
                       style="padding-left: 36px; text-align: right; padding-right: 2px;" @input="change($event)" min="0"  id="otherInput" placeholder="">

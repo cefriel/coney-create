@@ -1,13 +1,15 @@
 import { Component, Input, Output } from 'rete';
-import { TalkType } from '../sockets';
-import { TextAreaControl } from '../controls/text-area.control';
-import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
+import { QuestionAnswerType, TalkType } from '../sockets';
+import { CheckboxListControl } from '../controls/checkbox-list.control';
+import { ENUM_RETE_COMPONENT } from '../../../model/conversational.model';
+import { PointsFieldControl } from '../controls/points-field.control';
 import VueRender from 'rete-vue-render-plugin';
+import { MaxAnswControl } from '../controls/max-answers.control';
 
 var CustomNode = {
-  template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
+  template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">Message</h6>
+  <h4 class="m-0">{{node.data.type}}</h4>
   <small style="color: #777">{{node.data.subtype}}</small>
   </div>
 
@@ -34,24 +36,24 @@ var CustomNode = {
 }
 
 
-export class TalkTextComponent extends Component {
+export class AnswerCheckboxComponent extends Component {
   data: any;
   constructor() {
-    super(ENUM_RETE_COMPONENT.TALK_TEXT);
+    super(ENUM_RETE_COMPONENT.ANSWER_CHECKBOX);
     this.data.component = CustomNode;
   }
 
-
   builder(node) {
-    node.data.type = "Talk";
-    node.data.subtype = "text";
 
+    node.data.type = "Answer";
+    node.data.subtype = "checkbox";
 
-    const in1 = new Input('in', 'Talk/Answer', TalkType, true);
+    const in1 = new Input('in', 'Question', QuestionAnswerType, false);
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
-    return node
-      .addInput(in1)
-      .addControl(new TextAreaControl(this.editor, 'text'))
+    return node.addInput(in1)
+      .addControl(new MaxAnswControl(this.editor, 'max_answer'))
+      .addControl(new CheckboxListControl(this.editor, 'checkbox'))
+      //.addControl(new PointsFieldControl(this.editor, "points"))
       .addOutput(out1);
   }
 

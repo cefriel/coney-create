@@ -1,22 +1,26 @@
 <div style="height:100%; position: relative;">
   <div class="row align-items-center m-0 p-0">
 
-      <button mat-button title="Import" type="button" class="commands" (click)="importButtonPressed()" style="position: absolute; top: 0rem; right: 0rem;">
-        <img class="topBarImg" src="./assets/icons/navbar/import.svg">
+      <button mat-button title="Import" type="button" class="commands" (click)="importButtonPressed()" 
+      style="position: absolute; top: -0.5rem;
+      right: -1rem;">
+        <mat-icon class="material-icons-outlined">file_upload</mat-icon>
       </button>
 
-    <p class="pl-2" style="width: 100%; font-size: 20px">Open Conversation</p>
+    <h2 style="width: 100%;margin: 0;
+    font-weight: 500;">Open Conversation</h2>
 
 
-    <form class="row" style="margin: 0px; width: 100%">
-      <div class="col-12 mt-3">
+    <form class="row" style="margin: 0px; width: 100%; margin-top: 1rem!important;">
+      <div style="width: 100%;">
         <mat-form-field  style="width: 100%;" appearance="outline">
           <mat-label>Title</mat-label>
         <input matInput id="titleInput" [(ngModel)]="titleValue" [ngModelOptions]="{standalone: true}" style="width: 100%;"
           type="text" (input)="titleSelectionChanged()">
         </mat-form-field>
       </div>
-      <div *ngIf="showProject" class="col-6">
+      <div *ngIf="showProject" style="width: 50%; padding-right: 5px;
+      box-sizing: border-box;">
           <mat-form-field style="width: 100%;" appearance="outline">
             <mat-label>Status</mat-label>
               <mat-select [(value)]="selectedStatus" (selectionChange)="selectionChanged()">
@@ -26,7 +30,8 @@
               </mat-select>
             </mat-form-field>
       </div>
-      <div *ngIf="showProject" class="col-6">
+      <div *ngIf="showProject" style="width: 50%; padding-left: 5px;
+      box-sizing: border-box;">
         <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Projects</mat-label>
             <mat-select [(value)]="selectedProject" (selectionChange)="selectionChanged()">

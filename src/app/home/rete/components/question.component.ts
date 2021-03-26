@@ -3,14 +3,14 @@ import { QuestionAnswerType, TalkType } from '../sockets';
 import {TextAreaControl} from '../controls/text-area.control';
 import {TagFieldControl} from '../controls/tag-field.control';
 import {MatDialog} from '@angular/material/dialog';
-import {ENUM_RETE_COMPONENT} from '../../model/conversational.model';
+import {ENUM_RETE_COMPONENT} from '../../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
 import { OptionalControl } from '../controls/optional.control';
 
 
 var CustomNode = {
   template: `<div class="node questionNode" :class="[selected(), node.name] | kebab">
-    <div class="title"><h6>{{node.data.type}}</h6></div>
+    <div class="title"><h4 class="m-0">{{node.data.type}}</h4></div>
 
     <!-- Inputs-->
     <div class="input" v-for="input in inputs()" :key="input.key">

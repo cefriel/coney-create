@@ -40,10 +40,11 @@ $coney-app-accent:  mat-palette($mat-pink, A200, A100, A400);
 $coney-app-warn:    mat-palette($mat-red);
 
 $coney-typography: mat-typography-config(
-  $font-family: "'Lexend', monospace",
+  $font-family: "'Lexend', sans-serif",
   $headline: mat-typography-level(32px, 48px, 600),
   $body-1: mat-typography-level(16px, 24px, 500)
 );
+
 
 $coney-app-theme: mat-light-theme((
   color: (

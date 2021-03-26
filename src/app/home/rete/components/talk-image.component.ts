@@ -1,13 +1,13 @@
 import { Component, Input, Output } from 'rete';
 import { TalkType } from '../sockets';
 import { UrlFieldControl } from '../controls/url-field.control';
-import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
+import { ENUM_RETE_COMPONENT } from '../../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
 
 var CustomNode = {
   template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">Message</h6>
+  <h4 class="m-0">Message</h4>
   <small style="color: #777">{{node.label}}</small>
   </div>
   <!-- Inputs-->

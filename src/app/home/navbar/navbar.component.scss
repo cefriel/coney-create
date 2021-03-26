@@ -1,0 +1,62 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .nav-logo {
+    max-height: 75%;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  #navbar{
+    position: fixed;
+    z-index: 9;
+    box-shadow: 0 2px 2px 0 lightgray;
+  }
+
+  .deleteBtn{
+      color: var(--error-color);
+  }
+  .deleteBtn:disabled{
+    color: gray!important;
+}
+
+  #projectName{
+    color: gray;
+  }
+
+  #titleInput{
+    width: fit-content;
+    font-size: 20px;
+    font-weight: 400;
+    background: transparent!important;
+    outline: none!important;
+    border: none!important;
+    background: transparent!important; 
+    min-width: 60vw;
+  }
+  
+  .statusVBar{
+    width: 4px;
+    border-radius: 4px;
+    color:transparent;
+    display: none;
+    margin-left: 10px;
+    margin-right: 10px;
+  
+    &.published{
+      background-color: #4caf50;
+      display: block;
+    }
+    
+    &.saved{
+      background-color: #6c757d;
+      display: block;
+    }
+  
+    &.unpublished{
+      background-color: #03a9f4; 
+      display: block;
+    }
+  }
+  

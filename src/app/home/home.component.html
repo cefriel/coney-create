@@ -1,0 +1,194 @@
+<div style="height: 100vh" tabindex="0" (keydown)="keyPressed($event)">
+  <app-navbar
+  [currentConversationTitle]="currentConversationTitle"
+  [currentConversationProject]="currentConversationProject"
+  [currentConversationStatus]="currentConversationStatus"
+  [titleEditable]="titleEditable"
+  (deleteButtonPressed)="deleteButtonPressed()"
+  (titleChanged)="titleChanged($event)"
+  (navigateToHome)="navigateToHome()"
+  (publishButtonPressed)="publishButtonPressed()"
+  (unpublishButtonPressed)="unpublishButtonPressed()"
+  ></app-navbar>
+  
+  <!-- Side menu -->
+  <div class="menu">
+
+    <div id="commands-container">
+      <ul id="commandsUl">
+
+        <li class="nav-item">
+          <button mat-button title="New" [disabled]="!newButtonEnabled" type="button" class="commands"
+            (click)="newButtonPressed()">
+            <mat-icon class="material-icons-outlined">description</mat-icon>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button mat-button title="Open" type="button" class="commands" (click)="searchButtonPressed()">
+            <mat-icon class="material-icons-outlined">folder</mat-icon>
+          </button>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button title="Save" [disabled]="!saveButtonEnabled" type="button" class="commands"
+            (click)="saveButtonPressed()">
+            <mat-icon class="material-icons-outlined">save</mat-icon>
+          </button>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button title="Duplicate" [disabled]="!saveAsButtonEnabled" type="button"
+            class="commands" (click)="saveAsButtonPressed()">
+            <mat-icon class="material-icons-outlined">content_copy</mat-icon>
+          </button>
+        </li>
+
+        <li class="nav-item hideOnMobile">
+          <hr>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
+          class="commands" title="Question templates" (click)="addQuestionButtonPressed()">
+          <mat-icon class="material-icons-outlined">extension</mat-icon>
+        </button>
+        </li>
+  
+        <li class="nav-item hideOnMobile">
+          <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
+          class="commands" title="Clone nodes [BETA]" (click)="duplicateNodesPressed()">
+          <mat-icon class="material-icons-outlined">control_point_duplicate</mat-icon>
+        </button>
+        </li>
+
+        <li class="nav-item hideOnMobile">
+          <hr>
+        </li>
+        
+        <li class="nav-item">
+          <button mat-button title="Show questions" type="button" class="commands" 
+          *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">
+            <mat-icon class="material-icons-outlined">ballot</mat-icon>
+          </button>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button title="Show questions" type="button" class="commands" 
+          *ngIf="currentConversationStatus == 'saved' || currentConversationStatus == ''" (click)="oldPrintButtonPressed()">
+            <mat-icon class="material-icons-outlined">ballot</mat-icon>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button mat-button [disabled]="!previewButtonEnabled" type="button" title="Start preview" class=""
+            (click)="previewButtonPressed()">
+            <mat-icon class="material-icons-outlined">preview</mat-icon>
+          </button>
+        </li>
+
+          
+        <li class="nav-item" class="hideOnMobile">
+            <button mat-button 
+            [matMenuTriggerFor]="menu"
+            [disabled]="conversationTags.length == 0"
+            title="Tag" type="button" class="commands" style="min-width: 0!important; width: 100%; padding: 0!important;">
+              <mat-icon class="material-icons-outlined">sell</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngFor="let tag of conversationTags"
+              (click)="highlightTags(tag)">
+                <span>{{tag}}</span>
+              </button>
+            </mat-menu>
+        </li>
+        
+        <li class="nav-item hideOnMobile">
+          <hr>
+        </li>
+  
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Toggle Map" type="button" class="commands" (click)="toggleMapButtonPressed()">
+            <mat-icon class="material-icons-outlined">location_on</mat-icon>
+          </button>
+        </li>
+  
+        <li class="nav-item">
+          <button mat-button title="Check for mistakes" type="button" class="commands"
+            (click)="manualCheckButtonPressed()">
+            <mat-icon class="material-icons-outlined">task_alt</mat-icon>
+          </button>
+        </li>
+  
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Help" type="button" class="commands" (click)="helpButtonPressed('btn')">
+            <mat-icon class="material-icons-outlined">info</mat-icon>
+          </button>
+        </li>
+        
+        <li class="nav-item hideOnMobile">
+          <button mat-button title="Export" type="button" class="commands" (click)="exportButtonPressed()">
+            <mat-icon class="material-icons-outlined">file_download</mat-icon>
+          </button>
+        </li>
+
+
+
+
+        <li class="nav-item" *ngIf="!enterprise && currentConversationStatus=='published'">
+          <button mat-raised-button color="primary" title="Generic Link" type="button" class="commands mt-2" (click)="generateGenericLink(undefined)" [disabled]="currentConversationId == ''"
+          style="padding: 0px 0px!important; min-width: 32px!important;">
+            <img class="topBarImg" src="./assets/icons/navbar/link.svg">
+          </button>
+        </li>
+
+        <li class="nav-item" *ngIf="!enterprise && (currentConversationStatus =='published' || currentConversationStatus =='unpublished')">
+          <button mat-raised-button color="primary" title="Survey results" type="button" class="commands mt-2" (click)="openInspect()" [disabled]="currentConversationId == ''"
+          style="padding: 0px 0px!important; min-width: 32px!important;">
+            <img class="topBarImg" src="./assets/icons/navbar/inspect_pie.svg">
+          </button>
+        </li>
+  
+      </ul> 
+    </div>
+
+    <div id="bottom-status" class="hideOnMobile">
+      <div class="statusCircle" *ngIf="currentConversationStatus == 'published'"
+      style="background-color: #4caf50"></div>
+    <div class="statusCircle" *ngIf="currentConversationStatus == 'saved'"
+      style="background-color: #6c757d"></div>
+    <div class="statusCircle" *ngIf="currentConversationStatus == 'unpublished'"
+      style="background-color: #03a9f4"></div>
+      <div class="statusCircle" *ngIf="currentConversationStatus == ''"
+      style="background-color: #2c2c2c28"></div>
+
+      <h6 class="m-0 status-bottom-text">{{currentConversationStatus}}</h6>
+    </div>
+    
+  </div>
+
+  <!-- RETE EDITOR -->
+  <app-rete (click)="helpButtonPressed('close')" class="rete" 
+  (changedPosition)="reteChangedPosition($event)"
+    [sourceJson]="editorJson" 
+    [currentConversationStatus]="currentConversationStatus" 
+    (conversationTags)="reteChangedConversationTags($event)"
+    (editedJson)="reteEditedJson($event)" (reteObject)="reteMessage($event)"></app-rete>
+
+
+  <!--HELP-->
+  <div *ngIf="showHelp" id="guide">
+    <button mat-button id="guideCloseBtn" (click)="helpButtonPressed('close')">&times;</button>
+    <p><kbd>Ctrl</kbd><kbd>Space</kbd> - Quick new node</p>
+    <p><kbd>Ctrl</kbd><kbd>S</kbd> - Save</p>
+    <p><kbd>Ctrl</kbd><kbd>P</kbd> - Preview</p>
+    <p><kbd>Ctrl</kbd><kbd>O</kbd> - Open</p>
+    <p><kbd>Ctrl</kbd><kbd>M</kbd> - New Conversation</p>
+    <p><kbd>Ctrl</kbd><kbd>L</kbd> - Connect nodes (2)</p> 
+    <p><kbd>Shift</kbd><kbd>C</kbd> - Add comment</p> 
+    <p><kbd>Shift</kbd> - Zoom on node</p> 
+    <p><kbd>Ctrl</kbd> <kbd>&#8592;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd><kbd>&#8595;</kbd> - Move Nodes</p>
+  </div>
+
+</div>

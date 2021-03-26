@@ -12,6 +12,32 @@ textarea{
   resize: none!important;
 }
 
+*{
+  font-family: 'Lexend', sans-serif;
+}
+
+.row{
+  display: flex;
+  margin:0px!important;
+  flex-wrap: wrap;
+}
+
+.col{
+  flex: 1 1 auto;
+}
+
+.m-0{margin: 0px!important;}
+.m-3{margin: 1rem!important;}
+
+hr{
+  border-style: solid!important;
+  border: 1px solid lightgray!important;
+}
+
+h4{
+  font-weight: 500;
+}
+
 /*SCOLLBARS*/
 * {
   scrollbar-width: thin;
@@ -60,6 +86,7 @@ textarea{
 
 .minimap{
   width: 275px!important;
+  padding: 0!important;
 }
 
 .minimap.middle{
@@ -120,10 +147,6 @@ textarea{
 
 .mat-button-disabled:hover{
   background-color: transparent;
-}
-
-.nav-item > .mat-button-disabled, #selectedFilterTag > .mat-button-disabled {
-  z-index: -1!important;
 }
 
 /*color picker*/
@@ -210,19 +233,38 @@ p{
   background-color: transparent!important;;
 }
 
+input, textarea{
+  box-sizing: border-box!important;
+}
+
 .status-indicator{
   color: white;
-    border-radius: 4px;
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    top: 1.25rem;
-    left: 0rem;
-    text-align: center;
-    padding-left: .65rem;
-    line-height: 2.3;
-    padding-left: .5rem!important;
-    padding-right: .5rem!important;
+  border-radius: 4px;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 1rem;
+  left: 0.5rem;
+  text-align: center;
+  padding-left: .65rem;
+  line-height: 2.3;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  box-sizing: border-box;
+}
+
+.card-add{
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  height: 110px;
+  width: 120px;
+  margin: 0px 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.card-add:hover{
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
 #convList{
@@ -232,8 +274,12 @@ p{
   }
 
   .custom-select{
-    border: 0px!important;
-    border-bottom: 1px solid rgba(0,0,0,.26)!important;
+    width: 100%;
+    border: 0px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26) !important;
+    padding: 12px 0px;
+    border-radius: 4px;
+    outline: none;
   }
 
 #resetBtn{

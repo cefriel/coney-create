@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './home/home.component';
 import { AddQuickQuestionDialogComponent } from './dialogs/add-quick-question-dialog.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog.component';
@@ -13,8 +13,9 @@ import { SaveAsDialogComponent } from './dialogs/save-as-dialog.component';
 import { SearchConvDialogComponent } from './dialogs/search-conv-dialog.component';
 import { SearchTagDialogComponent } from './dialogs/search-tag-dialog.component';
 import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
+import { NavbarComponent } from './home/navbar/navbar.component';
 import { BackendService } from './services/backend.service';
-import { ReteComponent } from './rete/rete.component';
+import { ReteComponent } from './home/rete/rete.component';
 import { AppRoutingModule } from './routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -57,6 +59,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SearchTagDialogComponent,
     ShareSurveyDialogComponent,
     ImportConversationDialogComponent,
+    NavbarComponent,
     ReteComponent,
     LoginComponent,
     LogoutComponent
@@ -75,6 +78,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatToolbarModule,
     MatButtonModule,
     MatRadioModule,
     MatInputModule,

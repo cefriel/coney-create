@@ -1,8 +1,8 @@
 export enum ENUM_OPERATION_FEEDBACK {
-  SUCCESS = 'SUCCESS',
-  INFO = 'INFO',
-  WARNING = 'WARNING',
-  ERROR = 'ERROR'
+  SUCCESS = 'success',
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error'
 }
 
 export enum ENUM_CONV_STATUS {

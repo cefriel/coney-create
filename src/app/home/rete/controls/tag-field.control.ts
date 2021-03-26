@@ -1,6 +1,6 @@
 import { Control } from 'rete';
 import Vue from 'vue';;
-import { SearchTagDialogComponent } from '../../dialogs/search-tag-dialog.component';
+import { SearchTagDialogComponent } from '../../../dialogs/search-tag-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 var dialog: MatDialog;

@@ -4,7 +4,7 @@ import Vue from 'vue';;
 const VueNumControl = Vue.component('num', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
   template: `<div class="m-0 row" style="position: relative;">
-      <span class="input-group-text p-0" style="position: absolute;z-index: 1;left: 10px;top: 3px; color: #7c7c7c"> Order </span>
+      <span class="input-group-text" style="position: absolute;z-index: 1;left: 10px;top: 7px; color: #7c7c7c"> Order </span>
       <input @dblclick.stop=""  @pointermove.stop="" :readonly="readonly" type="number" class="customInput" :value="value" 
       style="display: inline-block; text-align: right" @input="change($event)" min="1" max="10" />
     </div>`,

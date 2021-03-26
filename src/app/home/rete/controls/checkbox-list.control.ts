@@ -14,10 +14,10 @@ v-on:keyup.enter="addRow('enter')"
 */
 const VueCheckboxListControl = Vue.component('text', {
   props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
-  template: `<div class="input-group mt-2" @dblclick.stop="" @pointermove.stop="" :readonly="readonly">
+  template: `<div class="input-group" @dblclick.stop="" @pointermove.stop="" :readonly="readonly">
               <ul v-bind:id="listid" style="margin-bottom: 0!important; padding: 0px!important; list-style: none; position: relative; width: 100%;">
                 <li v-for="(value, index) in values" v-if="value.type != 'other' && value.type != 'none'">
-                <div class="col-12 p-0" >
+                <div style="position:relative" >
                   <textarea rows="2" :readonly="readonly" class="checkboxInput" :id="index" @input="update($event)" type="text"
                       placeholder="Add answer" v-model="value.v" 
                       maxlength="150"></textarea>
@@ -31,18 +31,18 @@ const VueCheckboxListControl = Vue.component('text', {
                 </div>
                 </li>
               </ul>
-              <div id="inline-checkbox-controls" class="col-12 mb-2 pr-0 text-right" style="margin-bottom: 1rem!important;">
+              <div id="inline-checkbox-controls" style="text-align: right; margin-bottom: 1rem!important;">
                 <button class="add-checkbox" @click="addRow(undefined)" v-if="!readonly">
                     +
                 </button>
               </div>
-              <div style="width: 100%; position: relative" class="row my-0 mt-0 mb-2 checkbox">
+              <div style="position: relative; margin-bottom: 10px!important;" class="row checkbox">
                   <input v-model="noOpChecked" type="checkbox" @input="manageNone()" class="noneCheckbox" v-if="!readonly">
                   <input v-model="noOpText" v-bind:class="{ 'force-white': noOpChecked }"  :disabled="!noOpChecked || readonly"  v-on:blur="manageNone()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="150" type="text" id="noneInput" placeholder="Add 'none of the above'">
               </div>
           
-              <div style="width: 100%; position: relative" class="row m-0 checkbox">
+              <div style="margin-bottom: 5px!important; position: relative" class="row checkbox">
                   <input v-model="otherChecked" type="checkbox" @input="manageOther()" class="otherCheckbox" v-if="!readonly">
                   <input v-model="otherText" v-bind:class="{ 'force-white': otherChecked }"  :disabled="!otherChecked || readonly" v-on:blur="manageOther()" class="customInput col-12"
                       style="padding-left: 36px;" maxlength="30" type="text" id="otherInput" placeholder="Add 'other'">

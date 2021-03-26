@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { BackendService } from './services/backend.service';
-import { SearchConvDialogComponent } from './dialogs/search-conv-dialog.component';
-import { SaveAsDialogComponent } from './dialogs/save-as-dialog.component';
-import { DeleteDialogComponent } from './dialogs/delete-dialog.component';
-import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
-import { PublishDialogComponent } from './dialogs/publish-dialog.component';
-import { AddQuickQuestionDialogComponent } from './dialogs/add-quick-question-dialog.component';
-import { PrintDialogComponent } from './dialogs/print-dialog.component';
+import { BackendService } from '../services/backend.service';
+import { SearchConvDialogComponent } from '../dialogs/search-conv-dialog.component';
+import { SaveAsDialogComponent } from '../dialogs/save-as-dialog.component';
+import { DeleteDialogComponent } from '../dialogs/delete-dialog.component';
+import { ConfirmDialogComponent } from '../dialogs/confirm-dialog.component';
+import { PublishDialogComponent } from '../dialogs/publish-dialog.component';
+import { AddQuickQuestionDialogComponent } from '../dialogs/add-quick-question-dialog.component';
+import { PrintDialogComponent } from '../dialogs/print-dialog.component';
 
-import { ENUM_CHAT, ENUM_CONV_STATUS, ENUM_ERROR, RETE_ID, ENUM_OPERATION_FEEDBACK, ENUM_WARNING, ENUM_SUCCESS, ENUM_NODE_COMPONENT } from './model/conversational.model';
-import { Chat } from './model/chat';
+import { ENUM_CHAT, ENUM_CONV_STATUS, ENUM_ERROR, RETE_ID, ENUM_OPERATION_FEEDBACK, ENUM_WARNING, ENUM_SUCCESS, ENUM_NODE_COMPONENT } from '../model/conversational.model';
+import { Chat } from '../model/chat';
 import { saveAs } from 'file-saver';
 import { ReteComponent } from './rete/rete.component';
 
 
 import * as CryptoJS from 'crypto-js';
-import { environment } from '../environments/environment';
-import { ShareSurveyDialogComponent } from './dialogs/share-survey-dialog.component';
-import { UtilsService } from './services/utils.service';
+import { environment } from '../../environments/environment';
+import { ShareSurveyDialogComponent } from '../dialogs/share-survey-dialog.component';
+import { UtilsService } from '../services/utils.service';
 
 
 @Component({
@@ -126,6 +126,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.openNewConversation();
     }
+  }
+
+  titleChanged(event){
+    this.currentConversationTitle = event;
   }
 
   async openNewConversation() {

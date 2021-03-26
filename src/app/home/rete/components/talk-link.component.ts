@@ -1,19 +1,17 @@
 import { Component, Input, Output } from 'rete';
-import { QuestionAnswerType, TalkType } from '../sockets';
-import { CheckboxListControl } from '../controls/checkbox-list.control';
-import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
-import { PointsFieldControl } from '../controls/points-field.control';
+import { TalkType } from '../sockets';
+import { TextFieldControl } from '../controls/text-field.control';
+import { UrlFieldControl } from '../controls/url-field.control';
+import { ENUM_RETE_COMPONENT } from '../../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
-import { MaxAnswControl } from '../controls/max-answers.control';
 
 var CustomNode = {
-  template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
+  template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">{{node.data.type}}</h6>
+  <h4 class="m-0">Message</h4>
   <small style="color: #777">{{node.data.subtype}}</small>
   </div>
-
-    <!-- Inputs-->
+  <!-- Inputs-->
     <div class="input" v-for="input in inputs()" :key="input.key">
       <Socket v-socket:input="input" type="input" :socket="input.socket"></Socket>
       <div class="input-title" v-show="!input.showControl()">{{input.name}}</div>
@@ -35,29 +33,25 @@ var CustomNode = {
   }
 }
 
-
-export class AnswerCheckboxComponent extends Component {
+export class TalkLinkComponent extends Component {
   data: any;
   constructor() {
-    super(ENUM_RETE_COMPONENT.ANSWER_CHECKBOX);
+    super(ENUM_RETE_COMPONENT.TALK_LINK);
     this.data.component = CustomNode;
   }
 
   builder(node) {
 
-    node.data.type = "Answer";
-    node.data.subtype = "checkbox";
-
-    const in1 = new Input('in', 'Question', QuestionAnswerType, false);
+    node.data.type = "Talk";
+    node.data.subtype = "link";
+    
+    const in1 = new Input('in', 'Talk/Answer', TalkType, true);
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
     return node.addInput(in1)
-      .addControl(new MaxAnswControl(this.editor, 'max_answer'))
-      .addControl(new CheckboxListControl(this.editor, 'checkbox'))
-      //.addControl(new PointsFieldControl(this.editor, "points"))
+      .addControl(new TextFieldControl(this.editor, 'title'))
+      .addControl(new UrlFieldControl(this.editor, 'url'))
       .addOutput(out1);
   }
 
-  worker(node, inputs, outputs) { 
-  }
-
+  worker() { }
 }

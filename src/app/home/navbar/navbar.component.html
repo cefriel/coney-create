@@ -1,0 +1,50 @@
+<mat-toolbar id="navbar">
+  <img class="nav-logo" (click)="navigateToHome.emit()" src="./assets/icons/navbar/coney_create.png">
+
+  <span id="projectName" class="hideOnMobile">{{currentConversationProject}}</span>
+
+  <div [class.published]="currentConversationStatus == 'published'" [class.unpublished]="currentConversationStatus == 'unpublished'"
+    [class.saved]="currentConversationStatus == 'saved'" class="statusVBar hideOnMobile">.</div>
+
+ 
+    <input matInput [disabled]="!titleEditable"
+      [(ngModel)]="currentConversationTitle" 
+      (ngModelChange)="titleChanged.emit($event)"
+      maxlength="300" 
+      id="titleInput"
+      placeholder="Untitled Conversation">
+
+
+  <span class="spacer"></span>
+
+  <button mat-raised-button
+    *ngIf="currentConversationStatus != 'published';  else publishButtonDisabled"
+    class="ml-1 mr-1"
+    style="text-transform: lowercase!important; background-color: #4caf50; color: white; padding: 0px 8px!important;"
+    (click)="publishButtonPressed.emit()">Publish</button>
+
+  <ng-template #publishButtonDisabled>
+    <button mat-raised-button color="warn" type="button"
+      class="ml-1 mr-1" style="text-transform: lowercase!important; color: white" (click)="unpublishButtonPressed.emit()"
+      style="text-transform: lowercase!important; padding: 0px 8px!important;">Unpublish</button>
+  </ng-template>
+
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="nav-icon" aria-label="Options" title="Options">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item class="deleteBtn" 
+    [disabled]="currentConversationStatus=='' || currentConversationStatus=='published'"
+    (click)="deleteButtonPressed.emit()">
+      <mat-icon class="material-icons-outlined deleteBtn">delete</mat-icon>
+      <span>Delete</span>
+    </button>
+
+    <button mat-menu-item
+     [routerLink]="[ '/logout' ]">
+        <mat-icon class="material-icons-outlined">logout</mat-icon>
+        <span>Logout</span>
+      </button>
+  </mat-menu>
+</mat-toolbar>

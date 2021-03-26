@@ -1,6 +1,6 @@
 import {
   AfterViewInit, Component, ElementRef, EventEmitter,
-  Input, OnChanges, Output, ViewChild, ViewEncapsulation, NgZone
+  Input, OnChanges, Output, ViewChild, NgZone
 } from '@angular/core';
 
 import { Engine, NodeEditor, Node } from 'rete';
@@ -27,10 +27,8 @@ import { VisualizationControl } from './controls/visualization.control';
 import {
   ENUM_CONV_STATUS, ENUM_RETE_COMPONENT,
   RETE_ID, ENUM_INFO, ENUM_OPERATION_FEEDBACK
-} from '../model/conversational.model';
-import { Transform } from 'rete/types/view/area';
+} from '../../model/conversational.model';
 import { TextTypeControl } from './controls/text-type.control';
-import { TalkIframeComponent } from './components/talk-iframe.component';
 
 @Component({
   selector: 'app-rete',
@@ -356,7 +354,6 @@ export class ReteComponent implements AfterViewInit, OnChanges {
     });
 
     ReteComponent.editor.on('click', () => {
-      console.log("click")
       var tmp: any =  ReteComponent.editor.selected.list[ReteComponent.editor.selected.list.length-1];
       if(tmp!=undefined){tmp.vueContext.$el.style.transform = "scale(1)";}
       ReteComponent.editor.selected.clear();

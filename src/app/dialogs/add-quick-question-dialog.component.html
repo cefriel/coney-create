@@ -1,10 +1,11 @@
  <div class="row" *ngIf="!showCustom">
-  <h4 style="padding-left: 5px;">Multiple-choice templates</h4>
+  <h2 style="width: 100%;margin: 0;
+  font-weight: 500; margin-bottom: 15px;">Multiple-choice templates</h2>
 
-  <div class="col-12 p-0">
-    <h6 style="padding-left: 5px; margin-top: 2rem;">5-ranged Likert</h6>
+  <div>
+    <p style="padding-left: 5px; margin-top: 2rem; margin-bottom: 1rem;">5-ranged Likert</p>
     <div class="row">
-      <div class="card py-3 px-2" style="height: 120px; width: 120px;margin: 0px 5px; text-align: center; cursor: pointer;" 
+      <div class="card-add"
       *ngFor="let std of stdAnswers" 
       (click)="stdSelected(std.answers)">
       <div style="width: 100%; text-align: center; cursor: pointer;">
@@ -14,9 +15,9 @@
       </div>
     </div>
 
-    <h6 style="padding-left: 5px; margin-top: 2rem;">Other</h6>
+    <p style="padding-left: 5px; margin-top: .5rem; margin-bottom: 1rem;">Other</p>
     <div class="row">
-      <div class="card py-3 px-2" style="height: 120px; width: 120px;margin: 0px 5px; text-align: center; cursor: pointer;" 
+      <div class="card-add" 
       (click)="stdSelected('nps')">
       <div style="width: 100%; text-align: center; ">
         <img src="./assets/icons/ic_nps.png" style="height: 60px; width: 60px;">
@@ -24,7 +25,7 @@
         <p style="font-weight: 600;">NPS</p>
       </div>
 
-      <div class="card py-3 px-2" style="height: 120px; width: 120px;margin: 0px 5px; text-align: center;" 
+      <div class="card-add"  
       (click)="stdSelected('custom')">
       <div style="width: 100%; text-align: center; cursor: pointer;">
         <img src="./assets/icons/ic_custom.png" style="height: 60px; width: 60px;">
@@ -36,7 +37,8 @@
   </div>
 
   <div class="row" *ngIf="showCustom" style="position: relative;">
-    <h4 style="padding-left: 5px;">Custom question</h4>
+    <h2 style="width: 100%;margin: 0;
+    font-weight: 500; margin-bottom: 15px;">Custom question</h2>
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>N° of answers:</mat-label>
       <input matInput name="amount" style="width: 100%" class="customInput text-right" type="number" min="1" max="9"

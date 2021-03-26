@@ -1,16 +1,13 @@
 import { Component, Input, Output } from 'rete';
-import { QuestionAnswerType, TalkType } from '../sockets';
-import { NumControl } from '../controls/number.control';
-import { ValueControl } from '../controls/value.control';
-import { TextAreaLimitedControl } from '../controls/text-area-limited.control';
-import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
-import { PointsFieldControl } from '../controls/points-field.control';
+import { TalkType } from '../sockets';
+import { TextAreaControl } from '../controls/text-area.control';
+import { ENUM_RETE_COMPONENT } from '../../../model/conversational.model';
 import VueRender from 'rete-vue-render-plugin';
 
 var CustomNode = {
-  template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
+  template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">{{node.data.type}}</h6>
+  <h4 class="m-0">Message</h4>
   <small style="color: #777">{{node.data.subtype}}</small>
   </div>
 
@@ -28,7 +25,7 @@ var CustomNode = {
     </div>
     <!-- Controls-->
     <div class="control" v-for="control in controls()" v-control="control"></div>
-   
+    
 </div>`,
   mixins: [VueRender.mixin],
   components: {
@@ -36,30 +33,29 @@ var CustomNode = {
   }
 }
 
-export class AnswerMultipleComponent extends Component {
+
+export class TalkTextComponent extends Component {
   data: any;
   constructor() {
-    super(ENUM_RETE_COMPONENT.ANSWER_MULTIPLE);
+    super(ENUM_RETE_COMPONENT.TALK_TEXT);
     this.data.component = CustomNode;
   }
 
+
   builder(node) {
+    node.data.type = "Talk";
+    node.data.subtype = "text";
 
-    node.data.type = "Answer";
-    node.data.subtype = "multiple";
 
-    const in1 = new Input('in', 'Question', QuestionAnswerType, false);
+    const in1 = new Input('in', 'Talk/Answer', TalkType, true);
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
-    return node.addInput(in1)
-      .addControl(new NumControl(this.editor, 'sort'))
-      .addControl(new ValueControl(this.editor, 'value'))
-      .addControl(new TextAreaLimitedControl(this.editor, 'text'))
-      //.addControl(new PointsFieldControl(this.editor, "points"))
+    return node
+      .addInput(in1)
+      .addControl(new TextAreaControl(this.editor, 'text'))
       .addOutput(out1);
   }
 
-  worker(node, inputs, outputs) {
-
+  worker(node, inputs, outputs) { 
   }
 
 }

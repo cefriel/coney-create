@@ -1,17 +1,20 @@
 import { Component, Input, Output } from 'rete';
-import { TalkType } from '../sockets';
-import { TextFieldControl } from '../controls/text-field.control';
-import { UrlFieldControl } from '../controls/url-field.control';
-import { ENUM_RETE_COMPONENT } from '../../model/conversational.model';
+import { QuestionAnswerType, TalkType } from '../sockets';
+import { NumControl } from '../controls/number.control';
+import { ValueControl } from '../controls/value.control';
+import { TextAreaLimitedControl } from '../controls/text-area-limited.control';
+import { ENUM_RETE_COMPONENT } from '../../../model/conversational.model';
+import { PointsFieldControl } from '../controls/points-field.control';
 import VueRender from 'rete-vue-render-plugin';
 
 var CustomNode = {
-  template: `<div class="node talkNode" :class="[selected(), node.name] | kebab">
+  template: `<div class="node answerNode" :class="[selected(), node.name] | kebab">
   <div class="title">
-  <h6 class="m-0">Message</h6>
+  <h4 class="m-0">{{node.data.type}}</h4>
   <small style="color: #777">{{node.data.subtype}}</small>
   </div>
-  <!-- Inputs-->
+
+    <!-- Inputs-->
     <div class="input" v-for="input in inputs()" :key="input.key">
       <Socket v-socket:input="input" type="input" :socket="input.socket"></Socket>
       <div class="input-title" v-show="!input.showControl()">{{input.name}}</div>
@@ -25,7 +28,7 @@ var CustomNode = {
     </div>
     <!-- Controls-->
     <div class="control" v-for="control in controls()" v-control="control"></div>
-    
+   
 </div>`,
   mixins: [VueRender.mixin],
   components: {
@@ -33,25 +36,30 @@ var CustomNode = {
   }
 }
 
-export class TalkLinkComponent extends Component {
+export class AnswerMultipleComponent extends Component {
   data: any;
   constructor() {
-    super(ENUM_RETE_COMPONENT.TALK_LINK);
+    super(ENUM_RETE_COMPONENT.ANSWER_MULTIPLE);
     this.data.component = CustomNode;
   }
 
   builder(node) {
 
-    node.data.type = "Talk";
-    node.data.subtype = "link";
-    
-    const in1 = new Input('in', 'Talk/Answer', TalkType, true);
+    node.data.type = "Answer";
+    node.data.subtype = "multiple";
+
+    const in1 = new Input('in', 'Question', QuestionAnswerType, false);
     const out1 = new Output('out', 'Talk/Question', TalkType, false);
     return node.addInput(in1)
-      .addControl(new TextFieldControl(this.editor, 'title'))
-      .addControl(new UrlFieldControl(this.editor, 'url'))
+      .addControl(new NumControl(this.editor, 'sort'))
+      .addControl(new ValueControl(this.editor, 'value'))
+      .addControl(new TextAreaLimitedControl(this.editor, 'text'))
+      //.addControl(new PointsFieldControl(this.editor, "points"))
       .addOutput(out1);
   }
 
-  worker() { }
+  worker(node, inputs, outputs) {
+
+  }
+
 }

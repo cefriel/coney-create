@@ -65,6 +65,23 @@ export class AddQuickQuestionDialogComponent {
     }
   }
 
+  async onPaste(event: any) {
+    this.content = "";
+    let clipboardData = event.clipboardData ||  event.originalEvent.clipboardData;
+    let pastedText = clipboardData.getData('text');
+    let temp = pastedText.replace(/\r/gm, '-');
+    let count = 0;
+    count = (temp.match(new RegExp("-", "g")) || []).length;
+    setTimeout(() => { 
+      this.content = "";
+      this.content = temp.replace(/[\n\r]/g, '');
+      this.answersAmount = count;
+      console.log(count);
+     }, 1000);
+    
+    
+  }
+
   save() {
 
    
@@ -73,6 +90,9 @@ export class AddQuickQuestionDialogComponent {
     result.type = this.pickedType;
     result.content = this.content;
     result.num = this.answersAmount;
+    if(this.answersAmount > 15){
+      result.type = "select";
+    }
 
 
     this.dialogRef.close(result);

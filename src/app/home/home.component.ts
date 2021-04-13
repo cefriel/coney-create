@@ -1007,7 +1007,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openDeliver(){
+  navigateToHome(){
     if(!environment.enterprise){
       this.searchButtonPressed();
       return;

@@ -230,7 +230,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
-        else if (connection.input.node.name === ENUM_RETE_COMPONENT.ANSWER_MULTIPLE && outputConnections.length > 25) {
+        else if (connection.input.node.name === ENUM_RETE_COMPONENT.ANSWER_MULTIPLE && outputConnections.length > 50) {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
@@ -575,6 +575,10 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
     await ReteComponent.editor.addNode(nQuestion);
 
+    //create talk
+    var nTalk: Node;
+    nTalk = await this.createNode("Talk", "text", "", "", 0, 0, "", "", posX + 600, posY);
+    await ReteComponent.editor.addNode(nTalk);
 
     posY -= 300;
     //creates answers and link them
@@ -587,11 +591,16 @@ export class ReteComponent implements AfterViewInit, OnChanges {
         txt = answerContent[i - 1];
       }
       var nAnswer: Node;
-      nAnswer = await this.createNode("Answer", "multiple", txt, "", i, i, "", "", posX + 300, posY + (i * 200));
+      if(type = "select"){
+        nAnswer = await this.createNode("Answer", "multiple", txt, "", i, 0, "", "", posX + 300, posY + (i * 200));
+      } else {
+        nAnswer = await this.createNode("Answer", "multiple", txt, "", i, i, "", "", posX + 300, posY + (i * 200));
+      }
+      
       await ReteComponent.editor.addNode(nAnswer);
       //link nodes
       await ReteComponent.editor.connect(nQuestion.outputs.get("out"), nAnswer.inputs.get("in"));
-      //await ReteComponent.editor.connect(nAnswer.outputs.get("out"), nTalk.inputs.get("in"));
+      await ReteComponent.editor.connect(nAnswer.outputs.get("out"), nTalk.inputs.get("in"));
     }
     this.createLink = true;
 

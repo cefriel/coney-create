@@ -20,7 +20,7 @@ const VueCheckboxListControl = Vue.component('text', {
                 <div style="position:relative" >
                   <textarea rows="2" :readonly="readonly" class="checkboxInput" :id="index" @input="update($event)" type="text"
                       placeholder="Add answer" v-model="value.v" 
-                      maxlength="150"></textarea>
+                      maxlength="200"></textarea>
                       <div class="del-cb-line-col"  @click="deleteRow(index)" v-if="!readonly">
                         <button class="del-cb-line-btn" :disabled="readonly">x</button>
                       </div>
@@ -39,13 +39,13 @@ const VueCheckboxListControl = Vue.component('text', {
               <div style="position: relative; margin-bottom: 10px!important;" class="row checkbox">
                   <input v-model="noOpChecked" type="checkbox" @input="manageNone()" class="noneCheckbox" v-if="!readonly">
                   <input v-model="noOpText" v-bind:class="{ 'force-white': noOpChecked }"  :disabled="!noOpChecked || readonly"  v-on:blur="manageNone()" class="customInput col-12"
-                      style="padding-left: 36px;" maxlength="150" type="text" id="noneInput" placeholder="Add 'none of the above'">
+                      style="padding-left: 36px;" maxlength="200" type="text" id="noneInput" placeholder="Add 'none of the above'">
               </div>
           
               <div style="margin-bottom: 5px!important; position: relative" class="row checkbox">
                   <input v-model="otherChecked" type="checkbox" @input="manageOther()" class="otherCheckbox" v-if="!readonly">
                   <input v-model="otherText" v-bind:class="{ 'force-white': otherChecked }"  :disabled="!otherChecked || readonly" v-on:blur="manageOther()" class="customInput col-12"
-                      style="padding-left: 36px;" maxlength="30" type="text" id="otherInput" placeholder="Add 'other'">
+                      style="padding-left: 36px;" maxlength="200" type="text" id="otherInput" placeholder="Add 'other'">
               </div>
             </div>`,
   data() {
@@ -67,8 +67,8 @@ const VueCheckboxListControl = Vue.component('text', {
 
     },
     resize(event) {
-      //event.srcElement.style.height = "1px";
-      //event.srcElement.style.height = (5 + event.srcElement.scrollHeight) + "px";
+      event.srcElement.style.height = "1px";
+      event.srcElement.style.height = (5 + event.srcElement.scrollHeight) + "px";
     },
     update(event) {
       this.resize(event)
@@ -253,8 +253,8 @@ const VueCheckboxListControl = Vue.component('text', {
       var listElements = this.sortable.el.children;
       for (var i = 0; i < listElements.length; i++) {
         var e = listElements[i].firstChild.firstChild;
-        //e.style.height = "1px";
-        //e.style.height = (5 + e.scrollHeight) + "px";
+        e.style.height = "1px";
+        e.style.height = (5 + e.scrollHeight) + "px";
       }
     })
   }

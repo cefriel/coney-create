@@ -9,6 +9,17 @@
   padding-right: 10px;
 }
 
+.menu-icon {
+  color: #4A5568;
+  font-size: 1.3rem;
+}
+
+.commands:disabled {
+  .menu-icon {
+    color: #4a55685c!important;
+  }
+}
+
 #low-right-nav {
   display: flex;
   position: fixed;

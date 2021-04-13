@@ -1,0 +1,41 @@
+.full {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background: url(../../../assets/other/login_bg.jpg);
+  background-position-y: bottom;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.card {
+  max-width: 320px;
+  text-align: center;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px 2px #0000001c;
+}
+
+#coney-logo {
+  height: 100px;
+  width: auto;
+  margin-top: 1.5rem;
+}
+
+.fw {
+  width: 100%;
+}
+
+.bottom-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 2rem;
+}

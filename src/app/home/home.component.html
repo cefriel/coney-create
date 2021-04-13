@@ -20,27 +20,27 @@
         <li class="nav-item">
           <button mat-button title="New" [disabled]="!newButtonEnabled" type="button" class="commands"
             (click)="newButtonPressed()">
-            <mat-icon class="material-icons-outlined">description</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">description</mat-icon>
           </button>
         </li>
 
         <li class="nav-item">
           <button mat-button title="Open" type="button" class="commands" (click)="searchButtonPressed()">
-            <mat-icon class="material-icons-outlined">folder</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">folder</mat-icon>
           </button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Save" [disabled]="!saveButtonEnabled" type="button" class="commands"
             (click)="saveButtonPressed()">
-            <mat-icon class="material-icons-outlined">save</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">save</mat-icon>
           </button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Duplicate" [disabled]="!saveAsButtonEnabled" type="button"
             class="commands" (click)="saveAsButtonPressed()">
-            <mat-icon class="material-icons-outlined">content_copy</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">content_copy</mat-icon>
           </button>
         </li>
 
@@ -51,14 +51,14 @@
         <li class="nav-item">
           <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
           class="commands" title="Question templates" (click)="addQuestionButtonPressed()">
-          <mat-icon class="material-icons-outlined">extension</mat-icon>
+          <mat-icon class="material-icons-outlined menu-icon">extension</mat-icon>
         </button>
         </li>
   
         <li class="nav-item hideOnMobile">
           <button mat-button [disabled]="currentConversationStatus == 'published' || currentConversationStatus == 'unpublished'" 
           class="commands" title="Clone nodes [BETA]" (click)="duplicateNodesPressed()">
-          <mat-icon class="material-icons-outlined">control_point_duplicate</mat-icon>
+          <mat-icon class="material-icons-outlined menu-icon">control_point_duplicate</mat-icon>
         </button>
         </li>
 
@@ -69,21 +69,21 @@
         <li class="nav-item">
           <button mat-button title="Show questions" type="button" class="commands" 
           *ngIf="currentConversationStatus != 'saved' && currentConversationStatus != ''" (click)="printButtonPressed()">
-            <mat-icon class="material-icons-outlined">ballot</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">ballot</mat-icon>
           </button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Show questions" type="button" class="commands" 
           *ngIf="currentConversationStatus == 'saved' || currentConversationStatus == ''" (click)="oldPrintButtonPressed()">
-            <mat-icon class="material-icons-outlined">ballot</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">ballot</mat-icon>
           </button>
         </li>
 
         <li class="nav-item">
-          <button mat-button [disabled]="!previewButtonEnabled" type="button" title="Start preview" class=""
+          <button mat-button [disabled]="!previewButtonEnabled" type="button" title="Start preview" class="commands"
             (click)="previewButtonPressed()">
-            <mat-icon class="material-icons-outlined">preview</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">preview</mat-icon>
           </button>
         </li>
 
@@ -93,7 +93,7 @@
             [matMenuTriggerFor]="menu"
             [disabled]="conversationTags.length == 0"
             title="Tag" type="button" class="commands" style="min-width: 0!important; width: 100%; padding: 0!important;">
-              <mat-icon class="material-icons-outlined">sell</mat-icon>
+              <mat-icon class="material-icons-outlined menu-icon">sell</mat-icon>
             </button>
 
             <mat-menu #menu="matMenu">
@@ -110,26 +110,26 @@
   
         <li class="nav-item hideOnMobile">
           <button mat-button title="Toggle Map" type="button" class="commands" (click)="toggleMapButtonPressed()">
-            <mat-icon class="material-icons-outlined">location_on</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">location_on</mat-icon>
           </button>
         </li>
   
         <li class="nav-item">
           <button mat-button title="Check for mistakes" type="button" class="commands"
             (click)="manualCheckButtonPressed()">
-            <mat-icon class="material-icons-outlined">task_alt</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">task_alt</mat-icon>
           </button>
         </li>
   
         <li class="nav-item hideOnMobile">
           <button mat-button title="Help" type="button" class="commands" (click)="helpButtonPressed('btn')">
-            <mat-icon class="material-icons-outlined">info</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">info</mat-icon>
           </button>
         </li>
         
         <li class="nav-item hideOnMobile">
           <button mat-button title="Export" type="button" class="commands" (click)="exportButtonPressed()">
-            <mat-icon class="material-icons-outlined">file_download</mat-icon>
+            <mat-icon class="material-icons-outlined menu-icon">file_download</mat-icon>
           </button>
         </li>
 

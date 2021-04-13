@@ -51,7 +51,7 @@
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>Answers</mat-label>
           <textarea matInput style="width: 100%; height: 132px; border-radius: 4px; padding: 10px" 
-          [(ngModel)]="content" [ngModelOptions]="{standalone: true}"></textarea>
+          [(ngModel)]="content" [ngModelOptions]="{standalone: true}" (paste)="onPaste($event)"></textarea>
           <mat-hint>Answer 1 - Answer 2 - ...</mat-hint>
         </mat-form-field>
         

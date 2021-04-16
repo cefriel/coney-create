@@ -684,7 +684,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
 
       //if there is only one input and it points to self, then it's an ending node 
       if ((n.id ==conns[0].input.node.id) 
-          && (n.name.includes("Question"))
+          && (n.name.includes("Question") || n.name.includes("Answer"))
           && (conns[1] == undefined)) {
         this.setViewOnNode(n);
         return 3;

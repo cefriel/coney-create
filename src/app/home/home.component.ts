@@ -381,7 +381,7 @@ export class HomeComponent implements OnInit {
       } else if (n == 2) {
          this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.MULTIPLE_STARTS);
       } else if (n == 3) {
-         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.QUESTION_END);
+         this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.BAD_END);
       } else if (n == 4) {
          this.utilsService.feedbackMessage(ENUM_OPERATION_FEEDBACK.WARNING, ENUM_WARNING.FIELD_MISSING);
       }

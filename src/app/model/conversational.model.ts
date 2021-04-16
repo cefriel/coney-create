@@ -88,7 +88,7 @@ export enum ENUM_WARNING {
   LOOPS = 'Loops detected, please remove them before publishing',
   SAME_VALUE = 'Same order values found in different answers to question',
   NO_TEXT = 'Some option-answers are missing the text',
-  QUESTION_END = 'You can NOT finish a conversation with a question ',
+  BAD_END = 'The conversation needs to end with a "Talk" node',
   NO_ERRORS = 'Error check completed, OK',
   FIELD_MISSING = 'Fill all the necessary fields'
 }

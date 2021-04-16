@@ -146,7 +146,7 @@ const VueCheckboxListControl = Vue.component('text', {
 
 
           var text = this.noOpText;
-          if (this.noOpText == "") {
+          if (!this.noOpText || this.noOpText == "") {
             text = "None of the above";
           }
 
@@ -166,7 +166,7 @@ const VueCheckboxListControl = Vue.component('text', {
           }
 
           if (!isPresent && this.noOpChecked) {
-            var it = { v: this.noOpText, order: 99, type: "none" };
+            var it = { v: text, order: 99, type: "none" };
             this.values.push(it);
           }
 
@@ -180,10 +180,9 @@ const VueCheckboxListControl = Vue.component('text', {
 
       return new Promise(resolve => {
         setTimeout(() => {
-
           var text = this.otherText;
-          if (this.otherText == "") {
-            text = "None of the above";
+          if (!this.otherText || this.otherText == "") {
+            text = "Other";
           }
 
           var isPresent = false;
@@ -200,7 +199,7 @@ const VueCheckboxListControl = Vue.component('text', {
             this.values.splice(position, 1);
           }
           if (!isPresent && this.otherChecked) {
-            var it = { v: this.other, order: 98, type: "other" };
+            var it = { v: text, order: 98, type: "other" };
             this.values.push(it);
           }
         }, 20);

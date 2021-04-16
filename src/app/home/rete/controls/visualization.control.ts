@@ -31,8 +31,8 @@ const VueVisualizationControl = Vue.component('txt-field', {
           return;
         }
       } else if(e.target.value == "options"){
-        if(answers>6){
-          this.error = "Max of 6 answers for "+e.target.value;
+        if(answers>10){
+          this.error = "Max of 10 answers for "+e.target.value;
           e.target.value = this.text;
           return;
         }

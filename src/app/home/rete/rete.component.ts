@@ -222,7 +222,7 @@ export class ReteComponent implements AfterViewInit, OnChanges {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
-        else if (connection.output.node.data.visualization === "options" && outputConnections.length > 6) {
+        else if (connection.output.node.data.visualization === "options" && outputConnections.length > 10) {
           ReteComponent.editor.removeConnection(connection);
           this.reteMessage(ENUM_OPERATION_FEEDBACK.INFO, ENUM_INFO.MAX_RANGE);
         }
@@ -422,7 +422,6 @@ export class ReteComponent implements AfterViewInit, OnChanges {
      
     });
   }
-
 
   //fits all the nodes on the screen
   public async resetView() {

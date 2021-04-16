@@ -480,7 +480,6 @@ export class HomeComponent implements OnInit {
   }
 
   exportButtonPressed(){
-    console.log("export");
 
     this.editedJson[ENUM_CHAT.CONV_ID] = this.currentConversationId;
     this.editedJson[ENUM_CHAT.STATUS] = this.currentConversationStatus;
@@ -497,7 +496,6 @@ export class HomeComponent implements OnInit {
   importConversation(stringJson){
 
     this.loadingInProgress = true;
-
     const json = JSON.parse(JSON.stringify(stringJson));
 
     this.currentConversationId = "";
@@ -522,6 +520,7 @@ export class HomeComponent implements OnInit {
     this.delay(500);
     this.reteComp.resetView();
     this.getConversationTags();
+
     this.loadingInProgress = false;
   }
  

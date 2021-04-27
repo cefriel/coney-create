@@ -1,94 +1,93 @@
 <div style="height: 100%; width: 100%;">
 
 
-    <div class="row mx-0 my-0 pb-2">
-        <div class="col-10">
-            <h5>{{title}}</h5>
-        </div>
-        <div class="col-2 pr-0">
-            <button id="print" type="print" mat-raised-button printSectionId="print-section" [useExistingCss]="true"
-                ngxPrint>
-
-                <img class="topBarImg" src="./assets/icons/navbar/print.svg">
-
-            </button>
-        </div>
+  <div class="row" style="position: relative;">
+    <div style="width: 100%; margin: 0 0 1rem 0!important;">
+      <h2>{{title}}</h2>
     </div>
 
-    <div class="row mx-0 my-0" id="print-section">
-        <div *ngFor="let question of questions" class="px-2 py-1 m-1"
-            style="width: 100%; border-bottom: 1px dashed lightgray;">
-            <div class="row mx-0 py-2 px-0 position-relative">
+    <button id="print" type="print" mat-raised-button printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+      <img class="topBarImg" src="./assets/icons/navbar/print.svg">
+    </button>
+  </div>
 
+  <div class="row" id="print-section">
+    <div *ngFor="let question of questions" class="px-2 py-1 m-1"
+      style="width: 100%; border-bottom: 1px dashed lightgray;">
+      <div class="row" style="position: relative;">
 
-                <div style="border-radius: 4px; padding: 0px 1rem; border: 2px solid gray;" class="text-center">
-                    <h5 class="m-0">{{question.order}}</h5>
-                </div>
+        <h3 style="font-weight: 600; flex: 2;">
+          <span style="border-radius: 4px; text-align:center; min-width: 32px; display: inline-block;border: 2px solid gray; padding-bottom: .2rem;" class="text-center">
+            {{question.order}}
+          </span>
+          {{question.text}}</h3>
 
-                <p style="position: absolute; right: 2rem; text-transform: lowercase; font-weight: 500; margin:0px; text-align: right;">
-                    <span *ngIf="question.type == 'star'">{{question.type}} ⭐</span>
-                    <span *ngIf="question.type == 'emoji'">{{question.type}} 😄</span>
-                    <span *ngIf="question.type == 'slider'">{{question.type}} ➖</span>
-                    <span *ngIf="question.type == 'options'">{{question.type}} 🔘 </span>
-                    <span *ngIf="question.type == 'select'">{{question.type}} 🔽</span>
-                    <span *ngIf="question.type == 'checkbox'">{{question.type}} ☑️</span>
-                    <span *ngIf="question.type == 'text' || question.type == 'email' || question.type == 'number' 
-                    || question.type == 'time' || question.type == 'date' || question.type == 'url'">{{question.type}} 📜</span>
-                    <br>
-                    <span *ngIf="question.tag != ''" class="chip_custom"> {{question.tag}} </span>
-                </p>
+        <p
+          style="padding-top: 1.4rem; padding-right: .5rem; text-transform: lowercase; font-weight: 500; margin:0px; text-align: right;">
+          <span *ngIf="question.type == 'star'">{{question.type}} ⭐</span>
+          <span *ngIf="question.type == 'emoji'">{{question.type}} 😄</span>
+          <span *ngIf="question.type == 'slider'">{{question.type}} ➖</span>
+          <span *ngIf="question.type == 'options'">{{question.type}} 🔘 </span>
+          <span *ngIf="question.type == 'select'">{{question.type}} 🔽</span>
+          <span *ngIf="question.type == 'checkbox'">{{question.type}} ☑️</span>
+          <span *ngIf="question.type == 'text' || question.type == 'email' || question.type == 'number' 
+                    || question.type == 'time' || question.type == 'date' || question.type == 'url'">{{question.type}}
+            📜</span>
+          <br>
+          <span *ngIf="question.tag != ''" class="chip_custom"> {{question.tag}} </span>
+        </p>
 
-                <h5 class="my-0 ml-2">{{question.text}}</h5>
+       
 
-                <div *ngIf="question.type != 'text' && question.type != 'email' 
+        <div *ngIf="question.type != 'text' && question.type != 'email' 
                 && question.type != 'time' && question.type != 'date'  && question.type != 'number' 
-                && question.type != 'url'" class="col-12 p-0">
-                    <h6 style="width:100%;color: gray;" class="pt-2">Answers</h6>
+                && question.type != 'url'" style="width: 100%;">
+          <h4 style="width:100%;color: gray; margin:0" >Answers</h4>
 
-                    <ul style="list-style: none; padding: 0;">
-                        <li *ngFor="let answer of question.answers">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let answer of question.answers" style="margin: .2rem 0">
 
-                            <h6 *ngIf="question.type!='star' && question.type!='checkbox'">
-                                <span *ngIf="answer.value!=0 " class="order-square">{{answer.value}}</span>
-                                <span *ngIf="answer.value==0 " class="order-square">-</span>
-                                {{answer.text}}
-                                <small *ngIf="answer.nextQuestionId > 0"> → to <span
-                                        class="span-square">{{answer.nextQuestionId}}</span></small>
-                                <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
-                            </h6>
-                            <h6 *ngIf="question.type=='checkbox'">
-                                ◻ {{answer.text}}
-                                <small *ngIf="answer.nextQuestionId > 0"> → to <span
-                                        class="span-square">{{answer.nextQuestionId}}</span></small>
-                                <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
-                            </h6>
-                            <h6 *ngIf="question.type=='star'">
-                                <span class="order-square">{{answer.order}}</span> ⭐
-                                <small *ngIf="answer.nextQuestionId > 0"> → to <span
-                                        class="span-square">{{answer.nextQuestionId}}</span></small>
-                                <small *ngIf="answer.nextQuestionId < 0"> → Survey ends</small>
-                            </h6>
-                        </li>
-                    </ul>
-                </div>
-
-                <div *ngIf="question.type == 'text' || question.type == 'email' 
-                || question.type == 'time' || question.type == 'date' || 
-                question.type == 'url' || question.type == 'number'" class="col-12 p-0">
-                <ul style="list-style: none; padding: 0;">
-                <li *ngFor="let answer of question.answers">
-                    <h6 style="padding-top: .5rem!important;">
-                    <span *ngIf="answer.value!=0 " class="order-square">{{answer.value}}</span>
-                    <span *ngIf="answer.value==0 " class="order-square">-</span>
-                    Open-ended
-                    <small *ngIf="answer.nextQuestionId > 0"> → to <span
-                            class="span-square">{{answer.nextQuestionId}}</span></small>
-                    <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
-                </h6>
-                </li>
-            </ul>
-            </div>
-            </div>
+              <p *ngIf="question.type!='star' && question.type!='checkbox'">
+                <span *ngIf="answer.value!=0 " class="order-square">{{answer.value}}</span>
+                <span *ngIf="answer.value==0 " class="order-square">-</span>
+                {{answer.text}}
+                <small *ngIf="answer.nextQuestionId > 0"> → to <span
+                    class="span-square">{{answer.nextQuestionId}}</span></small>
+                <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
+              </p>
+              <p *ngIf="question.type=='checkbox'">
+                ◻ {{answer.text}}
+                <small *ngIf="answer.nextQuestionId > 0"> → to <span
+                    class="span-square">{{answer.nextQuestionId}}</span></small>
+                <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
+              </p>
+              <p *ngIf="question.type=='star'">
+                <span class="order-square">{{answer.order}}</span> ⭐
+                <small *ngIf="answer.nextQuestionId > 0"> → to <span
+                    class="span-square">{{answer.nextQuestionId}}</span></small>
+                <small *ngIf="answer.nextQuestionId < 0"> → Survey ends</small>
+              </p>
+            </li>
+          </ul>
         </div>
+
+        <div *ngIf="question.type == 'text' || question.type == 'email' 
+                || question.type == 'time' || question.type == 'date' || 
+                question.type == 'url' || question.type == 'number'" style="width: 100%;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let answer of question.answers">
+              <p style="padding-top: .5rem!important;">
+                <span *ngIf="answer.value!=0 " class="order-square">{{answer.value}}</span>
+                <span *ngIf="answer.value==0 " class="order-square">-</span>
+                Open-ended
+                <small *ngIf="answer.nextQuestionId > 0"> → to <span
+                    class="span-square">{{answer.nextQuestionId}}</span></small>
+                <small *ngIf="answer.nextQuestionId < 0"> → Survey ended</small>
+                </p>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -317,9 +317,10 @@ export class ReteComponent implements AfterViewInit, OnChanges {
         var sel = [];
         sel = ReteComponent.editor.selected["list"];
         if (sel.length > 0) {
-          sel.forEach(element => {
+          ReteComponent.editor.selected.clear();
+           sel.forEach(element => {
             ReteComponent.editor.removeNode(element);
-          });
+          }); 
         }
       }
     }),

@@ -403,7 +403,8 @@ input, textarea{
 }
 
 #print{
-  float: right;
+  position: absolute;
+  right: 0;
 }
 
 .form-control{
@@ -463,6 +464,7 @@ button:hover{
 #print-section{
   max-height: 65vh;
   overflow-y: auto;
+  position: relative;
 }
 
 .pr-sc{
